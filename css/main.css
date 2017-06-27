@@ -1,0 +1,116 @@
+body {
+	text-align: center;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+#overlay {
+	visibility: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 10;
+	display: table;
+	table-layout: fixed;
+}
+
+#overlay .options {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+#overlay .options > div {
+	height: 50%;
+}
+
+#overlay .option {
+	display: table;
+	table-layout: fixed;
+	background-color: red;
+	padding: 10px;
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+}
+
+#overlay .option p {
+	display: table-cell;
+	vertical-align: middle;
+	font-size: 3.5em;
+	font-weight: bold;
+	color: white;
+}
+
+#overlay #name {
+	position: fixed;
+	top: 5%;
+	width: 30%;
+	text-align: center;
+	font-size: 4em;
+	color: white;
+	z-index: 12;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+#overlay #exit {
+	position: fixed;
+	top: 5%;
+	width: 30%;
+	text-align: right;
+	font-size: 4em;
+	color: white;
+	z-index: 12;
+}
+
+#overlay #exit span {
+	padding: 10px;
+	cursor: pointer;
+}
+
+#content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+#top {
+	padding: 10px 10px;
+}
+
+#main {
+	width: 100%;
+}
+
+#room-name {
+	font-weight: bold;
+	font-size: 3.5em;
+	line-height: 1.4em;
+}
+
+#logo {
+	float: left;
+}
+
+.row {
+	padding: 10px 5px;
+}
+
+.row-item img {
+	height: 55%;
+	width: 55%;
+	border: 4px solid black;
+	cursor: pointer;
+}
+
+.row-item figcaption {
+	font-size: 1.4em;
+}
