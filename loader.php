@@ -1,43 +1,48 @@
 <?php
 
-
 // Sample Test List of children and their information
 $children = array(
 	array(
 		'name' => 'Jamie Rozanne',
-		'example' => 'nothing'
+		'present' => 1
 		// There will also be img link
 		// and any other information
 	),
 	array(
 		'name' => 'Casey Louie',
-		'example' => 'nothing'
+		'present' => 0
 	),
 	array(
 		'name' => 'Gillian Elfreda',
-		'example' => 'nothing'
+		'present' => 1
 	),
 	array(
 		'name' => 'Kira Edgar',
-		'example' => 'nothing'
+		'present' => 0
 	),
 	array(
 		'name' => 'Heath Louis',
-		'example' => 'nothing'
+		'present' => 0
 	),
 	array(
 		'name' => 'Emery Katherina',
-		'example' => 'nothing'
+		'present' => 1
 	),
 	array(
 		'name' => 'Ethel Zackery',
-		'example' => 'nothing'
+		'present' => 1
 	),
 	array(
 		'name' => 'Alec Brandie',
-		'example' => 'nothing'
+		'present' => 0
 	)
 );
+
+function getChildrenArray() {
+	global $children;
+
+	return json_encode($children);
+}
 
 function makeRowItem($child) {
 	$name = $child["name"];
@@ -74,4 +79,5 @@ function makeRowSet($list) {
 
 	return $html;
 }
+
 ?>

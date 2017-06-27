@@ -13,7 +13,7 @@
 	<div id="overlay">
 		<div class="container-fluid options">
 			<div class="col-md-4">
-				<div id="check-in-out" class="option" onclick="check_in_out_show()">
+				<div id="check-in-out" class="option">
 					<p>Check in/out</p>
 				</div>
 			</div>
@@ -27,28 +27,6 @@
 				<div class="exit"><span onclick="overlay_hide()">&#x2573</span></div>
 				<div id="change-pin" class="option">
 					<p>Change pin</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="overlay-check-in-out">
-		<div class="container-fluid options">
-			<div class="col-md-4">
-				<div class="back"><span onclick="check_in_out_hide()">&#x261A</span></div>
-				<div id="check-in-out" class="option" onclick="check_in_out_show()">
-					<p>Check in/out</p>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div id="check-in" class="option">		
-					<p>Check in</p>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="exit"><span onclick="overlay_hide()">&#x2573</span></div>
-				<div id="check-out" class="option">
-					<p>Check out</p>
 				</div>
 			</div>
 		</div>
@@ -68,6 +46,9 @@
 			<?php echo makeRowSet($children) ?>
 		</div>
 	</div>
+	<script type="text/javascript">
+		var children = JSON.parse('<?php echo getChildrenArray(); ?>');
+	</script>
 	<script src="js/main.js"></script>
 </body>
 </html>

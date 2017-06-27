@@ -1,5 +1,21 @@
+function isPresent(name) {
+	var present = false;
+	children.forEach(function(child) {
+		if (child.name == name && child.present)
+			present = true;
+	})
+	return present;
+}
+
+function changePresence(name, presence) {
+	children.forEach(function(child) {
+		if (child.name == name){
+			child.present = presence;
+		}
+	})
+}
+
 const overlay = document.getElementById("overlay");
-const check_in_out = document.getElementById("overlay-check-in-out")
 
 // Passed in elements made visible
 function show(elements) {
@@ -15,20 +31,43 @@ function hide(elements) {
 	});
 }
 
-function check_in_out_show() {
-	show(check_in_out);
+
+
+const check = document.getElementById("check-in-out");
+
+function check_in(name) {
+	check.querySelector("p").innerHTML = "Check out";
+	check.style.backgroundColor = "#F3625C";
+	check.setAttribute("onclick", "check_out('"+name+"')");
+	changePresence(name, 1);
 }
 
-function check_in_out_hide() {
-	hide(check_in_out);
+function check_out(name) {
+	check.querySelector("p").innerHTML = "Check in";
+	check.style.backgroundColor = "#00874A";
+	check.setAttribute("onclick", "check_in('"+name+"')");
+	changePresence(name, 0);
 }
 
 function overlay_show(id, name) {
-	document.getElementById("name").innerHTML = name;
+	// First name displayed
+	document.getElementById("name").innerHTML = name.split(' ')[0];
+
+	if (isPresent(name)) {
+		console.log(name);
+		check.querySelector("p").innerHTML = "Check out";
+		check.style.backgroundColor = "#F3625C";
+		check.setAttribute("onclick", "check_out('"+name+"')");
+	} else {
+		check.querySelector("p").innerHTML = "Check in";
+		check.style.backgroundColor = "#00874A";
+		check.setAttribute("onclick", "check_in('"+name+"')");
+	}
+
 	show(overlay);
 }
 
 function overlay_hide() {
 	document.getElementById("name").innerHTML = "";
-	hide(overlay, check_in_out);
+	hide(overlay);
 }

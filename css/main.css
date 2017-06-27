@@ -89,34 +89,6 @@ body {
 	cursor: pointer;
 }
 
-#overlay-check-in-out {
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	z-index: 20;
-	display: table;
-	table-layout: fixed;
-}
-
-#overlay-check-in-out {
-	visibility: hidden;
-}
-
-#overlay-check-in-out #check-in-out {
-	border: 10px solid #2C5276;
-	background-color: rgba(0, 0, 0, 0.25);
-}
-
-#overlay-check-in-out #check-in {
-	background-color: #3AA273;
-}
-
-#overlay-check-in-out #check-out {
-	background-color: #F0423A;
-}
-
 #content {
 	position: absolute;
 	top: 0;
