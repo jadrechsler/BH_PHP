@@ -36,16 +36,12 @@ function hide(elements) {
 const check = document.getElementById("check-in-out");
 
 function check_in(name) {
-	check.querySelector("p").innerHTML = "Check out";
-	check.style.backgroundColor = "#F3625C";
-	check.setAttribute("onclick", "check_out('"+name+"')");
+	overlay_hide();
 	changePresence(name, 1);
 }
 
 function check_out(name) {
-	check.querySelector("p").innerHTML = "Check in";
-	check.style.backgroundColor = "#00874A";
-	check.setAttribute("onclick", "check_in('"+name+"')");
+	overlay_hide();
 	changePresence(name, 0);
 }
 
