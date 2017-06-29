@@ -1,0 +1,306 @@
+@font-face {
+	font-family: Quicksand-Regular;
+	src: url(fonts/quicksand/Quicksand-Regular);
+}
+
+body {
+	text-align: center;
+	font-family: Quicksand-Regular;
+
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+}
+
+h1#room-name {
+	font-size: 2em;
+}
+
+#overlay {
+	visibility: hidden;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+	z-index: 10;
+	display: table;
+	table-layout: fixed;
+}
+
+.options {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.options > div {
+	height: 50%;
+}
+
+.option {
+	display: table;
+	table-layout: fixed;
+	background-color: #2C5276;
+	padding: 10px;
+	height: 100%;
+	width: 100%;
+	cursor: pointer;
+	border-radius: 30px;
+}
+
+.option p {
+	display: table-cell;
+	vertical-align: middle;
+	font-size: 3.5em;
+	font-weight: bold;
+	color: white;
+}
+
+#overlay #name {
+	position: fixed;
+	top: 5%;
+	width: 30%;
+	text-align: center;
+	font-size: 4em;
+	color: white;
+	z-index: 12;
+	background-color: rgba(0, 0, 0, 0.25);
+}
+
+#overlay #view-report {
+	background-color: #FEBE11;
+}
+
+.exit {
+	position: fixed;
+	top: 5%;
+	width: 30%;
+	text-align: right;
+	font-size: 4em;
+	color: white;
+	z-index: 12;
+}
+
+.exit span {
+	padding: 10px;
+	cursor: pointer;
+}
+
+#content {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+}
+
+#top {
+	padding: 10px 10px;
+}
+
+#main {
+	width: 100%;
+}
+
+#room-name {
+	font-weight: bold;
+	font-size: 3.5em;
+	line-height: 1.4em;
+}
+
+#logo {
+	float: left;
+}
+
+.row {
+	padding: 10px 5px;
+}
+
+.row-item {
+	width: 20%;
+}
+
+.row-item img {
+	/** Change these to fit real screen **/
+	height: 45%;
+	width: 55%;
+	/** ------------------------------- **/
+
+	border: 4px solid black;
+	cursor: pointer;
+}
+
+.row-item figcaption {
+	font-size: 1.4em;
+}
+
+
+
+
+
+
+
+
+
+
+#report {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+#report h1 {
+    font-size: 1.5em;
+}
+
+#report .report-main {
+    position: fixed;
+    height: 90%;
+    width: 100%;
+}
+
+#report .report-main > .container-fluid {
+    height: 100%;
+}
+
+#report .report-bottom {
+    top: calc(90% + 20px);
+    position: fixed;
+    height: 10%;
+    width: 100%;
+}
+
+#report .side {
+	position: fixed;
+    height: 75%;
+    width: 37.5%;
+    margin: 0;
+    padding: 0;
+    margin-top: 5%;
+}
+
+#report .left {
+	margin-left: 12.5%;
+}
+
+#report .right {
+	margin-left: 50%;
+}
+
+#report .left .top {
+    height: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+#report .left .top .double {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#report .report-container {
+    height: 100%;
+    margin: 0;
+    padding: 5px;
+}
+
+#report .left .top .top {
+    height: 50%;
+}
+
+#report .left .top .bottom {
+    height: 50%;
+}
+
+#report .left .bottom {
+    height: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+#report .left #i-went {
+    height: 100%;
+}
+
+#report .content {
+    border: 2px solid black;
+    border-radius: 30px;
+    height: 100%;
+    margin: 0;
+    padding: 0px 10px;
+    margin-top: -5px;
+    background-color: white;
+}
+
+#report .right .top {
+    margin: 0;
+    padding: 0;
+    height: 10%;
+}
+
+#report .right .middle {
+    margin: 0;
+    padding: 0;
+    height: 70%;
+}
+
+#report .right .bottom {
+    margin: 0;
+    padding: 0;
+    height: 20%;
+}
+
+#report #email {
+    text-align: right;
+    padding-top: 5px;
+}
+
+#report #email button {
+    border: none;
+    padding: 5px 5px;
+    width: 100%;
+    border-radius: 30px;
+    color: white;
+    font-weight: bold;
+    background-color: #2C5276;
+}
+
+#report #exit-report {
+    text-align: left;
+    padding-top: 5px;
+}
+
+#report #exit-report button {
+    border: none;
+    padding: 5px 5px;
+    width: 100%;
+    border-radius: 30px;
+    background-color: #F3625C;
+    color: white;
+    font-weight: bold;
+}
+
+#report .report-list {
+	list-style-type: none;
+	text-align: left;
+	font-size: 0.8em;
+}
+
+#report #occurence .content {
+	border: 5px solid #F3625C;
+}
+
+#report #occurence h1 {
+	line-height: calc(1%);
+	font-weight: bold;
+	color: #F3625C;
+}
