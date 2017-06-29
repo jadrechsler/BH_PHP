@@ -58,6 +58,12 @@
                         <div id="i-went" class="col-md-6 report-container">
                             <div class="content">
                                 <h1>I went</h1>
+				<p>9:30 - BM</p>
+				<p>10:30 - Peed</p>
+				<p>10:30 - Peed</p>
+				<p>10:30 - Peed</p>
+				<p>10:30 - Peed</p>
+				<p>10:30 - Peed</p>
                             </div>
                         </div>
                     </div>
@@ -73,7 +79,7 @@
                     <div class="container-fluid top">
                         <div id="occurence" class="col-md-12 report-container">
                             <div class="content">
-                                <h1>Occurence: please see teacher</h1>
+                                <h1>Please see the Teacher</h1>
                             </div>
                         </div>
                     </div>
@@ -88,6 +94,11 @@
                         <div class="col-md-6 report-container">
                             <div id="i-need" class="content">
                                 <h1>I need</h1>
+				<p>Diapers</p>
+				<p>Wipes</p>
+				<p>Shirts</p>
+				<p>Pants</p>
+				<p>Underwear</p>
                             </div>
                         </div>
                         <div id="changed-clothes" class="col-md-6 report-container">
