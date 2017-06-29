@@ -33,6 +33,54 @@ $children = array(
 		'present' => 1
 	),
 	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
+		'name' => 'Ethel Zackery',
+		'present' => 1
+	),
+	array(
 		'name' => 'Alec Brandie',
 		'present' => 0
 	)
@@ -73,7 +121,7 @@ function makeRow($list) {
 function makeRowSet($list) {
 	$html = '';
 
-	foreach (array_chunk($list, 4) as $row) {
+	foreach (array_chunk($list, 5) as $row) {
 		$html .= makeRow($row);
 	}
 

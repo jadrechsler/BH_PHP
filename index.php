@@ -6,7 +6,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Class 1</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap.css">
 	<link rel="stylesheet" href="css/main.css">
 </head>
 <body>
@@ -19,7 +19,7 @@
 			</div>
 			<div class="col-md-4">
 				<p id="name">Bobby Name</p>
-				<div id="view-day-report" class="option">		
+				<div id="view-report" class="option" onclick="report_show()">		
 					<p>View report</p>
 				</div>
 			</div>
@@ -32,10 +32,94 @@
 		</div>
 	</div>
 
+<div id="report">
+        <div class="report-main">
+            <div class="container-fluid">
+                <div class="col-md-6 side left">
+                    <div class="container-fluid top">
+                        <div class="col-md-6 double">
+                            <div class="container-fluid top">
+                                <div id="i-was" class="col-md-12 report-container">
+                                    <div class="content">
+                                        <h1>I was</h1>
+                                        <p>Happy</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-fluid bottom">
+                                <div id="i-slept" class="col-md-12 report-container">
+                                    <div class="content">
+                                        <h1>I slept</h1>
+                                        <p>10:30 - 12:30</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="i-went" class="col-md-6 report-container">
+                            <div class="content">
+                                <h1>I went</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid bottom">
+                        <div id="i-ate" class="col-md-12 report-container">
+                            <div class="content">
+                                <h1>I ate</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
+                <div class="col-md-6 side right">
+                    <div class="container-fluid top">
+                        <div id="occurence" class="col-md-12 report-container">
+                            <div class="content">
+                                <h1>Occurence: please see teacher</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid middle">
+                        <div id="highlights" class="col-md-12 report-container">
+                            <div class="content">
+                                <h1>Highlights/ new discoveries</h1>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid bottom">
+                        <div class="col-md-6 report-container">
+                            <div id="i-need" class="content">
+                                <h1>I need</h1>
+                            </div>
+                        </div>
+                        <div id="changed-clothes" class="col-md-6 report-container">
+                            <div class="content">
+                                <h1>Changed clothes</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="report-bottom">
+            <div class="container-fluid">
+                <div class="col-md-3">
+                	<div id="exit-report">
+                		<button onclick="report_hide()">EXIT</button>
+                	</div>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-3">
+                    <div id="email">
+                        <button>EMAIL</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 	<div id="content">
 		<div id="top" class="container-fluid">
 			<div id="test" class="col-md-4">
-				<img id="logo" src="img/logo.png" alt="logo" height="50%" width="50%">
+				<img id="logo" src="img/logo.png" alt="logo" height="35%" width="35%">
 			</div>
 			<div class="col-md-4">
 				<h1 id="room-name">Room 1</h1>

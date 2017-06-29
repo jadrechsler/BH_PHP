@@ -1,0 +1,110 @@
+#report {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 30;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#report h1 {
+    font-size: 1.5em;
+}
+
+#report .report-main {
+    position: fixed;
+    height: 90%;
+    width: 100%;
+}
+
+#report .report-main > .container-fluid {
+    height: 100%;
+}
+#report .report-bottom {
+    top: 90%;
+    position: fixed;
+    height: 10%;
+    width: 100%;
+}
+
+#report .side {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#report .left .top {
+    height: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+#report .left .top .double {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#report .report-container {
+    height: 100%;
+    margin: 0;
+    padding: 5px;
+}
+
+#report .left .top .top {
+    height: 50%;
+}
+
+#report .left .top .bottom {
+    height: 50%;
+}
+
+#report .left .bottom {
+    height: 50%;
+    margin: 0;
+    padding: 0;
+}
+
+#report .left #i-went {
+    height: 100%;
+}
+
+#report .content {
+    border: 2px solid black;
+    border-radius: 30px;
+    height: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    background-color: white;
+}
+
+#report .right .top {
+    margin: 0;
+    padding: 0;
+    height: 10%;
+}
+
+#report .right .middle {
+    margin: 0;
+    padding: 0;
+    height: 70%;
+}
+
+#report .right .bottom {
+    margin: 0;
+    padding: 0;
+    height: 20%;
+}
+
+#report #email {
+    text-align: right;
+    padding-top: 5px;
+}
+
+#report #email button {
+    border: none;
+    padding: 5px 5px;
+    width: 100%;
+    border-radius: 30px;
+}

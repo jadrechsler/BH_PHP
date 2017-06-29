@@ -16,6 +16,7 @@ function changePresence(name, presence) {
 }
 
 const overlay = document.getElementById("overlay");
+const report = document.getElementById("report");
 
 // Passed in elements made visible
 function show(elements) {
@@ -66,4 +67,12 @@ function overlay_show(id, name) {
 function overlay_hide() {
 	document.getElementById("name").innerHTML = "";
 	hide(overlay);
+}
+
+function report_show() {
+	show(report);
+}
+
+function report_hide() {
+	hide(report);
 }
