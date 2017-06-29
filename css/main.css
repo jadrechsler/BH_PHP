@@ -13,10 +13,10 @@ body {
     -webkit-user-select: none;
     -o-user-select: none;
 }
-
+/* remove
 h1#room-name {
 	font-size: 2em;
-}
+}*/
 
 #overlay {
 	visibility: hidden;
@@ -107,8 +107,8 @@ h1#room-name {
 
 #room-name {
 	font-weight: bold;
-	font-size: 3.5em;
-	line-height: 1.4em;
+	font-size: 5.5em;
+	/*line-height: 1.4em;*/
 }
 
 #logo {
@@ -154,11 +154,18 @@ h1#room-name {
     height: 100%;
     width: 100%;
     visibility: hidden;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 1);
 }
 
 #report h1 {
-    font-size: 1.5em;
+    /*font-size: 1.5em; remove*/
+	margin-top: 5px;
+	margin-bottom: 10px;
+}
+
+#report p {/*added*/
+    margin: 0 0 1px;
+	font-size: 23px;
 }
 
 #report .report-main {
@@ -303,4 +310,5 @@ h1#room-name {
 	line-height: calc(1%);
 	font-weight: bold;
 	color: #F3625C;
+	margin-top: 30px; /*Added*/
 }
