@@ -153,7 +153,7 @@ h1#room-name {
     z-index: 30;
     height: 100%;
     width: 100%;
-    visibility: hidden;
+    /* visibility: hidden; */
     background-color: rgba(0, 0, 0, 0.7);
 }
 
@@ -170,6 +170,7 @@ h1#room-name {
 #report .report-main > .container-fluid {
     height: 100%;
 }
+
 #report .report-bottom {
     top: calc(90% + 20px);
     position: fixed;
@@ -178,10 +179,20 @@ h1#room-name {
 }
 
 #report .side {
-    height: 100%;
+	position: fixed;
+    height: 75%;
+    width: 37.5%;
     margin: 0;
     padding: 0;
-    margin-top: 20px;
+    margin-top: 5%;
+}
+
+#report .left {
+	margin-left: 12.5%;
+}
+
+#report .right {
+	margin-left: 50%;
 }
 
 #report .left .top {
@@ -289,7 +300,7 @@ h1#room-name {
 }
 
 #report #occurence h1 {
-	line-height: calc(15%);
+	line-height: calc(1%);
 	font-weight: bold;
 	color: #F3625C;
 }
