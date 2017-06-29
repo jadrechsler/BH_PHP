@@ -6,12 +6,11 @@
 body {
 	text-align: center;
 	font-family: Quicksand-Regular;
-
-    user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -o-user-select: none;
+	user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	-o-user-select: none;
 }
 /* remove
 h1#room-name {
@@ -310,5 +309,5 @@ h1#room-name {
 	line-height: calc(1%);
 	font-weight: bold;
 	color: #F3625C;
-	margin-top: 30px; /*Added*/
+	margin-top: 25px; /*Added*/
 }
