@@ -153,8 +153,8 @@ h1#room-name {
     z-index: 30;
     height: 100%;
     width: 100%;
-    /* visibility: hidden; */
-    background-color: rgba(0, 0, 0, 0.7);
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.9);
 }
 
 #report h1 {
