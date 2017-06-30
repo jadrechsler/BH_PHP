@@ -8,7 +8,7 @@ CREATE TABLE users (
 );
 
 CREATE TABLE info (
-    time TIMESTAMP NOT NULL,
+    `date` TEXT,
     reports TEXT
 );
 

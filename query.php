@@ -19,6 +19,9 @@ function respond($success, $data, $error = null) {
 
 // Available Actions
 const NEW_USER = 'new_user';
+const DELETE_USER = 'delete_user';
+const MAKE_REPORT = 'make_report';
+const GET_REPORT = 'get_report';
 
 // Types of Users
 const ADMIN = 'admin';
@@ -36,10 +39,21 @@ if (empty($_REQUEST['action'])) {
 $action = strtolower($_REQUEST['action']);
 $data = json_decode($_REQUEST['data']);
 
+$today = date('d n Y');
+
 // Route the requested action
 switch ($action) {
     case NEW_USER:
         newUser();
+        break;
+    case DELETE_USER:
+        deleteUser();
+        break;
+    case MAKE_REPORT:
+        makeReport();
+        break;
+    case GET_REPORT:
+        getReport();
         break;
     default:
         respond(false, null, 'Invalid Action');
@@ -54,8 +68,8 @@ function newUser() {
     switch ($data->type) {
         case CHILD:
             try {
-                $name = strtolower($data->name);
-                $pin = strtolower($data->pin);
+                $name = $data->name;
+                $pin = $data->pin;
             } catch(Exception $e) {
                 respond(false, null, 'Missing Data Parameters');
             }
@@ -63,8 +77,8 @@ function newUser() {
             break;
         case CARER:
             try {
-                $name = strtolower($data->name);
-                $relation = strtolower($data->relation);
+                $name = $data->name;
+                $relation = $data->relation;
                 $email = strtolower($data->email);
             } catch(Exception $e) {
                 respond(false, null, 'Missing Data Parameters');
@@ -73,7 +87,7 @@ function newUser() {
             break;
         case FLOATER:
             try {
-                $name = strtolower($data->name);
+                $name = $data->name;
                 $email = strtolower($data->email);
                 $pin = $data->pin;
             } catch(Exception $e) {
@@ -83,7 +97,7 @@ function newUser() {
             break;
         case TEACHER:
             try {
-                $name = strtolower($data->name);
+                $name = $data->name;
                 $email = strtolower($data->email);
                 $pin = $data->pin;
             } catch(Exception $e) {
@@ -93,7 +107,7 @@ function newUser() {
             break;
         case ADMIN:
             try {
-                $name = strtolower($data->name);
+                $name = $data->name;
                 $email = strtolower($data->email);
                 $pin = $data->pin;
             } catch(Exception $e) {
@@ -106,6 +120,27 @@ function newUser() {
             break;
     }
 
+}
+
+function deleteUser() {
+    global $conn;
+    global $data;
+
+    try {
+        $id = $data->id;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters: id');
+    }
+
+    $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+    $stmt->bind_param('i', $id);
+
+    $stmt->execute();
+
+    respond(true, null);
+
+    $stmt->close();
+    $conn->close();
 }
 
 function newChild($name, $pin) {
@@ -186,6 +221,46 @@ function newAdmin($name, $email, $pin) {
 
     $stmt->close();
     $conn->close();
+}
+
+function makeReport() {
+    global $conn;
+    global $data;
+    global $today;
+
+    try {
+        $reports = $data->reports;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameter: reports');
+    }
+
+    ensureInfoDateExists($today);
+
+    $stmt = $conn->prepare("UPDATE info SET reports = ? WHERE date = '$today'");
+    $stmt->bind_param('s', $reports);
+
+    $stmt->execute();
+
+    respond(true, null);
+
+    $stmt->close();
+    $conn->close();
+}
+
+function getReport() {
+    global $conn;
+    global $data;
+    global $today;
+
+    ensureInfoDateExists($today);
+
+    $reports = mysqli_query($conn, "SELECT reports FROM info WHERE date = '$today'");
+
+    $data = array(
+        'reports' => mysqli_fetch_row($reports)
+    );
+
+    respond(true, json_encode($data));
 }
 
 ?>

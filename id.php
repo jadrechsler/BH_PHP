@@ -38,8 +38,8 @@ function nextFloaterId() {
 function nextTeacherId() {
     global $conn;
 
-    $first = mysql_num_rows(mysqli_query($conn, 'SELECT id FROM users WHERE id = 2'));
-    $second = mysql_num_rows(mysqli_query($conn, 'SELECT id FROM users WHERE id = 3'));
+    $first = mysqli_num_rows(mysqli_query($conn, 'SELECT id FROM users WHERE id = 2'));
+    $second = mysqli_num_rows(mysqli_query($conn, 'SELECT id FROM users WHERE id = 3'));
 
     if ($first == 0) {
         return 2;
@@ -53,12 +53,22 @@ function nextTeacherId() {
 function nextAdminId() {
     global $conn;
 
-    $first = mysql_num_rows(mysqli_query($conn, 'SELECT id FROM users WHERE id = 1'));
+    $first = mysqli_num_rows(mysqli_query($conn, 'SELECT id FROM users WHERE id = 1'));
 
     if ($first == 0) {
         return 1;
     } else {
         respond(false, null, 'Reached Maximum Admin Capacity');
+    }
+}
+
+function ensureInfoDateExists($date) {
+    global $conn;
+
+    $today = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM info WHERE date = '$date'"));
+
+    if ($today < 1) {
+        mysqli_query($conn, "INSERT INTO info(date, reports) VALUES('$date', '{}')");
     }
 }
 
