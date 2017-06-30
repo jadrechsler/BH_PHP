@@ -1,7 +1,7 @@
 <?php
 
 require('db.php');
-require('id.php');
+require('handlers.php');
 
 function respond($success, $data, $error = null) {
     header('Content-Type: application/json');
@@ -22,6 +22,10 @@ const NEW_USER = 'new_user';
 const DELETE_USER = 'delete_user';
 const MAKE_REPORT = 'make_report';
 const GET_REPORT = 'get_report';
+const CHANGE_EMAIL = 'change_email';
+const CHANGE_PIN = 'change_pin';
+const CHANGE_NAME = 'change_name';
+const GET_CHILDREN = 'get_children';
 
 // Types of Users
 const ADMIN = 'admin';
@@ -54,6 +58,18 @@ switch ($action) {
         break;
     case GET_REPORT:
         getReport();
+        break;
+    case CHANGE_EMAIL:
+        changeEmail();
+        break;
+    case CHANGE_PIN:
+        changePin();
+        break;
+    case CHANGE_NAME:
+        changeName();
+        break;
+    case GET_CHILDREN:
+        getChildren();
         break;
     default:
         respond(false, null, 'Invalid Action');
@@ -120,147 +136,6 @@ function newUser() {
             break;
     }
 
-}
-
-function deleteUser() {
-    global $conn;
-    global $data;
-
-    try {
-        $id = $data->id;
-    } catch(Exception $e) {
-        respond(false, null, 'Missing Data Parameters: id');
-    }
-
-    $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
-    $stmt->bind_param('i', $id);
-
-    $stmt->execute();
-
-    respond(true, null);
-
-    $stmt->close();
-    $conn->close();
-}
-
-function newChild($name, $pin) {
-    global $conn;
-
-    $id = nextChildId();
-
-    $stmt = $conn->prepare("INSERT INTO users (id, name, pin) VALUES ($id, ?, ?)");
-    $stmt->bind_param('si', $name, $pin);
-
-    $stmt->execute();
-
-    respond(true, null);
-
-    $stmt->close();
-    $conn->close();
-}
-
-function newCarer($name, $relation, $email) {
-    global $conn;
-
-    $id = newCarerId();
-
-    $stmt = $conn->prepare("INSERT INTO users (id, name, relation, email) VALUES ($id, ?, ?, ?)");
-    $stmt->bind_param('sss', $name, $relation, $email);
-
-    $stmt->execute();
-
-    respond(true, null);
-
-    $stmt->close();
-    $conn->close();
-}
-
-function newFloater($name, $email, $pin) {
-    global $conn;
-
-    $id = newFloaterId();
-
-    $stmt = $conn->prepare("INSERT INTO users (id, name, email, pin) VALUES ($id, ?, ?, ?)");
-    $stmt->bind_param('ssi', $name, $email, $pin);
-
-    $stmt->execute();
-
-    respond(true, null);
-
-    $stmt->close();
-    $conn->close();
-}
-
-function newTeacher($name, $email, $pin) {
-    global $conn;
-
-    $id = newTeacherrId();
-
-    $stmt = $conn->prepare("INSERT INTO users (id, name, email, pin) VALUES ($id, ?, ?, ?)");
-    $stmt->bind_param('ssi', $name, $email, $pin);
-
-    $stmt->execute();
-
-    respond(true, null);
-
-    $stmt->close();
-    $conn->close();
-}
-
-function newAdmin($name, $email, $pin) {
-    global $conn;
-
-    $id = newAdminId();
-
-    $stmt = $conn->prepare("INSERT INTO users (id, name, email, pin) VALUES ($id, ?, ?, ?)");
-    $stmt->bind_param('ssi', $name, $email, $pin);
-
-    $stmt->execute();
-
-    respond(true, null);
-
-    $stmt->close();
-    $conn->close();
-}
-
-function makeReport() {
-    global $conn;
-    global $data;
-    global $today;
-
-    try {
-        $reports = $data->reports;
-    } catch(Exception $e) {
-        respond(false, null, 'Missing Data Parameter: reports');
-    }
-
-    ensureInfoDateExists($today);
-
-    $stmt = $conn->prepare("UPDATE info SET reports = ? WHERE date = '$today'");
-    $stmt->bind_param('s', $reports);
-
-    $stmt->execute();
-
-    respond(true, null);
-
-    $stmt->close();
-    $conn->close();
-}
-
-function getReport() {
-    global $conn;
-    global $data;
-    global $today;
-
-    ensureInfoDateExists($today);
-
-    $reports = mysqli_query($conn, "SELECT reports FROM info WHERE date = '$today'");
-
-    $data = array(
-        'reports' => mysqli_fetch_row($reports)
-    );
-
-    respond(true, json_encode($data));
 }
 
 ?>
