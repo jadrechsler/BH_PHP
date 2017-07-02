@@ -1,23 +1,18 @@
-function isPresent(id) {
+function isPresent(name) {
 	var present = false;
 	children.forEach(function(child) {
-		if (child.id == id.toString() && child.present == "1")
+		if (child.name == name && child.present)
 			present = true;
 	})
 	return present;
 }
 
-function changePresence(id, presence) {
+function changePresence(name, presence) {
 	children.forEach(function(child) {
-		if (child.id == id.toString()){
+		if (child.name == name){
 			child.present = presence;
 		}
-		console.log(child);
 	})
-
-	const data = {id: id, presence: presence};	
-	QueryDB('change_presence', JSON.stringify(data));
-	console.log(JSON.stringify(data));
 }
 
 const overlay = document.getElementById("overlay");
@@ -41,29 +36,29 @@ function hide(elements) {
 
 const check = document.getElementById("check-in-out");
 
-function check_in(id) {
+function check_in(name) {
 	overlay_hide();
-	changePresence(id, 1);
+	changePresence(name, 1);
 }
 
-function check_out(id) {
+function check_out(name) {
 	overlay_hide();
-	changePresence(id, 0);
+	changePresence(name, 0);
 }
 
 function overlay_show(id, name) {
 	// First name displayed
 	document.getElementById("name").innerHTML = name.split(' ')[0];
 
-	if (isPresent(id)) {
+	if (isPresent(name)) {
 		console.log(name);
 		check.querySelector("p").innerHTML = "Check out";
 		check.style.backgroundColor = "#F3625C";
-		check.setAttribute("onclick", "check_out('"+id+"')");
+		check.setAttribute("onclick", "check_out('"+name+"')");
 	} else {
 		check.querySelector("p").innerHTML = "Check in";
 		check.style.backgroundColor = "#00874A";
-		check.setAttribute("onclick", "check_in('"+id+"')");
+		check.setAttribute("onclick", "check_in('"+name+"')");
 	}
 
 	show(overlay);

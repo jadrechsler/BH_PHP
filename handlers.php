@@ -191,10 +191,10 @@ function makeReport() {
 
     $stmt->execute();
 
+    respond(true, null);
+
     $stmt->close();
     $conn->close();
-
-    respond(true, null);
 }
 
 function getReport() {
@@ -210,7 +210,7 @@ function getReport() {
         'reports' => mysqli_fetch_row($reports)
     );
 
-    respond(true, $data);
+    respond(true, json_encode($data));
 }
 
 function changeEmail() {
@@ -228,9 +228,6 @@ function changeEmail() {
     $stmt->bind_param('si', $email, $id);
 
     $stmt->execute();
-
-    $stmt->close();
-    $conn->close();
 
     respond(true, null);
 }
@@ -295,58 +292,7 @@ function getChildren() {
         'children' => $list
     );
 
-    respond(true, $data);
+    respond(true, json_encode($data));
 }
 
-function changePresence() {
-    global $conn;
-    global $data;
-
-    try {
-        $present = $data->presence;
-        $id = $data->id;
-    } catch(Exception $e) {
-        respond(false, null, 'Missing Data Parameters');
-    }
-
-    $stmt = $conn->prepare("UPDATE users SET present = ? WHERE id = ?");
-    $stmt->bind_param('ii', $present, $id);
-
-    $stmt->execute();
-
-    $stmt->close();
-    $conn->close();
-
-    respond(true, null);
-}
-
-function checkPin() {
-    global $conn;
-    global $data;
-
-    try {
-        $id = $data->id;
-        $pin = $data->pin;
-    } catch(Exception $e) {
-        respond(false, null, 'Missing Data Parameters');
-    }
-
-    $stmt = $conn->prepare("SELECT pin FROM users WHERE id = ?");
-    $stmt->bind_param('i', $id);
-
-    $stmt->execute();
-
-    $truePin = $stmt->get_result()->fetch_array()['pin'];
-
-    $stmt->close();
-    $conn->close();
-
-    if ($truePin == $pin) {
-        // If pin is correct
-        respond(true, null);
-    } else {
-        // If pin is incorrect
-        respond(false, null);
-    }
-}
 ?>

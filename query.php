@@ -25,9 +25,7 @@ const GET_REPORT = 'get_report';
 const CHANGE_EMAIL = 'change_email';
 const CHANGE_PIN = 'change_pin';
 const CHANGE_NAME = 'change_name';
-const CHECK_PIN = 'check_pin';
 const GET_CHILDREN = 'get_children';
-const CHANGE_PRESENCE = 'change_presence';
 
 // Types of Users
 const ADMIN = 'admin';
@@ -70,14 +68,8 @@ switch ($action) {
     case CHANGE_NAME:
         changeName();
         break;
-    case CHECK_PIN:
-        checkPin();
-        break;
     case GET_CHILDREN:
         getChildren();
-        break;
-    case CHANGE_PRESENCE:
-        changePresence();
         break;
     default:
         respond(false, null, 'Invalid Action');
