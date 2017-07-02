@@ -17,17 +17,17 @@
 ## Available Actions
 List of actions and data parameters required
 * 'new_user'
-  * admin `{name, email, pin}`
-  * teacher `{name, email, pin}`
-  * floater `{name, email, pin}`
-  * carer `{name, relation, email}`
-  * child `{name, pin}`
-* 'delete_user' `{id}`
-* 'make_report' `{reports: type json string}`
+  * admin `{name: string, email: string, pin: int}`
+  * teacher `{name: string, email: string, pin: int}`
+  * floater `{name: string, email: string, pin: int}`
+  * carer `{name: string, relation: string, email: string}`
+  * child `{name: string, pin: int}`
+* 'delete_user' `{id: int}`
+* 'make_report' `{reports: object}`
 * 'get_report' `{}`
-* 'change_email' `{id, email}`
-* 'change_pin' `{id, pin}`
-* 'change_name' `{id, name}`
-* 'check_pin' `{id, pin}`
+* 'change_email' `{id: int, email: string}`
+* 'change_pin' `{id: int, pin: int}`
+* 'change_name' `{id: int, name: string}`
+* 'check_pin' `{id: int, pin: int or equivalent string}`
 * 'get_children' `{}`
-* 'change_presence' `{id, presence}`
+* 'change_presence' `{id: int, presence: int (either 1 or 0)}`
