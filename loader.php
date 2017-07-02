@@ -1,90 +1,8 @@
 <?php
 
-// Sample Test List of children and their information
-$children = array(
-	array(
-		'name' => 'Jamie Rozanne',
-		'present' => 1
-		// There will also be img link
-		// and any other information
-	),
-	array(
-		'name' => 'Casey Louie',
-		'present' => 0
-	),
-	array(
-		'name' => 'Gillian Elfreda',
-		'present' => 1
-	),
-	array(
-		'name' => 'Kira Edgar',
-		'present' => 0
-	),
-	array(
-		'name' => 'Heath Louis',
-		'present' => 0
-	),
-	array(
-		'name' => 'Emery Katherina',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Ethel Zackery',
-		'present' => 1
-	),
-	array(
-		'name' => 'Alec Brandie',
-		'present' => 0
-	)
-);
+$fetchChildren = file_get_contents('http://localhost:/query.php?action=get_children&data={}');
+
+$children = json_decode($fetchChildren)->data->children;
 
 function getChildrenArray() {
 	global $children;
@@ -93,11 +11,11 @@ function getChildrenArray() {
 }
 
 function makeRowItem($child) {
-	$name = $child["name"];
+	$name = $child->name;
 
 	$html = '<div class="col-md-3 row-item">';
 
-	$html .= '<img src="img/face.jpg" onclick="overlay_show(1, \''.$name.'\')">';
+	$html .= '<img src="img/face.jpg" onclick="overlay_show('.$child->id.', \''.$name.'\')">';
 
 	$html .= '<figcaption>'.$name.'</figcaption>';
 

@@ -58,12 +58,6 @@
                         <div id="i-went" class="col-md-6 report-container">
                             <div class="content">
                                 <h1>I went</h1>
-				<p>9:30 - BM</p>
-				<p>10:30 - Peed</p>
-				<p>10:30 - Peed</p>
-				<p>10:30 - Peed</p>
-				<p>10:30 - Peed</p>
-				<p>10:30 - Peed</p>
                             </div>
                         </div>
                     </div>
@@ -94,11 +88,6 @@
                         <div class="col-md-6 report-container">
                             <div id="i-need" class="content">
                                 <h1>I need</h1>
-				<p>Diapers</p>
-				<p>Wipes</p>
-				<p>Shirts</p>
-				<p>Pants</p>
-				<p>Underwear</p>
                             </div>
                         </div>
                         <div id="changed-clothes" class="col-md-6 report-container">
@@ -144,6 +133,7 @@
 	<script type="text/javascript">
 		var children = JSON.parse('<?php echo getChildrenArray(); ?>');
 	</script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/query.js"></script>
 	<script src="js/main.js"></script>
-</body>
 </html>

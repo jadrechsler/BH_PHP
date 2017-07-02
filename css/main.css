@@ -1,139 +1,139 @@
 @font-face {
-	font-family: Quicksand-Regular;
-	src: url(fonts/quicksand/Quicksand-Regular);
+    font-family: Quicksand-Regular;
+    src: url(fonts/quicksand/Quicksand-Regular);
 }
 
 body {
-	text-align: center;
-	font-family: Quicksand-Regular;
-	user-select: none;
-	-moz-user-select: none;
-	-khtml-user-select: none;
-	-webkit-user-select: none;
-	-o-user-select: none;
+    text-align: center;
+    font-family: Quicksand-Regular;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
 }
 /* remove
 h1#room-name {
-	font-size: 2em;
+    font-size: 2em;
 }*/
 
 #overlay {
-	visibility: hidden;
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
-	background-color: rgba(0, 0, 0, 0.7);
-	z-index: 10;
-	display: table;
-	table-layout: fixed;
+    visibility: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 10;
+    display: table;
+    table-layout: fixed;
 }
 
 .options {
-	display: table-cell;
-	vertical-align: middle;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .options > div {
-	height: 50%;
+    height: 50%;
 }
 
 .option {
-	display: table;
-	table-layout: fixed;
-	background-color: #2C5276;
-	padding: 10px;
-	height: 100%;
-	width: 100%;
-	cursor: pointer;
-	border-radius: 30px;
+    display: table;
+    table-layout: fixed;
+    background-color: #2C5276;
+    padding: 10px;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 30px;
 }
 
 .option p {
-	display: table-cell;
-	vertical-align: middle;
-	font-size: 3.5em;
-	font-weight: bold;
-	color: white;
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 3.5em;
+    font-weight: bold;
+    color: white;
 }
 
 #overlay #name {
-	position: fixed;
-	top: 5%;
-	width: 30%;
-	text-align: center;
-	font-size: 4em;
-	color: white;
-	z-index: 12;
-	background-color: rgba(0, 0, 0, 0.25);
+    position: fixed;
+    top: 5%;
+    width: 30%;
+    text-align: center;
+    font-size: 4em;
+    color: white;
+    z-index: 12;
+    background-color: rgba(0, 0, 0, 0.25);
 }
 
 #overlay #view-report {
-	background-color: #FEBE11;
+    background-color: #FEBE11;
 }
 
 .exit {
-	position: fixed;
-	top: 5%;
-	width: 30%;
-	text-align: right;
-	font-size: 4em;
-	color: white;
-	z-index: 12;
+    position: fixed;
+    top: 5%;
+    width: 30%;
+    text-align: right;
+    font-size: 4em;
+    color: white;
+    z-index: 12;
 }
 
 .exit span {
-	padding: 10px;
-	cursor: pointer;
+    padding: 10px;
+    cursor: pointer;
 }
 
 #content {
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
 }
 
 #top {
-	padding: 10px 10px;
+    padding: 10px 10px;
 }
 
 #main {
-	width: 100%;
+    width: 100%;
 }
 
 #room-name {
-	font-weight: bold;
-	font-size: 5.5em;
-	/*line-height: 1.4em;*/
+    font-weight: bold;
+    font-size: 5.5em;
+    /*line-height: 1.4em;*/
 }
 
 #logo {
-	float: left;
+    float: left;
 }
 
 .row {
-	padding: 10px 5px;
+    padding: 10px 5px;
 }
 
 .row-item {
-	width: 20%;
+    width: 20%;
 }
 
 .row-item img {
-	/** Change these to fit real screen **/
-	height: 45%;
-	width: 55%;
-	/** ------------------------------- **/
+    /** Change these to fit real screen **/
+    height: 45%;
+    width: 55%;
+    /** ------------------------------- **/
 
-	border: 4px solid black;
-	cursor: pointer;
+    border: 4px solid black;
+    cursor: pointer;
 }
 
 .row-item figcaption {
-	font-size: 1.4em;
+    font-size: 1.4em;
 }
 
 
@@ -158,13 +158,13 @@ h1#room-name {
 
 #report h1 {
     /*font-size: 1.5em; remove*/
-	margin-top: 5px;
-	margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 #report p {/*added*/
     margin: 0 0 1px;
-	font-size: 23px;
+    font-size: 23px;
 }
 
 #report .report-main {
@@ -185,7 +185,7 @@ h1#room-name {
 }
 
 #report .side {
-	position: fixed;
+    position: fixed;
     height: 75%;
     width: 37.5%;
     margin: 0;
@@ -194,11 +194,11 @@ h1#room-name {
 }
 
 #report .left {
-	margin-left: 12.5%;
+    margin-left: 12.5%;
 }
 
 #report .right {
-	margin-left: 50%;
+    margin-left: 50%;
 }
 
 #report .left .top {
@@ -296,18 +296,18 @@ h1#room-name {
 }
 
 #report .report-list {
-	list-style-type: none;
-	text-align: left;
-	font-size: 0.8em;
+    list-style-type: none;
+    text-align: left;
+    font-size: 0.8em;
 }
 
 #report #occurence .content {
-	border: 5px solid #F3625C;
+    border: 5px solid #F3625C;
 }
 
 #report #occurence h1 {
-	line-height: calc(1%);
-	font-weight: bold;
-	color: #F3625C;
-	margin-top: 25px; /*Added*/
+    line-height: calc(1%);
+    font-weight: bold;
+    color: #F3625C;
+    margin-top: 25px; /*Added*/
 }
