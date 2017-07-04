@@ -112,7 +112,7 @@ function newChild($name, $pin) {
 function newCarer($name, $relation, $email) {
     global $conn;
 
-    $id = newCarerId();
+    $id = nextCarerId();
 
     $stmt = $conn->prepare("INSERT INTO users (id, name, relation, email) VALUES ($id, ?, ?, ?)");
     $stmt->bind_param('sss', $name, $relation, $email);
@@ -349,4 +349,32 @@ function checkPin() {
         respond(false, null);
     }
 }
+
+function getName() {
+    global $conn;
+    global $data;
+
+    try {
+        $id = $data->id;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    $stmt = $conn->prepare("SELECT name FROM users WHERE id = ?");
+    $stmt->bind_param('i', $id);
+
+    $stmt->execute();
+
+    $name = $stmt->get_result()->fetch_array()['name'];
+
+    $stmt->close();
+    $conn->close();
+
+    $data = array(
+        'name' => $name
+    );
+
+    respond(true, $data);
+}
+
 ?>

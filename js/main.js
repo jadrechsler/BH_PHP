@@ -81,3 +81,23 @@ function report_show() {
 function report_hide() {
 	hide(report);
 }
+
+function autoDimDisplay() {
+	const startTime = 13; // 13 - 1: PM 24 hour format
+	const endTime = 15; // 15 - 3: PM 24 hour format
+
+	var t = setInterval(function() {
+		const now = new Date();
+
+		if (now.getHours() >= startTime && now.getHours() <= endTime) {
+			$('#brightness').show();
+		} else {
+			$('#brightness').hide();
+		}
+
+	}, 2000); // Every 2 seconds
+}
+
+autoDimDisplay();
+
+// TODO: Make function to un-dim when interaction detected and dim again after time

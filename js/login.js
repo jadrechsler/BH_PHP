@@ -53,3 +53,7 @@ function filled(input) {
 function empty(input) {
     $(input).css('border', '1px solid red');
 }
+
+$(document).ready(function() {
+    $('input[type="password"]').numeric();
+});

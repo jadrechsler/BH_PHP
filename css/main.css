@@ -1,6 +1,6 @@
 @font-face {
     font-family: Quicksand-Regular;
-    src: url(fonts/quicksand/Quicksand-Regular);
+    src: url(/fonts/quicksand/Quicksand-Regular);
 }
 
 body {
@@ -16,6 +16,20 @@ body {
 h1#room-name {
     font-size: 2em;
 }*/
+
+#brightness {
+    display: none;
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust 0.6 - higher = more dark, max 1, min 0 */
+    z-index: 100;
+}
 
 #overlay {
     visibility: hidden;

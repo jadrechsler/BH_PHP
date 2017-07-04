@@ -28,6 +28,7 @@ const CHANGE_NAME = 'change_name';
 const CHECK_PIN = 'check_pin';
 const GET_CHILDREN = 'get_children';
 const CHANGE_PRESENCE = 'change_presence';
+const GET_NAME = 'get_name'; // Not documented
 
 // Types of Users
 const ADMIN = 'admin';
@@ -79,6 +80,9 @@ switch ($action) {
     case CHANGE_PRESENCE:
         changePresence();
         break;
+    case GET_NAME:
+        getName();
+        break;
     default:
         respond(false, null, 'Invalid Action');
         break;
@@ -87,9 +91,7 @@ switch ($action) {
 function newUser() {
     global $data;
 
-    $pin = $data->pin;
-
-    switch ($data->type) {
+    switch (strtolower($data->type)) {
         case CHILD:
             try {
                 $name = $data->name;

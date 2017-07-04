@@ -7,15 +7,35 @@
             'pin' => $_POST['pin']
         );
 
-        $check = file_get_contents('http://localhost:/query.php?action='.$action.'&data='.json_encode($data));
+        $check = file_get_contents('http://localhost/query.php?action='.$action.'&data='.json_encode($data));
 
         if (json_decode($check)->success) {
             // TODO: set sessions
         }
     }
+
+    $action = 'get_name';
+
+    $getTeacher1 = array(
+        'id' => 2
+    );
+
+    $getTeacher2 = array(
+        'id' => 3
+    );
+
+    $getFloater = array(
+        'id' => 4
+    );
+
+    $teacher1Name = json_decode(file_get_contents('http://localhost/query.php?action='.$action.'&data='.json_encode($getTeacher1)))->data->name;
+
+    $teacher2Name = json_decode(file_get_contents('http://localhost/query.php?action='.$action.'&data='.json_encode($getTeacher2)))->data->name;
+
+    $floaterName = json_decode(file_get_contents('http://localhost/query.php?action='.$action.'&data='.json_encode($getFloater)))->data->name;
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <title>Login</title>
@@ -36,9 +56,9 @@
                         <select name="user" id="user">
                             <option selected="selected" value="">&lt;select user&gt;</option>
                             <option value="admin">Admin</option>
-                            <option value="teacher_1">teacher_1</option>
-                            <option value="teacher_2">teacher_2</option>
-                            <option value="floater">floater</option>
+                            <option value="teacher_1"><?php echo $teacher1Name; ?></option>
+                            <option value="teacher_2"><?php echo $teacher2Name; ?></option>
+                            <option value="floater"><?php echo $floaterName; ?></option>
                         </select><br />
                         <input type="password" name="pin" id="pin" placeholder="enter pin" pattern="[0-9]{6}" maxlength="6" />
                     </form>
