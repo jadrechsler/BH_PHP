@@ -55,7 +55,7 @@ if (isset($_POST['child-name'])) {
 
     move_uploaded_file($_FILES['child-picture']['tmp_name'], $targetFile);
 
-    header('Location: '.$IPADDRESS.'/admin/manage_children.php');
+    header('Location: manage_children.php');
 
 }
 
@@ -64,8 +64,8 @@ if (isset($_POST['child-name'])) {
 <html lang="en">
 <head>
     <title>Add child</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/admin/children.css">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
     <h1>Add child</h1>
@@ -139,8 +139,8 @@ if (isset($_POST['child-name'])) {
     <script>
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
     </script>
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/query.js"></script>
-    <script src="/js/admin/children.js"></script>
+    <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/query.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/admin/children.js'); ?>"></script>
 </body>
 </html>

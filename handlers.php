@@ -19,7 +19,11 @@ function nextCarerId() {
     $nextId = mysqli_query($conn, 'SELECT carer FROM nextid');
 
     // Increment Id
-    mysqli_query($conn, 'UPDATE nextid SET carer = carer + 1');
+    if ($nextid == 975) {
+        mysqli_query($conn, 'UPDATE nextid SET carer = 500');
+    } else {
+        mysqli_query($conn, 'UPDATE nextid SET carer = carer + 1');
+    }
 
     return mysqli_fetch_assoc($nextId)['carer'];
 }

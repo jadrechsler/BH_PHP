@@ -42,8 +42,8 @@ $floaterName = json_decode(file_get_contents('http://'.$IPADDRESS.'/query.php?ac
 <head>
     <meta charset="utf-8">
     <title>Login</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/login.css'); ?>">
 </head>
 <body>
     <form style="visibility: hidden;" method="POST" action="/login.php">
@@ -74,8 +74,8 @@ $floaterName = json_decode(file_get_contents('http://'.$IPADDRESS.'/query.php?ac
     <script>
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
     </script>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/query.js"></script>
-    <script src="js/login.js"></script>
+    <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/query.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/login.js'); ?>"></script>
 </body>
 </html>

@@ -11,8 +11,8 @@ $children = json_decode($fetchChildren)->data->children;
 <html lang="en">
 <head>
     <title>Manage Children</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/admin/children.css">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
     <h1>Manage Children</h1>
@@ -60,8 +60,8 @@ $children = json_decode($fetchChildren)->data->children;
     <script>
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
     </script>
-    <script src="/js/jquery-3.2.1.min.js"></script>
-    <script src="/js/query.js"></script>
-    <script src="/js/admin/children.js"></script>
+    <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/query.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/admin/children.js'); ?>"></script>
 </body>
 </html>

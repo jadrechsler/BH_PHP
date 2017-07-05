@@ -67,10 +67,10 @@ function addCarer() {
     $(inputs).insertAfter('.carer-solo:last');
 }
 
-function addHighlight() {
-    const inputs = '<div class="one-info highlight-input"><label for="highlight[]">Highlight:</label><input type="text" name="highlight[]" /><br /></div>'; 
+function addDetails() {
+    const inputs = '<div class="one-info changed-clothes-detail"><label for="changed-clothes-details[]">Details:</label><input type="text" name="changed-clothes-details[]" /><br /></div>'; 
 
-    $(inputs).insertAfter('.highlight-input:last');
+    $(inputs).insertAfter('.changed-clothes-detail:last');
 }
 
 function addChild() {
@@ -115,3 +115,7 @@ function addChild() {
         $('#submit').click();
     }
 }
+
+// function saveReport() {
+
+// }

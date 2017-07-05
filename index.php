@@ -1,6 +1,6 @@
 <?php
 
-require('ipconfig.php');
+require_once('ipconfig.php');
 
 $fetchChildren = file_get_contents('http://'.$IPADDRESS.'/query.php?action=get_children&data={}');
 
@@ -17,7 +17,7 @@ function makeRowItem($child) {
 
     $html = '<div class="col-md-3 row-item">';
 
-    $html .= '<img src="img/children/'.$child->id.'.jpg" onclick="overlay_show('.$child->id.', \''.$name.'\')">';
+    $html .= '<div class="image" style="background-image: url(\'img/children/'.$child->id.'.jpg\')" onclick="overlay_show('.$child->id.', \''.$name.'\')"></div>';
 
     $html .= '<figcaption>'.$name.'</figcaption>';
 
@@ -54,8 +54,8 @@ function makeRowSet($list) {
 <head>
 	<meta charset="utf-8">
 	<title>Class 1</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css">
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="<?php echo AddrLink('css/bootstrap.min.css'); ?>">
+	<link rel="stylesheet" href="<?php echo AddrLink('css/main.css'); ?>">
 </head>
 <body>
     <div id="brightness"></div>
@@ -183,7 +183,7 @@ function makeRowSet($list) {
 		var children = JSON.parse('<?php echo getChildrenArray(); ?>');
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
 	</script>
-    <script src="js/jquery-3.2.1.min.js"></script>
-    <script src="js/query.js"></script>
-	<script src="js/main.js"></script>
+    <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/query.js'); ?>"></script>
+	<script src="<?php echo AddrLink('js/main.js'); ?>"></script>
 </html>

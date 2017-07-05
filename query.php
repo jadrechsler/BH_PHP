@@ -29,6 +29,7 @@ const CHECK_PIN = 'check_pin';
 const GET_CHILDREN = 'get_children';
 const CHANGE_PRESENCE = 'change_presence';
 const GET_NAME = 'get_name'; // Not documented
+const INSERT_REPORT = 'insert_report'; // Not documented
 
 // Types of Users
 const ADMIN = 'admin';
@@ -82,6 +83,9 @@ switch ($action) {
         break;
     case GET_NAME:
         getName();
+        break;
+    case INSERT_REPORT:
+        insertReport();
         break;
     default:
         respond(false, null, 'Invalid Action');

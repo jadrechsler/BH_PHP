@@ -34,7 +34,7 @@ body {
     height: 60%;
     min-width: 140px;
     width: 100%;
-    border: 2px solid black;
+    border: 1px solid grey;
     display: table;
     padding: 10px;
     background-color: white;
@@ -67,13 +67,13 @@ body {
 }
 
 #panel button {
-    border: 2px solid black;
+    border: 1px solid #2C5276;
     padding-bottom: 5px;
     color: white;
-    background-color: black;
+    background-color: #2C5276;
 }
 
 #panel button:hover{
-    color: black;
+    color: #2C5276;
     background-color: white;
 }
