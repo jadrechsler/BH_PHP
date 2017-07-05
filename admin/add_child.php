@@ -31,7 +31,7 @@ if (isset($_POST['child-name'])) {
         'type' => 'child'
     );
 
-    echo "http://'.$IPADDRESS.'/query.php?action=new_user&data=".urlencode(json_encode($child));
+    echo "http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($child));
 
     $addChild = file_get_contents("http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($child)));
 
@@ -43,6 +43,8 @@ if (isset($_POST['child-name'])) {
 
     foreach ($carers as $carer) {
         $addCarer = file_get_contents("http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($carer)));
+
+        echo "http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($carer));
 
         $addCarerResponse = json_decode($addCarer);
 
