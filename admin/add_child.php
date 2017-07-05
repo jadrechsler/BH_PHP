@@ -1,59 +1,63 @@
 <?php
 
-    if (isset($_POST['child-name'])) {
-        $childName = $_POST['child-name'];
-        $teacher = $_POST['child-teacher'];
-        $pin = $_POST['pin'];
+require('../ipconfig.php');
 
-        $carerNames = $_POST['carer-name'];
-        $carerEmails = $_POST['carer-email'];
-        $carerRelations = $_POST['carer-relation'];
+if (isset($_POST['child-name'])) {
+    $childName = $_POST['child-name'];
+    $teacher = $_POST['child-teacher'];
+    $pin = $_POST['pin'];
 
-        $carers = array();
+    $carerNames = $_POST['carer-name'];
+    $carerEmails = $_POST['carer-email'];
+    $carerRelations = $_POST['carer-relation'];
 
-        for ($x = 0; $x < sizeof($carerNames); $x++) {
-            $carer = array(
-                'name' => $carerNames[$x],
-                'email' => $carerEmails[$x],
-                'relation' => $carerRelations[$x],
-                'type' => 'carer'
-            );
+    $carers = array();
 
-            array_push($carers, $carer);
-        }
-
-        $child = array(
-            'name' => $childName,
-            'pin' => $pin,
-            'teacher' => $teacher,
-            'type' => 'child'
+    for ($x = 0; $x < sizeof($carerNames); $x++) {
+        $carer = array(
+            'name' => $carerNames[$x],
+            'email' => $carerEmails[$x],
+            'relation' => $carerRelations[$x],
+            'type' => 'carer'
         );
 
-        $addChild = file_get_contents("http://localhost/query.php?action=new_user&data=".urlencode(json_encode($child)));
-
-        $addChildResponse = json_decode($addChild);
-
-        if (!$addChildResponse->success) {
-            die($addChildResponse->error);
-        }
-
-        foreach ($carers as $carer) {
-            $addCarer = file_get_contents("http://localhost/query.php?action=new_user&data=".urlencode(json_encode($carer)));
-
-            $addCarerResponse = json_decode($addCarer);
-
-            if (!$addCarerResponse->success) {
-                die($addCarerResponse->error);
-            }
-        }
-
-        $targetFile = '../img/children/'.basename($addChildResponse->data->id.'.'.end(explode('.', $_FILES['child-picture']['name'])));
-
-        move_uploaded_file($_FILES['child-picture']['tmp_name'], $targetFile);
-
-        header('Location: /admin/manage_children.php');
-
+        array_push($carers, $carer);
     }
+
+    $child = array(
+        'name' => $childName,
+        'pin' => $pin,
+        'teacher' => $teacher,
+        'type' => 'child'
+    );
+
+    echo "http://'.$IPADDRESS.'/query.php?action=new_user&data=".urlencode(json_encode($child));
+
+    $addChild = file_get_contents("http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($child)));
+
+    $addChildResponse = json_decode($addChild);
+
+    if (!$addChildResponse->success) {
+        die($addChildResponse->error);
+    }
+
+    foreach ($carers as $carer) {
+        $addCarer = file_get_contents("http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($carer)));
+
+        $addCarerResponse = json_decode($addCarer);
+
+        if (!$addCarerResponse->success) {
+            die($addCarerResponse->error);
+        }
+    }
+
+    $targetFile = '../img/children/'.basename($addChildResponse->data->id.'.jpg');
+
+    move_uploaded_file($_FILES['child-picture']['tmp_name'], $targetFile);
+
+    header('Location: '.$IPADDRESS.'/admin/manage_children.php');
+
+}
 
 ?>
 <!DOCTYPE html>
@@ -132,6 +136,9 @@
         </div>
         <div class="col-md-3 col-sm-3"></div>
     </div>
+    <script>
+        const IPADDRESS = "<?php echo $IPADDRESS ?>";
+    </script>
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/query.js"></script>
     <script src="/js/admin/children.js"></script>

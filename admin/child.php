@@ -1,4 +1,7 @@
 <?php
+
+require('../ipconfig.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -178,6 +181,9 @@
         </div>
         <div class="col-md-3 col-sm-3"></div>
     </div>
+    <script>
+        const IPADDRESS = "<?php echo $IPADDRESS ?>";
+    </script>
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/clockpicker.js"></script>
     <script src="/js/query.js"></script>

@@ -1,38 +1,41 @@
 <?php
-    if (isset($_POST['pin']) && isset($_POST['id'])) {
-        $action = 'check_pin';
 
-        $data = array(
-            'id' => $_POST['id'],
-            'pin' => $_POST['pin']
-        );
+require('ipconfig.php');
 
-        $check = file_get_contents('http://localhost/query.php?action='.$action.'&data='.json_encode($data));
+if (isset($_POST['pin']) && isset($_POST['id'])) {
+    $action = 'check_pin';
 
-        if (json_decode($check)->success) {
-            // TODO: set sessions
-        }
+    $data = array(
+        'id' => $_POST['id'],
+        'pin' => $_POST['pin']
+    );
+
+    $check = file_get_contents('http://'.$IPADDRESS.'/query.php?action='.$action.'&data='.json_encode($data));
+
+    if (json_decode($check)->success) {
+        // TODO: set sessions
     }
+}
 
-    $action = 'get_name';
+$action = 'get_name';
 
-    $getTeacher1 = array(
-        'id' => 2
-    );
+$getTeacher1 = array(
+    'id' => 2
+);
 
-    $getTeacher2 = array(
-        'id' => 3
-    );
+$getTeacher2 = array(
+    'id' => 3
+);
 
-    $getFloater = array(
-        'id' => 4
-    );
+$getFloater = array(
+    'id' => 4
+);
 
-    $teacher1Name = json_decode(file_get_contents('http://localhost/query.php?action='.$action.'&data='.json_encode($getTeacher1)))->data->name;
+$teacher1Name = json_decode(file_get_contents('http://'.$IPADDRESS.'/query.php?action='.$action.'&data='.json_encode($getTeacher1)))->data->name;
 
-    $teacher2Name = json_decode(file_get_contents('http://localhost/query.php?action='.$action.'&data='.json_encode($getTeacher2)))->data->name;
+$teacher2Name = json_decode(file_get_contents('http://'.$IPADDRESS.'/query.php?action='.$action.'&data='.json_encode($getTeacher2)))->data->name;
 
-    $floaterName = json_decode(file_get_contents('http://localhost/query.php?action='.$action.'&data='.json_encode($getFloater)))->data->name;
+$floaterName = json_decode(file_get_contents('http://'.$IPADDRESS.'/query.php?action='.$action.'&data='.json_encode($getFloater)))->data->name;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +71,9 @@
         </div>
         <div class="col-md-3 col-sm-2"></div>
     </div>
+    <script>
+        const IPADDRESS = "<?php echo $IPADDRESS ?>";
+    </script>
     <script src="js/jquery-3.2.1.min.js"></script>
     <script src="js/query.js"></script>
     <script src="js/login.js"></script>

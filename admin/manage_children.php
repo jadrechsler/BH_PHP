@@ -1,8 +1,10 @@
 <?php
 
-    $fetchChildren = file_get_contents('http://localhost/query.php?action=get_children&data={}');
+require('../ipconfig.php');
 
-    $children = json_decode($fetchChildren)->data->children;
+$fetchChildren = file_get_contents('http://'.$IPADDRESS.'/query.php?action=get_children&data={}');
+
+$children = json_decode($fetchChildren)->data->children;
 
 ?>
 <!DOCTYPE html>
@@ -27,7 +29,7 @@
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3 option-button-container">
-                    <div id="add-button" class="option-button" onclick="window.location('/admin/add_child')">
+                    <div id="add-button" class="option-button" onclick="window.location.href = '/admin/add_child'">
                         <p>Add</p>
                     </div>
                 </div>
@@ -55,6 +57,9 @@
             <?php endforeach; ?>
         </div>
     </div>
+    <script>
+        const IPADDRESS = "<?php echo $IPADDRESS ?>";
+    </script>
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/query.js"></script>
     <script src="/js/admin/children.js"></script>

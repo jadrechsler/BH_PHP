@@ -1,5 +1,7 @@
 <?php
 
+require('ipconfig.php');
+
 $address = "localhost:3306";
 $username = "query";
 $password = "password";
