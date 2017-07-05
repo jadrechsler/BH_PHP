@@ -1,0 +1,37 @@
+{
+    "bathroom": {
+        "iWent": "wee",
+        "at": "00:00"
+    },
+    "meals": {
+        "breakfast": "Parent provided",
+        "lunch": "Provided here",
+        "snack": "Parent provided"
+    },
+    "nap": {
+        "from": "00:00",
+        "to": "00:00"
+    },
+    "feeling": {
+        "iWas": "Happy"
+    },
+    "highlights": [
+        "learnt to swim",
+        "ate apples"
+    ],
+    "changedClothes": {
+        "details": "Yeah changed clothes because yeah"
+    },
+    "medicine": {
+        "givenBy": "Bob",
+        "at": "00:00"
+    },
+    "sunscreen": {
+        "givenBy": "Bob",
+        "at": "00:00"
+    },
+    "insectRepellent": {
+        "givenBy": "Bob",
+        "at": "00:00"
+    }
+}

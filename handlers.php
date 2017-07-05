@@ -103,7 +103,11 @@ function newChild($name, $pin) {
 
     $stmt->execute();
 
-    respond(true, null);
+    $data = array(
+        'id' => $id
+    );
+
+    respond(true, $data);
 
     $stmt->close();
     $conn->close();

@@ -4,6 +4,8 @@ CREATE TABLE users (
     relation TINYTEXT,
     email VARCHAR(255),
     pin INT,
+    carers TEXT,
+    teacher INT UNSIGNED,
     present TINYINT(1)
 );
 

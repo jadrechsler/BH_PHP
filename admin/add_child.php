@@ -31,8 +31,6 @@
 
         $addChild = file_get_contents("http://localhost/query.php?action=new_user&data=".urlencode(json_encode($child)));
 
-        echo $addChild;
-
         $addChildResponse = json_decode($addChild);
 
         if (!$addChildResponse->success) {
@@ -42,8 +40,6 @@
         foreach ($carers as $carer) {
             $addCarer = file_get_contents("http://localhost/query.php?action=new_user&data=".urlencode(json_encode($carer)));
 
-            echo json_encode($carer);
-
             $addCarerResponse = json_decode($addCarer);
 
             if (!$addCarerResponse->success) {
@@ -51,7 +47,11 @@
             }
         }
 
-        header('Location: /admin/children.php');
+        $targetFile = '../img/children/'.basename($addChildResponse->data->id.'.'.end(explode('.', $_FILES['child-picture']['name'])));
+
+        move_uploaded_file($_FILES['child-picture']['tmp_name'], $targetFile);
+
+        header('Location: /admin/manage_children.php');
 
     }
 
@@ -61,14 +61,14 @@
 <head>
     <title>Add child</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/admin/students.css">
+    <link rel="stylesheet" href="/css/admin/children.css">
 </head>
 <body>
     <h1>Add child</h1>
     <div id="add-child-main" class="container-fluid">
         <div class="col-md-3 col-sm-3"></div>
         <div class="col-md-6 col-sm-6">
-            <form method="POST" id="add-child">
+            <form method="POST" enctype="multipart/form-data" id="add-child">
                 <div id="child-info" class="input-section">
                     <p>Child</p>
                     <div class="one-info">
@@ -122,7 +122,7 @@
                         <div>
                             <p>Add a carer</p>
                         </div>
-                    </div>
+                    </div><br /><br />
                 </div>
                 <button style="visibility: hidden;" id="submit" type="submit"></button>
             </form>
@@ -134,6 +134,6 @@
     </div>
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/query.js"></script>
-    <script src="/js/admin/students.js"></script>
+    <script src="/js/admin/children.js"></script>
 </body>
 </html>

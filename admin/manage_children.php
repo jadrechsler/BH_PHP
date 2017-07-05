@@ -10,7 +10,7 @@
 <head>
     <title>Manage Children</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/admin/students.css">
+    <link rel="stylesheet" href="/css/admin/children.css">
 </head>
 <body>
     <h1>Manage Children</h1>
@@ -52,11 +52,11 @@
                 </div>
                 <div class="col-md-3"></div>
             </div>
-        <?php endforeach; ?>
+            <?php endforeach; ?>
         </div>
     </div>
     <script src="/js/jquery-3.2.1.min.js"></script>
     <script src="/js/query.js"></script>
-    <script src="/js/admin/students.js"></script>
+    <script src="/js/admin/children.js"></script>
 </body>
 </html>

@@ -1,0 +1,254 @@
+@font-face {
+    font-family: Quicksand-Regular;
+    src: url(/fonts/quicksand/Quicksand-Regular);
+}
+
+body {
+    text-align: center;
+    font-family: Quicksand-Regular;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    background-color: #EFEBE9;
+}
+
+.list-item:hover {
+    cursor: pointer;
+}
+
+#selectors {
+    background-color: red;
+}
+
+#main {
+    /*background-color: red;*/
+    width: 100%;
+}
+
+#search-input {
+    height: 30px;
+    border: 1px solid grey;
+}
+
+.list-item.selected {
+    border-right: 10px solid #00874A;
+}
+
+.p-container {
+    padding-top: 20px;
+}
+
+.list-item {
+    margin-top: 1px;
+    padding: 5px;
+    border: 1px solid grey;
+    background-color: white;
+}
+
+.list-item img {
+    float: left;
+    margin-right: 5px;
+    border-radius: 100%;
+}
+
+.list-item p {
+    margin-top: -4px;
+    float: left;
+    text-align: center;
+}
+
+.options-container {
+    margin: 0;
+    padding: 0;
+}
+
+#options {
+    padding: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#search-input {
+    float: left;
+    padding: 20px;
+    width: 100%;
+}
+
+.option-button-container {
+    float: left;
+}
+
+.option-button {
+    padding: 0;
+    height: 100%;
+    cursor: pointer;
+}
+
+.option-button p {
+    padding-top: 9px;
+    padding-bottom: 1px;
+    border: 1px solid grey;
+    border: none;
+}
+
+#remove-button {
+    color: white;
+    background-color: #F3625C;
+    border: 1px solid #F3625C;
+}
+
+#remove-button:hover {
+    color: #F3625C;
+    background-color: white;
+}
+
+#add-button {
+    color: white;
+    background-color: #00874A;
+    border: 1px solid #00874A;
+}
+
+#add-button:hover{
+    color: #00874A;
+    background-color: white;
+}
+
+.input-section {
+    padding: 20px;
+    margin-top: 4px;
+    border: 1px solid grey;
+    background-color: white;
+}
+
+.input-section p {
+    text-align: left;
+}
+
+.one-info {
+    padding: 5px;
+}
+
+label {
+    font-weight: normal;
+    margin-left: 100px;
+    padding-top: 3px;
+}
+
+form {
+    text-align: left;
+}
+
+form input, select, button, .input-group {
+    float: right;
+    margin-right: 30px;
+    padding: 5px;
+    border: 1px solid grey;
+    width: 180px;
+    height: 30px;
+}
+
+#add-carer-button, #add-highlight-button {
+    margin-top: 5px;
+}
+
+#add-carer-button, #add-highlight-button {
+    float: right;
+    margin-right: 35px;
+    padding: 5px;
+    border: 1px solid grey;
+    width: 180px;
+    height: 30px;
+    background-color: #2C5276;
+    border: 1px solid #2C5276;
+    color: white;
+    cursor: pointer;
+}
+
+#add-carer-button:hover, #add-highlight-button:hover {
+    background-color: white;
+    color: #2C5276;
+}
+
+#add-carer-button p, #add-highlight-button p {
+    text-align: center;
+}
+
+#child-picture-input {
+    visibility: hidden;
+}
+
+#child-picture-button {
+    background-color: #2C5276;
+    border: 1px solid #2C5276;
+    color: white;
+}
+
+#child-picture-button:hover {
+    background-color: white;
+    color: #2C5276;
+}
+
+.carer-solo {
+    padding-bottom: 30px;
+}
+
+#complete-button p {
+    margin: 0;
+    padding: 0;
+}
+
+#complete-button {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #2C5276;
+    color: white;
+    border: 1px solid #2C5276;
+    cursor: pointer;
+}
+
+#complete-button:hover {
+    color: #2C5276;
+    background-color: white;
+}
+
+.empty {
+    border: 1px solid #F3625C;
+}
+
+button#child-picture-button.empty {
+    background-color: #F3625C;
+    border: 1px solid #F3625C;
+}
+
+button#child-picture-button.empty:hover {
+    background-color: white;
+    color: #F3625C;
+}
+
+.input-group {
+    width: 180px;
+    border: none;
+    margin-left: 20px;
+    padding: 0;
+    margin: 0;
+    margin-right: 30px;
+}
+
+.input-group input {
+    border: 1px solid grey;
+    border-radius: 0px;
+}
+
+.input-group span {
+    border-radius: 0px;
+}
+
+#occurence label {
+    padding-top: 8px;
+}
+
+#occurence input {
+    margin-right: 30px;
+}
