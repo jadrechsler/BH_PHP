@@ -15,13 +15,15 @@
     "feeling": {
         "iWas": "Happy"
     },
-    "highlights": [
-        "learnt to swim",
-        "ate apples"
+    "highlights": "This thing",
+    "changedClothes": [
+        {
+            "details": "Yeah changed clothes because yeah"
+        },
+        {
+            "details": "Changed pants cus boy"
+        }
     ],
-    "changedClothes": {
-        "details": "Yeah changed clothes because yeah"
-    },
     "medicine": {
         "givenBy": "Bob",
         "at": "00:00"
