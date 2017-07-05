@@ -129,7 +129,7 @@ body {
 }
 
 .one-info {
-    padding: 5px;
+    padding: 10px;
 }
 
 label {
@@ -148,7 +148,7 @@ form input, select, button, .input-group {
     padding: 5px;
     border: 1px solid grey;
     width: 180px;
-    height: 30px;
+    height: 45px;
 }
 
 #add-carer-button, #add-highlight-button {
@@ -180,6 +180,12 @@ form input, select, button, .input-group {
 
 #child-picture-input {
     visibility: hidden;
+    overflow: hidden;
+}
+
+#child-picture-input {
+    visibility: hidden;
+    overflow: hidden;
 }
 
 #child-picture-button {
@@ -187,11 +193,13 @@ form input, select, button, .input-group {
     border: 1px solid #2C5276;
     color: white;
     padding-bottom: 35px;
+    overflow: hidden;
 }
 
 #child-picture-button:hover {
     background-color: white;
     color: #2C5276;
+    overflow: hidden;
 }
 
 .carer-solo {
