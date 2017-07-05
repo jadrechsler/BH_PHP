@@ -17,8 +17,8 @@ $children = json_decode($fetchChildren)->data->children;
 <body>
     <h1>Manage Children</h1>
     <div class="container-fluid student-item">
-        <div class="col-md-3 col-sm-3"></div>
-        <div id="options" class="col-md-6 col-sm-6">
+        <div class="col-md-3 col-sm-1"></div>
+        <div id="options" class="col-md-6 col-sm-10">
             <div class="container-fluid options-container">
                 <div class="col-md-6 col-sm-6">
                     <input type="text" id="search-input" onkeyup="searchStudents()" placeholder="Search for a name">
@@ -35,14 +35,14 @@ $children = json_decode($fetchChildren)->data->children;
                 </div>
             </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-1"></div>
     </div>
     <div id="main">
         <div id="student-list">
             <?php foreach ($children as $child): ?>
             <div class="container-fluid student-item">
-                <div class="col-md-3 col-sm-3"></div>
-                <div id="children-list-container" class="col-md-6 col-sm-6">
+                <div class="col-md-3 col-sm-1"></div>
+                <div id="children-list-container" class="col-md-6 col-sm-10">
                     <div childId="<?php echo $child->id; ?>" class="container-fluid list-item">
                         <div class="col-md-4 col-sm-4 img-container">
                             <img src="/img/face.jpg" height="50px" width="50px" />
@@ -52,7 +52,7 @@ $children = json_decode($fetchChildren)->data->children;
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3"></div>
+                <div class="col-md-1"></div>
             </div>
             <?php endforeach; ?>
         </div>

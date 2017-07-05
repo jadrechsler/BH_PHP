@@ -70,8 +70,8 @@ if (isset($_POST['child-name'])) {
 <body>
     <h1>Add child</h1>
     <div id="add-child-main" class="container-fluid">
-        <div class="col-md-3 col-sm-3"></div>
-        <div class="col-md-6 col-sm-6">
+        <div class="col-md-3 col-sm-1"></div>
+        <div class="col-md-6 col-sm-10">
             <form method="POST" enctype="multipart/form-data" id="add-child">
                 <div id="child-info" class="input-section">
                     <p>Child</p>
@@ -134,7 +134,7 @@ if (isset($_POST['child-name'])) {
                 <p>Complete</p>
             </div>
         </div>
-        <div class="col-md-3 col-sm-3"></div>
+        <div class="col-md-3 col-sm-1"></div>
     </div>
     <script>
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
