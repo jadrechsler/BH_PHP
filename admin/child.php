@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require('../ipconfig.php');
 
 if (!isset($_REQUEST['id'])) {
@@ -24,7 +26,7 @@ $name = json_decode($nameRequest)->data->name;
 <body>
     <div id="child-name">
         <h1><?php echo $name; ?></h1>
-        <div id="complete-button">
+        <div id="complete-button" onclick="saveReport()">
             <p>Complete</p>
         </div>
     </div>
@@ -79,7 +81,7 @@ $name = json_decode($nameRequest)->data->name;
                     <div class="one-info">
                         <label for="nap-from">From:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input placeholder="00:00" type="text" name="i-went-time" class="form-control" />
+                            <input placeholder="00:00" type="text" name="nap-from" class="form-control" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -88,7 +90,7 @@ $name = json_decode($nameRequest)->data->name;
                     <div class="one-info">
                         <label for="nap-to">To:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input placeholder="00:00" type="text" name="i-went-time" class="form-control" />
+                            <input placeholder="00:00" type="text" name="nap-to" class="form-control" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -99,7 +101,7 @@ $name = json_decode($nameRequest)->data->name;
                     <p>Feeling</p>
                     <div class="one-info">
                         <label for="feeling-i-was">I was:</label>
-                        <select name="snack">
+                        <select name="feeling-i-was">
                             <option selected="selected" value="">&lt;select feeling&gt;</option>
                             <option value="Happy">Happy</option>
                             <option value="Sad">Sad</option>
@@ -121,7 +123,7 @@ $name = json_decode($nameRequest)->data->name;
                         <label for="changed-clothes-details[]">Details:</label>
                         <input placeholder="changed shirt" type="text" name="changed-clothes-details[]" /><br />
                     </div>
-                    <br /><div id="add-highlight-button" onclick="addDetails()">
+                    <br /><div id="add-details-button" onclick="addDetails()">
                         <div>
                             <p>Add details</p>
                         </div>

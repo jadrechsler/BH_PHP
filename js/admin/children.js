@@ -16,7 +16,7 @@ function searchStudents() {
 }
 
 $(document).ready(function() {
-    $('.list-item').click(function() {
+    $('.student').click(function() {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
         } else {
@@ -27,6 +27,62 @@ $(document).ready(function() {
     $('#child-picture-input').change(function() {
         const filename = $(this).val().split("\\");
         $('#child-picture-button').html(filename[filename.length-1]);
+    });
+
+    $('.staff-info-form input').keyup(function(event) {
+        const $input = $(this);
+        const id = $input.closest('form').attr('staffId');
+        const val = $input.val();
+        const name = $input.attr('name');
+
+        switch (name) {
+            case 'name':
+                const newName = {
+                    id: id,
+                    name: val
+                };
+
+                QueryDB('change_name', JSON.stringify(newName), function(r) {
+                    console.log(r.success);
+                    if (r.success) {
+                        $input.addClass('saved');
+                    } else {
+                        $input.removeClass('saved');
+                    }
+                })
+
+                break;
+            case 'email':
+                const newEmail = {
+                    id: id,
+                    email: val
+                };
+
+                QueryDB('change_email', JSON.stringify(newEmail), function(r) {
+                    if (r.success) {
+                        $input.addClass('saved');
+                    } else {
+                        $input.removeClass('saved');
+                    }
+                })
+
+                break;
+            case 'pin':
+                const newPin = {
+                    id: id,
+                    pin: val
+                };
+
+                QueryDB('change_pin', JSON.stringify(newPin), function(r) {
+                    if (r.success) {
+                        $input.addClass('saved');
+                    } else {
+                        $input.removeClass('saved');
+                    }
+                })
+
+                break;
+        }
     });
 
     $('input[type="password"]').numeric();
@@ -68,7 +124,7 @@ function addCarer() {
 }
 
 function addDetails() {
-    const inputs = '<div class="one-info changed-clothes-detail"><label for="changed-clothes-details[]">Details:</label><input type="text" name="changed-clothes-details[]" /><br /></div>'; 
+    const inputs = '<div class="one-info changed-clothes-detail"><label for="changed-clothes-details[]">Details:</label><input placeholder="changed shirt" type="text" name="changed-clothes-details[]" /><br /></div>'; 
 
     $(inputs).insertAfter('.changed-clothes-detail:last');
 }
@@ -116,6 +172,124 @@ function addChild() {
     }
 }
 
-// function saveReport() {
+function saveReport() {
+    var report = {
+        bathroom: {
+            iWent: "",
+            at: ""
+        },
+        meals: {
+            breakfast: "",
+            lunch: "",
+            snack: ""
+        },
+        nap: {
+            from: "",
+            to: ""
+        },
+        feeling: {
+            iWas: ""
+        },
+        highlights: "",
+        changedClothes: [],
+        occurence: false,
+        medicine: {
+            givenBy: "",
+            at: ""
+        },
+        sunscreen: {
+            givenBy: "",
+            at: ""
+        },
+        insectRepellent: {
+            givenBy: "",
+            at: ""
+        }
+    };
 
-// }
+    const form = $('#child-report *');
+
+    form.filter(':input').each(function() {
+        const val = $(this).val();
+
+        const attr = $(this).attr('type');
+        const name = $(this).attr('name');
+        const classes = $(this).attr('class');
+
+        switch (name) {
+            case 'i-went':
+                report.bathroom.iWent = val;
+                break;
+            case 'i-went-time':
+                report.bathroom.at = val;
+                break;
+            case 'breakfast':
+                report.meals.breakfast = val;
+                break;
+            case 'lunch':
+                report.meals.lunch = val;
+                break;
+            case 'snack':
+                report.meals.snack = val;
+                break;
+            case 'nap-from':
+                report.nap.from = val;
+                break;
+            case 'nap-to':
+                report.nap.to = val;
+                break;
+            case 'feeling-i-was':
+                report.feeling.iWas = val;
+                break;
+            case 'highlight':
+                report.highlight = val;
+                break;
+            case 'changed-clothes-details[]':
+                if (val != "") {
+                    report.changedClothes.push(val);
+                }
+                break;
+            case 'occurence':
+                report.occurence = $(this).is(':checked') ? true : false;
+                break;
+            case 'medicine-given-by':
+                report.medicine.givenBy = val;
+                break;
+            case 'medicine-given-at':
+                report.medicine.givenAt = val;
+                break;
+            case 'sunscreen-given-by':
+                report.sunscreen.givenBy = val == "on";
+                break;
+            case 'sunscreen-given-at':
+                report.sunscreen.givenAt = val;
+                break;
+            case 'insect-repellent-given-by':
+                report.insectRepellent.givenBy = val;
+                break;
+            case 'insect-repellent-given-at':
+                report.insectRepellent.givenAt = val;
+                break;
+        }
+    })
+
+    QueryDB('get_report', '{}', function(r) {
+        var reports = r.data.reports;
+
+        console.log(reports);
+
+        reports[CHILD_ID.toString()] = report;
+
+        const data = {
+            reports: JSON.stringify(reports)
+        }
+
+        console.log(JSON.stringify(data));
+
+        QueryDB('make_report', JSON.stringify(data), function(rr) {
+            if (!rr.success) {
+                console.log(rr.error);
+            }
+        })
+    });
+}

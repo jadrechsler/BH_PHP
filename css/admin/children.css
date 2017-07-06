@@ -74,7 +74,7 @@ body {
 
 #search-input {
     float: left;
-    padding: 20px;
+    padding: 24px;
     width: 100%;
 }
 
@@ -151,13 +151,13 @@ form input, select, button, .input-group {
     height: 45px;
 }
 
-#add-carer-button, #add-highlight-button {
+#add-carer-button, #add-details-button {
     margin-top: 5px;
 }
 
-#add-carer-button, #add-highlight-button {
+#add-carer-button, #add-details-button {
     float: right;
-    margin-right: 35px;
+    margin-right: 40px;
     padding: 5px;
     padding-bottom: 35px;
     border: 1px solid grey;
@@ -169,12 +169,12 @@ form input, select, button, .input-group {
     cursor: pointer;
 }
 
-#add-carer-button:hover, #add-highlight-button:hover {
+#add-carer-button:hover, #add-details-button:hover {
     background-color: white;
     color: #2C5276;
 }
 
-#add-carer-button p, #add-highlight-button p {
+#add-carer-button p, #add-details-button p {
     text-align: center;
 }
 
@@ -192,6 +192,7 @@ form input, select, button, .input-group {
     background-color: #2C5276;
     border: 1px solid #2C5276;
     color: white;
+    padding-top: 8px;
     padding-bottom: 35px;
     overflow: hidden;
 }
@@ -248,6 +249,14 @@ button#child-picture-button.empty:hover {
     margin-right: 30px;
 }
 
+.form-control {
+    height: 45px;
+}
+
+.form-control.empty {
+    border: 1px solid #F3625C;
+}
+
 .input-group input {
     border: 1px solid grey;
     border-radius: 0px;
@@ -295,4 +304,38 @@ button#child-picture-button.empty:hover {
 
 #info-child-main {
     margin-top: 100px;
+}
+
+.round-img {
+    margin-top: 3px;
+    image-orientation: from-image;
+}
+
+.staff-name-container {
+    width: 100%;
+}
+
+.staff-info-box {
+    padding-top: 60px;
+    padding-bottom: 20px;
+}
+
+.staff-info-box input {
+    width: 300px;
+}
+
+.staff-info-box label {
+    margin-top: 4px;
+}
+
+.edit-staff {
+    position: absolute;
+    right: 40px;
+    color: grey;
+    font-size: 0.8em;
+    line-height: 30px;
+}
+
+.staff-info-form .saved {
+    border: 3px solid #00874A;;
 }

@@ -30,6 +30,7 @@ const GET_CHILDREN = 'get_children';
 const CHANGE_PRESENCE = 'change_presence';
 const GET_NAME = 'get_name'; // Not documented
 const INSERT_REPORT = 'insert_report'; // Not documented
+const GET_USER_INFO = 'get_user_info'; // Not documented
 
 // Types of Users
 const ADMIN = 'admin';
@@ -86,6 +87,9 @@ switch ($action) {
         break;
     case INSERT_REPORT:
         insertReport();
+        break;
+    case GET_USER_INFO:
+        getUserInfo();
         break;
     default:
         respond(false, null, 'Invalid Action');

@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require('../ipconfig.php');
 
 if (isset($_POST['child-name'])) {
@@ -24,22 +26,7 @@ if (isset($_POST['child-name'])) {
         array_push($carers, $carer);
     }
 
-    $child = array(
-        'name' => $childName,
-        'pin' => $pin,
-        'teacher' => $teacher,
-        'type' => 'child'
-    );
-
-    echo "http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($child));
-
-    $addChild = file_get_contents("http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($child)));
-
-    $addChildResponse = json_decode($addChild);
-
-    if (!$addChildResponse->success) {
-        die($addChildResponse->error);
-    }
+    $carerIds = array();
 
     foreach ($carers as $carer) {
         $addCarer = file_get_contents("http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($carer)));
@@ -51,6 +38,24 @@ if (isset($_POST['child-name'])) {
         if (!$addCarerResponse->success) {
             die($addCarerResponse->error);
         }
+
+        array_push($carerIds, $addCarerResponse->data->id);
+    }
+
+    $child = array(
+        'name' => $childName,
+        'pin' => $pin,
+        'teacher' => $teacher,
+        'type' => 'child',
+        'carers' => $carerIds
+    );
+
+    $addChild = file_get_contents("http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($child)));
+
+    $addChildResponse = json_decode($addChild);
+
+    if (!$addChildResponse->success) {
+        die($addChildResponse->error);
     }
 
     $targetFile = '../img/children/'.basename($addChildResponse->data->id.'.jpg');
@@ -85,13 +90,13 @@ if (isset($_POST['child-name'])) {
                         <label for="child-teacher">Teacher:</label>
                         <select name="child-teacher">
                             <option selected="selected" value="">&lt;select teacher&gt;</option>
-                            <option value="teacher_1">Rory</option>
-                            <option value="teacher_2">Sandra</option>
+                            <option value="1">Rory</option>
+                            <option value="2">Sandra</option>
                         </select><br />
                     </div>
                     <div class="one-info">
                         <label for="pin">Pin:</label>
-                        <input type="password" name="pin" id="pin" placeholder="123456" maxlength="6" /><br />
+                        <input type="password" name="pin" id="pin" placeholder="123456" maxlength="6" pattern="\d*" /><br />
                     </div>
                     <div class="one-info">
                         <label id="child-picture-label" for="child-image">Picture:</label>

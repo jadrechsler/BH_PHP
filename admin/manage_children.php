@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 require('../ipconfig.php');
 
 $fetchChildren = file_get_contents('http://'.$IPADDRESS.'/query.php?action=get_children&data={}');
@@ -29,7 +31,7 @@ $children = json_decode($fetchChildren)->data->children;
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3 option-button-container">
-                    <div id="add-button" class="option-button" onclick="window.location.href = '/admin/add_child'">
+                    <div id="add-button" class="option-button" onclick="window.location.href = '/admin/add_child.php'">
                         <p>Add</p>
                     </div>
                 </div>
@@ -43,9 +45,9 @@ $children = json_decode($fetchChildren)->data->children;
             <div class="container-fluid student-item">
                 <div class="col-md-3 col-sm-1"></div>
                 <div id="children-list-container" class="col-md-6 col-sm-10">
-                    <div childId="<?php echo $child->id; ?>" class="container-fluid list-item">
+                    <div childId="<?php echo $child->id; ?>" class="container-fluid list-item student">
                         <div class="col-md-4 col-sm-4 img-container">
-                            <img src="/img/face.jpg" height="50px" width="50px" />
+                            <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
                         </div>                    
                         <div class="col-md-7 col-sm-7 p-container">
                             <p><?php echo $child->name; ?></p>

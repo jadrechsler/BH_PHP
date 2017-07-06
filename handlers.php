@@ -74,7 +74,7 @@ function ensureInfoDateExists($date) {
     $today = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM info WHERE date = '$date'"));
 
     if ($today < 1) {
-        mysqli_query($conn, "INSERT INTO info(date, reports) VALUES('$date', '{}')");
+        mysqli_query($conn, "INSERT INTO info(date, reports) VALUES('$date', '{\"0\": {}}')");
     }
 }
 
@@ -101,11 +101,19 @@ function deleteUser() {
 
 function newChild($name, $pin) {
     global $conn;
+    global $data;
 
     $id = nextChildId();
 
-    $stmt = $conn->prepare("INSERT INTO users (id, name, pin) VALUES ($id, ?, ?)");
-    $stmt->bind_param('si', $name, $pin);
+    try {
+        $teacher = $data->teacher;
+        $carers = json_encode($data->carers);
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    $stmt = $conn->prepare("INSERT INTO users (id, name, pin, teacher, carers) VALUES ($id, ?, ?, ?, ?)");
+    $stmt->bind_param('ssis', $name, $pin, $teacher, $carers);
 
     $stmt->execute();
 
@@ -129,7 +137,11 @@ function newCarer($name, $relation, $email) {
 
     $stmt->execute();
 
-    respond(true, null);
+    $data = array(
+        'id' => $id
+    );
+
+    respond(true, $data);
 
     $stmt->close();
     $conn->close();
@@ -141,7 +153,7 @@ function newFloater($name, $email, $pin) {
     $id = newFloaterId();
 
     $stmt = $conn->prepare("INSERT INTO users (id, name, email, pin) VALUES ($id, ?, ?, ?)");
-    $stmt->bind_param('ssi', $name, $email, $pin);
+    $stmt->bind_param('sss', $name, $email, $pin);
 
     $stmt->execute();
 
@@ -157,7 +169,7 @@ function newTeacher($name, $email, $pin) {
     $id = newTeacherrId();
 
     $stmt = $conn->prepare("INSERT INTO users (id, name, email, pin) VALUES ($id, ?, ?, ?)");
-    $stmt->bind_param('ssi', $name, $email, $pin);
+    $stmt->bind_param('sss', $name, $email, $pin);
 
     $stmt->execute();
 
@@ -173,7 +185,7 @@ function newAdmin($name, $email, $pin) {
     $id = newAdminId();
 
     $stmt = $conn->prepare("INSERT INTO users (id, name, email, pin) VALUES ($id, ?, ?, ?)");
-    $stmt->bind_param('ssi', $name, $email, $pin);
+    $stmt->bind_param('sss', $name, $email, $pin);
 
     $stmt->execute();
 
@@ -217,7 +229,7 @@ function getReport() {
     $reports = mysqli_query($conn, "SELECT reports FROM info WHERE date = '$today'");
 
     $data = array(
-        'reports' => mysqli_fetch_row($reports)
+        'reports' => json_decode(mysqli_fetch_row($reports)[0])
     );
 
     respond(true, $data);
@@ -257,7 +269,7 @@ function changePin() {
     }
 
     $stmt = $conn->prepare("UPDATE users SET pin = ? WHERE id = ?");
-    $stmt->bind_param('ii', $pin, $id);
+    $stmt->bind_param('si', $pin, $id);
 
     $stmt->execute();
 
@@ -387,8 +399,38 @@ function getName() {
     respond(true, $data);
 }
 
-function insertReport() {
+function getUserInfo() {
+    global $conn;
+    global $data;
 
-}
+    try {
+        $id = $data->id;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+    $stmt->bind_param('i', $id);
+
+    $stmt->execute();
+
+    $info = $stmt->get_result()->fetch_array();
+
+    $stmt->close();
+    $conn->close();
+
+    $data = array(
+        'id' => $id,
+        'name' => $info['name'],
+        'relation' => $info['relation'],
+        'email' => $info['email'],
+        'pin' => $info['pin'],
+        'carers' => $info['carers'],
+        'teacher' => $info['teacher'],
+        'present' => $info['present']
+    );
+
+    respond(true, $data);
+} 
 
 ?>

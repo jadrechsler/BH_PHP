@@ -78,3 +78,7 @@ body {
     color: #2C5276;
     background-color: white;
 }
+
+#error {
+    padding-top: 20px;
+}

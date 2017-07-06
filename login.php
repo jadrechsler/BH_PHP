@@ -1,19 +1,41 @@
 <?php
 
+session_start();
+
+$exitPage = 'Location: admin/manage_children.php';
+
+if (isset($_SESSION['id'])) {
+    header($exitPage);
+}
+
 require('ipconfig.php');
 
-if (isset($_POST['pin']) && isset($_POST['id'])) {
+if (isset($_REQUEST['submit'])) {
     $action = 'check_pin';
 
     $data = array(
-        'id' => $_POST['id'],
-        'pin' => $_POST['pin']
+        'id' => $_REQUEST['id'],
+        'pin' => $_REQUEST['pin']
     );
 
     $check = file_get_contents('http://'.$IPADDRESS.'/query.php?action='.$action.'&data='.json_encode($data));
 
     if (json_decode($check)->success) {
-        // TODO: set sessions
+        $action = 'get_name';
+
+        $data = array(
+            'id' => $_REQUEST['id']
+        );
+
+        $name = json_decode(file_get_contents('http://'.$IPADDRESS.'/query.php?action='.$action.'&data='.json_encode($data)))->data->name;
+
+
+        $_SESSION['id'] = $_REQUEST['id'];
+        $_SESSION['name'] = $name;
+
+        header($exitPage);
+    } else {
+        echo 'Something wen\'t wrong validating you';
     }
 }
 
@@ -50,26 +72,28 @@ $floaterName = json_decode(file_get_contents('http://'.$IPADDRESS.'/query.php?ac
         <input type="text" >
     </form>
     <div class="container-fluid">
-        <div class="col-md-3 col-sm-2"></div>
-        <div class="col-md-6 col-sm-8 panel-container">
+        <div class="col-md-3 col-sm-1"></div>
+        <div class="col-md-6 col-sm-10 panel-container">
             <div id="panel">
                 <div>
                 <h1>Login</h1>
-                    <form>
-                        <select name="user" id="user">
+                    <form method="POST">
+                        <select name="id" id="user">
                             <option selected="selected" value="">&lt;select user&gt;</option>
-                            <option value="admin">Admin</option>
-                            <option value="teacher_1"><?php echo $teacher1Name; ?></option>
-                            <option value="teacher_2"><?php echo $teacher2Name; ?></option>
-                            <option value="floater"><?php echo $floaterName; ?></option>
+                            <option value="1">Admin</option>
+                            <option value="2"><?php echo $teacher1Name; ?></option>
+                            <option value="3"><?php echo $teacher2Name; ?></option>
+                            <option value="4"><?php echo $floaterName; ?></option>
                         </select><br />
-                        <input type="password" name="pin" id="pin" placeholder="enter pin" pattern="[0-9]{6}" maxlength="6" />
+                        <input type="password" name="pin" id="pin" placeholder="enter pin" maxlength="6" pattern="\d*" />
+                        <input name="submit" style="visibility: hidden; position: fixed;" id="login-submit" type="submit" />
                     </form>
                     <button id="login-button" onclick="login()">Sign in</button>
+                    <p id="error"></p>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 col-sm-2"></div>
+        <div class="col-md-3 col-sm-1"></div>
     </div>
     <script>
         const IPADDRESS = "<?php echo $IPADDRESS ?>";

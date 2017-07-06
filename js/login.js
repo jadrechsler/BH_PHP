@@ -1,10 +1,10 @@
 function login() {
     var filledInput = 0;
 
-    const userValue = $('#user').val();
+    const id = $('#user').val();
     const pinValue = $('#pin').val();
 
-    if (userValue == "") {
+    if (id == "") {
         empty('#user');
     } else {
         filled('#user');
@@ -18,30 +18,20 @@ function login() {
     }
 
     if (filledInput == 2) {
-        var id;
+        const data = {id: id, pin: pinValue.toString()};
 
-        switch(userValue) {
-            case 'admin':
-                id = 1;
-                break;
-            case 'teacher_1':
-                id = 2;
-                break;
-            case 'teacher_2':
-                id = 3;
-                break;
-            case 'floater':
-                id = 4;
-                break;
-            default:
-                console.log('Something wen\'t wrong');
-                break;
-        }
-
-        const data = {id: id, pin: pinValue};
+        console.log(data);
 
         QueryDB('check_pin', JSON.stringify(data), function(value) {
-            console.log(value.success);
+            console.log(value);
+            if (!value.success) {
+                empty('#pin');
+                $('#error').text("incorrect pin");
+            } else {
+                filled('#pin');
+                $('#error').text("");
+                $('#login-submit').click();
+            }
         });
     }
 }
@@ -56,4 +46,17 @@ function empty(input) {
 
 $(document).ready(function() {
     $('input[type="password"]').numeric();
+
+    $(window).keydown(function(event){
+        if(event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    $('input, select').keydown(function(event){
+        if(event.keyCode == 13) {
+            login();
+        }
+    });
 });
