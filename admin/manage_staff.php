@@ -2,6 +2,14 @@
 
 session_start();
 
+if (isset($_SESSION['id'])) {
+    if (!($_SESSION['id'] == 1)) {
+        die('Invalid Authorisation');
+    }
+} else {
+    header('Location: ../login.php');
+}
+
 require('../ipconfig.php');
 
 $action = 'get_user_info';
@@ -62,19 +70,17 @@ $staffList = array(
                 <div id="children-list-container" class="col-md-6 col-sm-10">
                     <div class="container-fluid list-item staff">
                         <div class="col-md-7 col-sm-7 p-container staff-name-container">
-                            <p><?php echo $staff['name']; ?></p>
+                            <p class="staff-name-real"><?php echo $staff['name']; ?></p>
                             <p class="edit-staff">edit</p>
                         </div>
                         <div class="staff-info-box">
                             <form staffId="<?php echo $staff['id']; ?>" class="staff-info-form">
+                                <?php if ($staff['id'] != 4): ?>
                                 <div class="one-info">
                                     <label for="name">Name:</label>
                                     <input type="text" name="name" value="<?php echo $staff['name']; ?>" />
                                 </div>
-                                <div class="one-info">
-                                    <label for="name">Email:</label>
-                                    <input type="text" name="email" value="<?php echo $staff['email']; ?>" />
-                                </div>
+                                <?php endif; ?>
                                 <div class="one-info">
                                     <label for="name">Pin:</label>
                                     <input type="password" name="pin" value="<?php echo $staff['pin']; ?>" maxlength="6" />

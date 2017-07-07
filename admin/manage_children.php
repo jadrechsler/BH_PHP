@@ -2,11 +2,43 @@
 
 session_start();
 
+if (isset($_SESSION['id'])) {
+    if (!($_SESSION['id'] <= 4)) {
+        die('Invalid Authorisation');
+    }
+} else {
+    header('Location: ../login.php');
+}
+
 require('../ipconfig.php');
+
+$id = $_SESSION['id'];
 
 $fetchChildren = file_get_contents('http://'.$IPADDRESS.'/query.php?action=get_children&data={}');
 
 $children = json_decode($fetchChildren)->data->children;
+
+$displayChildren = array();
+
+if ($id == 2 || $id == 3) {
+    foreach ($children as $child) {
+        if ($child->teacher == $id) {
+            array_push($displayChildren, $child);
+        }
+    }
+} elseif ($id == 4) {
+    foreach ($children as $child) {
+        if (($child->teacher == 2 || $child->teacher == 3) && $child->present) {
+            array_push($displayChildren, $child);
+        }
+    }
+} else {
+    $displayChildren = $children;
+}
+
+$isAdmin = $id == 1 ? true : false;
+$isTeacher = $id == 2 || $id == 3 ? true : false;
+$isFloater = $id == 4 ? true : false;
 
 ?>
 <!DOCTYPE html>
@@ -18,39 +50,38 @@ $children = json_decode($fetchChildren)->data->children;
 </head>
 <body>
     <h1>Manage Children</h1>
+    <?php if ($isAdmin || $isFloater): ?>
     <div class="container-fluid student-item">
         <div class="col-md-3 col-sm-1"></div>
         <div id="options" class="col-md-6 col-sm-10">
             <div class="container-fluid options-container">
-                <div class="col-md-6 col-sm-6">
+                <div class="col-md-12 col-sm-12">
                     <input type="text" id="search-input" onkeyup="searchStudents()" placeholder="Search for a name">
-                </div>
-                <div class="col-md-3 col-sm-3 option-button-container">
-                    <div id="remove-button" class="option-button" onclick="removeSelectedChildren()">
-                        <p>Remove</p>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-3 option-button-container">
-                    <div id="add-button" class="option-button" onclick="window.location.href = '/admin/add_child.php'">
-                        <p>Add</p>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="col-md-1"></div>
     </div>
+    <?php endif; ?>
     <div id="main">
         <div id="student-list">
-            <?php foreach ($children as $child): ?>
-            <div class="container-fluid student-item">
+            <?php foreach ($displayChildren as $child): ?>
+            <div refChildId="<?php echo $child->id; ?>" class="container-fluid student-item">
                 <div class="col-md-3 col-sm-1"></div>
                 <div id="children-list-container" class="col-md-6 col-sm-10">
-                    <div childId="<?php echo $child->id; ?>" class="container-fluid list-item student">
-                        <div class="col-md-4 col-sm-4 img-container">
-                            <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
-                        </div>                    
-                        <div class="col-md-7 col-sm-7 p-container">
-                            <p><?php echo $child->name; ?></p>
+                    <div>
+                        <div childId="<?php echo $child->id; ?>" class="container-fluid col-sm-11 col-md-11 list-item student">
+                            <div class="col-md-4 col-sm-4 img-container">
+                                <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
+                            </div>                    
+                            <div class="col-md-7 col-sm-7 p-container">
+                                <p><?php echo $child->name; ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-1 report-edit-button-container" onclick="window.location.href='child.php?id='+<?php echo $child->id; ?>">
+                            <div class="report-edit-button">
+                                <p>&#x370;</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -59,6 +90,21 @@ $children = json_decode($fetchChildren)->data->children;
             <?php endforeach; ?>
         </div>
     </div>
+    <?php if (!$isFloater): ?>
+    <div class="container-fluid student-item">
+        <div class="col-md-3 col-sm-1"></div>
+        <div id="options" class="col-md-6 col-sm-10">
+            <div class="container-fluid options-container">
+                <div class="col-md-12 col-sm-12 option-button-container">
+                    <div id="add-button" class="option-button" onclick="window.location.href = '/admin/add_child.php'">
+                        <p>Add</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <?php endif; ?>
     <script>
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
     </script>

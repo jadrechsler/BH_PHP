@@ -1,0 +1,47 @@
+@font-face {
+    font-family: Quicksand-Regular;
+    src: url(/fonts/quicksand/Quicksand-Regular);
+}
+
+body {
+    text-align: center;
+    font-family: Quicksand-Regular;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    background-color: #EFEBE9;
+    padding-bottom: 10px;
+    font-size: 2em;
+}
+
+.option-container {
+    margin-top: 40px;
+}
+
+.option-box {
+    background-color: #2C5276;
+    border-radius: 40px;
+    height: 400px;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    display: table;
+    table-layout: fixed;
+    color: white;
+    cursor: pointer;
+    border: 2px solid #2C5276;
+}
+
+.option-box p {
+    display: table-cell;
+    vertical-align: middle;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.option-box:hover {
+    background-color: white;
+    color: #2C5276;
+}

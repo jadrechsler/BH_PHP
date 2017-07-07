@@ -16,6 +16,10 @@ body {
     font-size: 2em;
 }
 
+body > h1:nth-of-type(1) {
+    padding-bottom: 30px;
+}
+
 .list-item:hover {
     cursor: pointer;
 }
@@ -35,7 +39,7 @@ body {
 }
 
 .list-item.selected {
-    border-right: 10px solid #00874A;
+    border-left: 10px solid #00874A;
 }
 
 .p-container {
@@ -47,6 +51,7 @@ body {
     padding: 5px;
     border: 1px solid grey;
     background-color: white;
+    height: 66px;
 }
 
 .list-item img {
@@ -94,6 +99,23 @@ body {
     border: 1px solid grey;
     border: none;
 }
+
+.update-options {
+    padding: 0;
+    margin: 0;
+    background-color: red;
+}
+
+
+#edit-button {
+    background-color: yellow;
+}
+
+#remove-button-edit {
+    background-color: blue;
+}
+
+
 
 #remove-button {
     color: white;
@@ -316,6 +338,7 @@ button#child-picture-button.empty:hover {
 }
 
 .staff-info-box {
+    display: table-row;
     padding-top: 60px;
     padding-bottom: 20px;
 }
@@ -328,6 +351,15 @@ button#child-picture-button.empty:hover {
     margin-top: 4px;
 }
 
+div.staff {
+    display: table;
+    position: relative;
+    background-color: white;
+    margin-top: 20px;
+    padding: 40px;
+    width: 100%;
+}
+
 .edit-staff {
     position: absolute;
     right: 40px;
@@ -338,4 +370,24 @@ button#child-picture-button.empty:hover {
 
 .staff-info-form .saved {
     border: 3px solid #00874A;;
+}
+
+.report-edit-button-container {
+    background-color: #2C5276;
+    color: white;
+    border: 1px solid #2C5276;
+    padding: 0;
+    margin: 0;
+    margin-top: 1px;
+    height: 66px;
+    cursor: pointer;
+}
+
+.report-edit-button-container:hover {
+    color: #2C5276;
+    background-color: white;
+}
+
+.report-edit-button p {
+    font-size: 2em;
 }

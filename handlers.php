@@ -299,7 +299,7 @@ function getChildren() {
     global $conn;
     global $data;
 
-    $children = mysqli_query($conn, "SELECT id, name, present FROM users WHERE id > 999");
+    $children = mysqli_query($conn, "SELECT id, name, present, carers, teacher FROM users WHERE id > 999");
 
     $list = array();
 
@@ -307,7 +307,9 @@ function getChildren() {
         $child = array(
             'id' => $c['id'],
             'name' => $c['name'],
-            'present' => $c['present']
+            'present' => $c['present'],
+            'carers' => $c['carers'],
+            'teacher' => $c['teacher']
         );
 
         array_push($list, $child);
@@ -363,7 +365,7 @@ function checkPin() {
     $stmt->close();
     $conn->close();
 
-    if ($truePin == $pin) {
+    if ($truePin === $pin) {
         // If pin is correct
         respond(true, null);
     } else {

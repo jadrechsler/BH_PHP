@@ -2,7 +2,7 @@
 
 session_start();
 
-$exitPage = 'Location: admin/manage_children.php';
+$exitPage = 'Location: admin/dashboard.php';
 
 if (isset($_SESSION['id'])) {
     header($exitPage);
@@ -85,7 +85,7 @@ $floaterName = json_decode(file_get_contents('http://'.$IPADDRESS.'/query.php?ac
                             <option value="3"><?php echo $teacher2Name; ?></option>
                             <option value="4"><?php echo $floaterName; ?></option>
                         </select><br />
-                        <input type="password" name="pin" id="pin" placeholder="enter pin" maxlength="6" pattern="\d*" />
+                        <input type="password" name="pin" id="pin" placeholder="enter pin" maxlength="6" pattern="[0-9]*" inputmode="numeric" />
                         <input name="submit" style="visibility: hidden; position: fixed;" id="login-submit" type="submit" />
                     </form>
                     <button id="login-button" onclick="login()">Sign in</button>

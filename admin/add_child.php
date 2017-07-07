@@ -66,6 +66,21 @@ if (isset($_POST['child-name'])) {
 
 }
 
+$getTeacher1 = array(
+    'id' => 2
+);
+
+$getTeacher2 = array(
+    'id' => 3
+);
+
+$teacher1Name = json_decode(file_get_contents("http://$IPADDRESS/query.php?action=get_name&data=".urlencode(json_encode($getTeacher1))))->data->name;
+
+$teacher2Name = json_decode(file_get_contents("http://$IPADDRESS/query.php?action=get_name&data=".urlencode(json_encode($getTeacher2))))->data->name;
+
+$first1 = explode(' ', $teacher1Name)[0];
+$first2 = explode(' ', $teacher2Name)[0];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,8 +105,8 @@ if (isset($_POST['child-name'])) {
                         <label for="child-teacher">Teacher:</label>
                         <select name="child-teacher">
                             <option selected="selected" value="">&lt;select teacher&gt;</option>
-                            <option value="1">Rory</option>
-                            <option value="2">Sandra</option>
+                            <option value="2"><?php echo $first1; ?></option>
+                            <option value="3"><?php echo $first2; ?></option>
                         </select><br />
                     </div>
                     <div class="one-info">
@@ -101,7 +116,7 @@ if (isset($_POST['child-name'])) {
                     <div class="one-info">
                         <label id="child-picture-label" for="child-image">Picture:</label>
                         <button type="button" id="child-picture-button" onclick="uploadPicture()">Upload</button>
-                        <input id="child-picture-input" type="file" name="child-picture" accept="image/jpeg" /><br />
+                        <input id="child-picture-input" type="file" name="child-picture" accept="image/jpeg, image/jpg" /><br />
                     </div>
                 </div>
                 <div id="carers-info" class="input-section">

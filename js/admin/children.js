@@ -17,11 +17,9 @@ function searchStudents() {
 
 $(document).ready(function() {
     $('.student').click(function() {
-        if ($(this).hasClass('selected')) {
-            $(this).removeClass('selected');
-        } else {
-            $(this).addClass('selected');
-        }
+        const id = $(this).attr('childId');
+
+        window.location.href = 'report.php?id='+id;
     });
 
     $('#child-picture-input').change(function() {
@@ -43,11 +41,13 @@ $(document).ready(function() {
                 };
 
                 QueryDB('change_name', JSON.stringify(newName), function(r) {
-                    console.log(r.success);
                     if (r.success) {
                         $input.addClass('saved');
+                        $input.closest('.staff-info-box').siblings('.staff-name-container').children('.staff-name-real').text(val);
+                        $input.closest('.staff-info-box').siblings('.staff-name-container').children('.edit-staff').text('saved name');
                     } else {
                         $input.removeClass('saved');
+                        $input.closest('.staff-info-box').siblings('.staff-name-container').children('.edit-staff').text('error');
                     }
                 })
 
@@ -61,8 +61,10 @@ $(document).ready(function() {
                 QueryDB('change_email', JSON.stringify(newEmail), function(r) {
                     if (r.success) {
                         $input.addClass('saved');
+                        $input.closest('.staff-info-box').siblings('.staff-name-container').children('.edit-staff').text('saved email');
                     } else {
                         $input.removeClass('saved');
+                        $input.closest('.staff-info-box').siblings('.staff-name-container').children('.edit-staff').text('error');
                     }
                 })
 
@@ -76,8 +78,10 @@ $(document).ready(function() {
                 QueryDB('change_pin', JSON.stringify(newPin), function(r) {
                     if (r.success) {
                         $input.addClass('saved');
+                        $input.closest('.staff-info-box').siblings('.staff-name-container').children('.edit-staff').text('saved pin');
                     } else {
                         $input.removeClass('saved');
+                        $input.closest('.staff-info-box').siblings('.staff-name-container').children('.edit-staff').text('error');
                     }
                 })
 
@@ -105,11 +109,7 @@ function removeSelectedChildren() {
     selected.forEach(function(child) {
         const data = {id: child};
         QueryDB('delete_user', JSON.stringify(data));
-        $('.list-item').each(function() {
-            if ($(this).hasClass('selected')) {
-                $(this).remove();
-            }
-        })
+        $('.student-item[refChildId='+child+']').remove();
     })
 }
 
@@ -289,6 +289,8 @@ function saveReport() {
         QueryDB('make_report', JSON.stringify(data), function(rr) {
             if (!rr.success) {
                 console.log(rr.error);
+            } else {
+                window.location.href = 'manage_children.php';
             }
         })
     });
