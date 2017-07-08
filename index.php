@@ -17,7 +17,7 @@ function makeRowItem($child) {
 
     $html = '<div class="col-md-3 row-item">';
 
-    $html .= '<div class="image" style="background-image: url(\'img/children/'.$child->id.'.jpg\')" onclick="overlay_show('.$child->id.', \''.$name.'\')"></div>';
+    $html .= '<img src="'.AddrLink("img/children/$child->id.jpg").'" onclick="overlay_show('.$child->id.', \''.$name.'\')" />';
 
     $html .= '<figcaption>'.$name.'</figcaption>';
 

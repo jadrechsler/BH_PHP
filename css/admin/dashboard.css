@@ -16,6 +16,10 @@ body {
     font-size: 2em;
 }
 
+body > h1:nth-of-type(1) {
+    font-size: 3em;
+}
+
 .option-container {
     margin-top: 40px;
 }

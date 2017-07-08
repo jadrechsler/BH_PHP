@@ -49,6 +49,9 @@ $isFloater = $id == 4 ? true : false;
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
+    <a id="back-button" href="/admin">
+        <span>&larr;</span>
+    </a>
     <h1>Manage Children</h1>
     <?php if ($isAdmin || $isFloater): ?>
     <div class="container-fluid student-item">

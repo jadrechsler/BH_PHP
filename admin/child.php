@@ -34,9 +34,6 @@ $teacher1Name = json_decode(file_get_contents("http://$IPADDRESS/query.php?actio
 
 $teacher2Name = json_decode(file_get_contents("http://$IPADDRESS/query.php?action=get_name&data=".urlencode(json_encode($getTeacher2))))->data->name;
 
-$first1 = explode(' ', $teacher1Name)[0];
-$first2 = explode(' ', $teacher2Name)[0];
-
 $carersInfo = array();
 
 foreach (json_decode($childInfo->carers) as $carer) {
@@ -58,6 +55,9 @@ foreach (json_decode($childInfo->carers) as $carer) {
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
+    <a id="back-button" href="/admin/manage_children.php">
+        <span>&larr;</span>
+    </a>
     <h1>Edit child info</h1>
     <div id="add-child-main" class="container-fluid">
         <div class="col-md-3 col-sm-1"></div>
@@ -73,8 +73,8 @@ foreach (json_decode($childInfo->carers) as $carer) {
                         <label for="child-teacher">Teacher:</label>
                         <select name="child-teacher">
                             <option <?php if($childInfo->teacher != 2 && $childInfo->teacher != 4) echo 'selected="selected"'; ?> value="">&lt;select teacher&gt;</option>
-                            <option <?php if($childInfo->teacher == 2) echo 'selected="selected"'; ?> value="2"><?php echo $first1; ?></option>
-                            <option <?php if($childInfo->teacher == 3) echo 'selected="selected"'; ?> value="3"><?php echo $first2; ?></option>
+                            <option <?php if($childInfo->teacher == 2) echo 'selected="selected"'; ?> value="2"><?php echo $teacher1Name; ?></option>
+                            <option <?php if($childInfo->teacher == 3) echo 'selected="selected"'; ?> value="3"><?php echo $teacher2Name; ?></option>
                         </select><br />
                     </div>
                     <div class="one-info">
@@ -123,12 +123,12 @@ foreach (json_decode($childInfo->carers) as $carer) {
                 <button style="visibility: hidden;" id="submit" type="submit"></button>
             </form>
             <div class="container-fluid update-options">
-                <div id="edit-button" class="col-md-4 col-sm-6" onclick="">
+                <div id="edit-button" class="col-md-6 col-sm-6 update-option" onclick="">
                     <div>
                         <p>Update</p>
                     </div>
                 </div>
-                <div id="remove-button-edit" class="col-md-4 col-sm-6">
+                <div id="remove-button-edit" class="col-md-6 col-sm-6 update-option">
                     <div>
                         <p>Remove</p>
                     </div>

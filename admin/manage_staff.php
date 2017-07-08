@@ -52,6 +52,7 @@ $staffList = array(
         'id' => 4
     )
 );
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -61,6 +62,9 @@ $staffList = array(
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
+    <a id="back-button" href="/admin">
+        <span>&larr;</span>
+    </a>
     <h1>Manage Staff</h1>
     <div id="main">
         <div id="staff-list">

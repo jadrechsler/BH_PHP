@@ -33,6 +33,9 @@ $name = json_decode($nameRequest)->data->name;
 </head>
 <body>
     <div id="child-name">
+        <a id="back-button" class="back-dark" href="/admin/manage_children.php">
+            <span>&larr;</span>
+        </a>
         <h1><?php echo $name; ?></h1>
         <div id="complete-button" onclick="saveReport()">
             <p>Complete</p>

@@ -78,9 +78,6 @@ $teacher1Name = json_decode(file_get_contents("http://$IPADDRESS/query.php?actio
 
 $teacher2Name = json_decode(file_get_contents("http://$IPADDRESS/query.php?action=get_name&data=".urlencode(json_encode($getTeacher2))))->data->name;
 
-$first1 = explode(' ', $teacher1Name)[0];
-$first2 = explode(' ', $teacher2Name)[0];
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -90,6 +87,9 @@ $first2 = explode(' ', $teacher2Name)[0];
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
+    <a id="back-button" href="/admin/manage_children.php">
+        <span>&larr;</span>
+    </a>
     <h1>Add child</h1>
     <div id="add-child-main" class="container-fluid">
         <div class="col-md-3 col-sm-1"></div>
@@ -105,8 +105,8 @@ $first2 = explode(' ', $teacher2Name)[0];
                         <label for="child-teacher">Teacher:</label>
                         <select name="child-teacher">
                             <option selected="selected" value="">&lt;select teacher&gt;</option>
-                            <option value="2"><?php echo $first1; ?></option>
-                            <option value="3"><?php echo $first2; ?></option>
+                            <option value="2"><?php echo $teacher1Name; ?></option>
+                            <option value="3"><?php echo $teacher2Name; ?></option>
                         </select><br />
                     </div>
                     <div class="one-info">

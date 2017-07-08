@@ -103,16 +103,41 @@ body > h1:nth-of-type(1) {
 .update-options {
     padding: 0;
     margin: 0;
-    background-color: red;
 }
 
+.update-option {
+    padding: 0;
+    margin: 0;
+    height: 70px;
+    color: white;
+}
+
+.update-option div p {
+    padding: 0;
+    margin: 0;
+    line-height: 70px;
+}
 
 #edit-button {
-    background-color: yellow;
+    padding-right: 5px;
 }
 
-#remove-button-edit {
-    background-color: blue;
+#remove-button {
+    padding-left: 5px;
+}
+
+.update-option div {
+    padding: 0;
+    margin: 0;
+}
+
+#edit-button div {
+    margin-top: 45px;
+    background-color: #00874A;
+}
+
+#remove-button-edit div {
+    background-color: #F3625C;
 }
 
 
@@ -390,4 +415,18 @@ div.staff {
 
 .report-edit-button p {
     font-size: 2em;
+}
+
+#back-button {
+    text-align: left;
+    top: 0;
+    left: 20px;
+    position: absolute;
+    font-size: 2.5em;
+    text-decoration: none;
+    color: black;
+}
+
+#back-button.back-dark {
+    color: white;
 }

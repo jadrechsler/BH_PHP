@@ -2,7 +2,7 @@
 
 session_start();
 
-$exitPage = 'Location: admin/dashboard.php';
+$exitPage = 'Location: admin/';
 
 if (isset($_SESSION['id'])) {
     header($exitPage);

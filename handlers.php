@@ -308,7 +308,7 @@ function getChildren() {
             'id' => $c['id'],
             'name' => $c['name'],
             'present' => $c['present'],
-            'carers' => $c['carers'],
+            'carers' => json_decode($c['carers']),
             'teacher' => $c['teacher']
         );
 
