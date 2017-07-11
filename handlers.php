@@ -295,6 +295,60 @@ function changeName() {
     respond(true, null);
 }
 
+function changeRelation() {
+    global $conn;
+    global $data;
+
+    try {
+        $id = $data->id;
+        $relation = $data->relation;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    $stmt = $conn->prepare("UPDATE users SET relation = ? WHERE id = ?");
+    $stmt->bind_param('si', $relation, $id);
+
+    $stmt->execute();
+
+    respond(true, null);
+}
+
+function changeTeacher() {
+    global $conn;
+    global $data;
+
+    try {
+        $id = $data->id;
+        $teacher = $data->teacher;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    $stmt = $conn->prepare("UPDATE users SET teacher = ? WHERE id = ?");
+    $stmt->bind_param('ii', $teacher, $id);
+
+    $stmt->execute();
+
+    respond(true, null);
+}
+
+function changeImage() {
+    global $data;
+
+    try {
+        $id = $data->id;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    if (!unlink("img/children/$id.jpg")) {
+        respond(false, null, 'Error Removing Current Image');
+    }
+
+    
+}
+
 function getChildren() {
     global $conn;
     global $data;

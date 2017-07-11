@@ -49,3 +49,20 @@ body > h1:nth-of-type(1) {
     background-color: white;
     color: #2C5276;
 }
+
+#logout-button {
+    top: 10px;
+    left: 20px;
+    position: absolute;
+    font-size: 1em;
+    text-decoration: none;
+    padding: 5px;
+    color: white;
+    border: 1px solid #F3625C;
+    background-color: #F3625C;
+}
+
+#logout-button:hover {
+    color: #F3625C;
+    background-color: white;
+}

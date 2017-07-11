@@ -92,25 +92,108 @@ $(document).ready(function() {
     $('input[type="password"]').numeric();
 });
 
-function selectedChildren() {
-    var selected = [];
-    $('.list-item').each(function() {
-        if ($(this).hasClass('selected')) {
-            selected.push($(this).attr('childId'));
+function deleteChild() {
+    const data = {id: childId};
+    QueryDB('delete_user', JSON.stringify(data), function(r) {
+        if (!r.success) {
+            console.log(r.error);
         }
-    })
-
-    return selected;
+    });
 }
 
-function removeSelectedChildren() {
-    const selected = selectedChildren();
+function updateChild() {
+    const form = $('#update-child-main *');
 
-    selected.forEach(function(child) {
-        const data = {id: child};
-        QueryDB('delete_user', JSON.stringify(data));
-        $('.student-item[refChildId='+child+']').remove();
-    })
+    form.filter(':input').each(function() {
+        const val = $(this).val();
+        const carerId = $(this).parent().parent().attr('carerId');
+        const attr = $(this).attr('type');
+        const name = $(this).attr('name');
+
+        if (attr != 'button' && val != undefined && attr != 'file') {
+            switch (name) {
+                case 'child-name':
+                    const changeChildName = {
+                        id: childId,
+                        name: val
+                    };
+
+                    QueryDB('change_name', JSON.stringify(changeChildName), function(r) {
+                        if (!r.success) {
+                            console.log(r.error);
+                        }
+                    })
+                    break;
+                case 'child-teacher':
+                    const changeTeacher = {
+                        id: childId,
+                        teacher: val
+                    }
+
+                    QueryDB('change_teacher', JSON.stringify(changeTeacher), function(r) {
+                        if (!r.success) {
+                            console.log(r.error);
+                        }
+                    })
+                    break;
+                case 'pin':
+                    const changePin = {
+                        id: childId,
+                        pin: val
+                    }
+
+                    QueryDB('change_teacher', JSON.stringify(changePin), function(r) {
+                        if (!r.success) {
+                            console.log(r.error);
+                        }
+                    })
+                    break;
+                case 'carer-name[]':
+                    const changeCarerName = {
+                        id: carerId,
+                        name: val
+                    }
+
+                    QueryDB('change_name', JSON.stringify(changeCarerName), function(r) {
+                        if (!r.success) {
+                            console.log(r.error);
+                        }
+                    })
+                    break;
+                case 'carer-email[]':
+                    const changeCarerEmail = {
+                        id: carerId,
+                        email: val
+                    }
+
+                    QueryDB('change_email', JSON.stringify(changeCarerEmail), function(r) {
+                        if (!r.success) {
+                            console.log(r.error);
+                        }
+                    })
+                    break;
+                case 'carer-relation[]':
+                    const changeRelation = {
+                        id: carerId,
+                        relation: val
+                    }
+
+                    QueryDB('change_relation', JSON.stringify(changeRelation), function(r) {
+                        if (!r.success) {
+                            console.log(r.error);
+                        }
+                    })
+                    break;
+            }
+        } else if (attr == 'file' && name == 'child-picture') {
+            var data = new FormData();
+            data.append('file', val);
+
+            uploadImage(data, function(r) {
+                console.log(r);
+            });
+        }
+    });
 }
 
 function uploadPicture() {

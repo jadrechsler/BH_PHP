@@ -59,7 +59,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
         <span>&larr;</span>
     </a>
     <h1>Edit child info</h1>
-    <div id="add-child-main" class="container-fluid">
+    <div id="update-child-main" class="container-fluid">
         <div class="col-md-3 col-sm-1"></div>
         <div class="col-md-6 col-sm-10">
             <form method="POST" enctype="multipart/form-data" id="add-child">
@@ -90,7 +90,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
                 <div id="carers-info" class="input-section">
                     <p>Carers</p>
                     <?php foreach ($carersInfo as $carerInfo): ?>
-                    <div class="carer-solo">
+                    <div carerId="<?php echo $carerInfo->id; ?>" class="carer-solo">
                         <div class="one-info">
                             <label for="carer-name[]">Name:</label>
                             <input value="<?php echo $carerInfo->name; ?>" type="text" name="carer-name[]" placeholder="Sarah Leaf"><br />
@@ -120,15 +120,14 @@ foreach (json_decode($childInfo->carers) as $carer) {
                         </div>
                     </div><br /><br />
                 </div>
-                <button style="visibility: hidden;" id="submit" type="submit"></button>
             </form>
             <div class="container-fluid update-options">
-                <div id="edit-button" class="col-md-6 col-sm-6 update-option" onclick="">
+                <div id="edit-button" class="col-md-6 col-sm-6 update-option" onclick="updateChild()">
                     <div>
                         <p>Update</p>
                     </div>
                 </div>
-                <div id="remove-button-edit" class="col-md-6 col-sm-6 update-option">
+                <div id="remove-button-edit" class="col-md-6 col-sm-6 update-option" onclick="deleteChild(); window.location.href='manage_children.php'">
                     <div>
                         <p>Remove</p>
                     </div>
@@ -139,6 +138,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
     </div>
     <script>
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
+        const childId = <?php echo $id ?>;
     </script>
     <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
     <script src="<?php echo AddrLink('js/query.js'); ?>"></script>

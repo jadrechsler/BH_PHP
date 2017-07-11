@@ -22,6 +22,27 @@ $nameRequest = file_get_contents("http://$IPADDRESS/query.php?action=get_name&da
 
 $name = json_decode($nameRequest)->data->name;
 
+$reportRequest = json_decode(file_get_contents("http://$IPADDRESS/query.php?action=get_report&data=".urlencode("{}")), true);
+
+if (!$reportRequest['success']) {
+    die('Error fetching current report');
+}
+
+$report = $reportRequest['data']['reports'];
+
+echo '<br />';
+echo '<br />';
+echo '<br />';
+echo '<br />';
+echo '<br />';
+echo '<br />';
+echo '<br />';
+echo '<br />';
+echo '<br />';
+echo '<br />';
+echo '<br />';
+var_dump($report["$id"]['meals']['snack']);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,7 +59,7 @@ $name = json_decode($nameRequest)->data->name;
         </a>
         <h1><?php echo $name; ?></h1>
         <div id="complete-button" onclick="saveReport()">
-            <p>Complete</p>
+            <p>Save</p>
         </div>
     </div>
     <div id="info-child-main" class="container-fluid">

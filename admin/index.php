@@ -41,6 +41,9 @@ $isFloater = $id == 4 ? true : false;
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/dashboard.css'); ?>">
 </head>
 <body>
+    <a id="logout-button" href="../logout.php">
+        <span>logout</span>
+    </a>
     <h1><?php echo $info->name; ?></h1>
     <div id="main">
         <?php if ($isAdmin): ?>

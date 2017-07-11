@@ -25,6 +25,8 @@ const GET_REPORT = 'get_report';
 const CHANGE_EMAIL = 'change_email';
 const CHANGE_PIN = 'change_pin';
 const CHANGE_NAME = 'change_name';
+const CHANGE_RELATION = 'change_relation'; // Not documented
+const CHANGE_TEACHER = 'change_teacher'; // Not documented
 const CHECK_PIN = 'check_pin';
 const GET_CHILDREN = 'get_children';
 const CHANGE_PRESENCE = 'change_presence';
@@ -72,6 +74,12 @@ switch ($action) {
         break;
     case CHANGE_NAME:
         changeName();
+        break;
+    case CHANGE_RELATION:
+        changeRelation();
+        break;
+    case CHANGE_TEACHER:
+        changeTeacher();
         break;
     case CHECK_PIN:
         checkPin();

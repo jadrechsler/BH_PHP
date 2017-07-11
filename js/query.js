@@ -8,3 +8,7 @@ function QueryDB(action, data, callback = function(value){}) {
         }
     });
 }
+
+function uploadImage(imageData, callback = function(value){}) {
+    return $.post('http://'+IPADDRESS+'/upload_image.php', imageData);
+}

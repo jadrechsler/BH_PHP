@@ -1,6 +1,6 @@
 <?php
 
-$IPADDRESS = '192.168.1.70';
+$IPADDRESS = 'localhost';
 
 function AddrLink($path) {
     global $IPADDRESS;
