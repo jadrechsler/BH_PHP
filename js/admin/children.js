@@ -325,7 +325,7 @@ function saveReport() {
                 report.feeling.iWas = val;
                 break;
             case 'highlight':
-                report.highlight = val;
+                report.highlights = val;
                 break;
             case 'changed-clothes-details[]':
                 if (val != "") {

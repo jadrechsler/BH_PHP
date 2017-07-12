@@ -28,20 +28,31 @@ if (!$reportRequest['success']) {
     die('Error fetching current report');
 }
 
-$report = $reportRequest['data']['reports'];
+$reports = $reportRequest['data']['reports'];
 
-echo '<br />';
-echo '<br />';
-echo '<br />';
-echo '<br />';
-echo '<br />';
-echo '<br />';
-echo '<br />';
-echo '<br />';
-echo '<br />';
-echo '<br />';
-echo '<br />';
-var_dump($report["$id"]['meals']['snack']);
+$reportSet = isset($reports["$id"]);
+
+if ($reportSet) {
+    $report = $reports["$id"];
+}
+
+function GetSaved($spec) {
+    global $reportSet;
+    if ($reportSet) {
+        global $report;
+
+        $exec = '
+            if (isset($report'.$spec.')) {
+                return $report'.$spec.';
+            }
+            return "";
+        ';
+
+        return eval($exec);
+    }
+
+    return '';
+}
 
 ?>
 <!DOCTYPE html>
@@ -70,19 +81,22 @@ var_dump($report["$id"]['meals']['snack']);
                     <p>Bathroom</p>
                     <div class="one-info">
                         <label for="i-went">I went:</label>
+                        <?php { $value = GetSaved('[\'bathroom\'][\'iWent\']'); ?>
                         <select name="i-went">
-                            <option selected="selected" value="">&lt;select&gt;</option>
-                            <option value="Wet">Wet</option>
-                            <option value="Dry">Dry</option>
-                            <option value="Peed">Peed</option>
-                            <option value="BM">BM</option>
-                            <option value="LS">LS</option>
-                        </select><br />
+                            <option <?php if ($value == '') {echo 'selected="selected"';} ?> value="">&lt;select&gt;</option>
+                            <option <?php if ($value == 'Wet') {echo 'selected="selected"';} ?> value="Wet">Wet</option>
+                            <option <?php if ($value == 'Dry') {echo 'selected="selected"';} ?> value="Dry">Dry</option>
+                            <option <?php if ($value == 'Peed') {echo 'selected="selected"';} ?> value="Peed">Peed</option>
+                            <option <?php if ($value == 'BM') {echo 'selected="selected"';} ?> value="BM">BM</option>
+                            <option <?php if ($value == 'LS') {echo 'selected="selected"';} ?> value="LS">LS</option>
+                        </select>
+                        <?php } ?>
+                        <br />
                     </div>
                     <div class="one-info">
                         <label for="i-went-time">At:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input placeholder="00:00" type="text" name="i-went-time" class="form-control" />
+                            <input placeholder="00:00" type="text" name="i-went-time" class="form-control" value="<?php echo GetSaved('[\'bathroom\'][\'at\']'); ?>" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -93,19 +107,21 @@ var_dump($report["$id"]['meals']['snack']);
                     <p>Meals</p>
                     <div class="one-info">
                         <label for="breakfast">Breakfast:</label>
-                        <input placeholder="cereals" type="text" name="breakfast" /><br />
+                        <input placeholder="cereals" type="text" name="breakfast" value="<?php echo GetSaved('[\'meals\'][\'breakfast\']'); ?>" /><br />
                     </div>
                     <div class="one-info">
                         <label for="lunch">Lunch:</label>
+                        <?php { $value = GetSaved('[\'meals\'][\'lunch\']'); ?>
                         <select name="lunch">
-                            <option selected="selected" value="">&lt;select lunch&gt;</option>
-                            <option value="Parent provided">Parent provided</option>
-                            <option value="Option here">Option here</option>
-                        </select><br />
+                            <option <?php if ($value == '') {echo 'selected="selected"';} ?> selected="selected" value="">&lt;select lunch&gt;</option>
+                            <option <?php if ($value == 'Parent Provided') {echo 'selected="selected"';} ?> value="Parent provided">Parent provided</option>
+                            <option <?php if ($value == 'Option here') {echo 'selected="selected"';} ?> value="Option here">Option here</option>
+                        </select>
+                        <?php } ?><br />
                     </div>
                     <div class="one-info">
                         <label for="snack">Snack:</label>
-                        <input placeholder="banana" type="text" name="snack" /><br />
+                        <input placeholder="banana" type="text" name="snack" value="<?php echo GetSaved('[\'meals\'][\'snack\']'); ?>" /><br />
                     </div>
                 </div>
                 <div class="input-section">
@@ -113,7 +129,7 @@ var_dump($report["$id"]['meals']['snack']);
                     <div class="one-info">
                         <label for="nap-from">From:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input placeholder="00:00" type="text" name="nap-from" class="form-control" />
+                            <input placeholder="00:00" type="text" name="nap-from" class="form-control" value="<?php echo GetSaved('[\'nap\'][\'from\']') ?>" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -122,7 +138,7 @@ var_dump($report["$id"]['meals']['snack']);
                     <div class="one-info">
                         <label for="nap-to">To:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input placeholder="00:00" type="text" name="nap-to" class="form-control" />
+                            <input placeholder="00:00" type="text" name="nap-to" class="form-control" value="<?php echo GetSaved('[\'nap\'][\'to\']') ?>" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -133,28 +149,39 @@ var_dump($report["$id"]['meals']['snack']);
                     <p>Feeling</p>
                     <div class="one-info">
                         <label for="feeling-i-was">I was:</label>
+                        <?php { $value = GetSaved('[\'feeling\'][\'iWas\']'); ?>
                         <select name="feeling-i-was">
-                            <option selected="selected" value="">&lt;select feeling&gt;</option>
-                            <option value="Happy">Happy</option>
-                            <option value="Sad">Sad</option>
-                            <option value="Cool">Cool</option>
-                            <option value="Excited">Excited</option>
-                        </select><br />
+                            <option <?php if ($value == '') {echo 'selected="selected"';} ?> selected="selected" value="">&lt;select feeling&gt;</option>
+                            <option <?php if ($value == 'Happy') {echo 'selected="selected"';} ?> value="Happy">Happy</option>
+                            <option <?php if ($value == 'Sad') {echo 'selected="selected"';} ?> value="Sad">Sad</option>
+                            <option <?php if ($value == 'Cool') {echo 'selected="selected"';} ?> value="Cool">Cool</option>
+                            <option <?php if ($value == 'Excited') {echo 'selected="selected"';} ?> value="Excited">Excited</option>
+                        </select>
+                        <?php } ?><br />
                     </div>
                 </div>
                 <div class="input-section">
                     <p>Highlights / new discoveries</p>
                     <div class="one-info highlight-input">
                         <label for="highlight">Highlight:</label>
-                        <input placeholder="new friend" type="text" name="highlight" /><br />
+                        <input placeholder="new friend" type="text" name="highlight" value="<?php echo GetSaved('[\'highlights\']') ?>" /><br />
                     </div>
                 </div>
                 <div class="input-section">
                     <p>Changed clothes</p>
+                    <?php $values = GetSaved('[\'changedClothes\']'); if (sizeof($values) == 0 || $values == ''): ?>
                     <div class="one-info changed-clothes-detail">
                         <label for="changed-clothes-details[]">Details:</label>
                         <input placeholder="changed shirt" type="text" name="changed-clothes-details[]" /><br />
                     </div>
+                    <?php endif; if (sizeof($values) > 0 && $values != ''): ?>
+                        <?php foreach ($values as $value): ?>
+                        <div class="one-info changed-clothes-detail">
+                            <label for="changed-clothes-details[]">Details:</label>
+                            <input placeholder="changed shirt" type="text" name="changed-clothes-details[]" value="<?php echo $value; ?>" /><br />
+                        </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
                     <br /><div id="add-details-button" onclick="addDetails()">
                         <div>
                             <p>Add details</p>
@@ -165,19 +192,19 @@ var_dump($report["$id"]['meals']['snack']);
                     <p>Occurence</p>
                     <div class="one-info">
                         <label for="occurence">Yes / no:</label>
-                        <input type="checkbox" name="occurence" /><br />
+                        <input type="checkbox" name="occurence" <?php if (GetSaved('[\'occurence\']') == true) {echo 'checked="checked"';}; ?> /><br />
                     </div>
                 </div>
                 <div class="input-section">
                     <p>Medicine</p>
                     <div class="one-info">
                         <label for="medicine-given-by">Given by:</label>
-                        <input placeholder="Sarah" type="text" name="medicine-given-by" /><br />
+                        <input placeholder="Sarah" type="text" name="medicine-given-by" value="<?php echo GetSaved('[\'medicine\'][\'givenBy\']') ?>" /><br />
                     </div>
                     <div class="one-info">
                         <label for="medicine-given-at">At:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input placeholder="00:00" type="text" name="medicine-given-at" class="form-control" />
+                            <input placeholder="00:00" type="text" name="medicine-given-at" class="form-control" value="<?php echo GetSaved('[\'medicine\'][\'givenAt\']') ?>" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -188,12 +215,12 @@ var_dump($report["$id"]['meals']['snack']);
                     <p>Sunscreen</p>
                     <div class="one-info">
                         <label for="sunscreen-given-by">Given by:</label>
-                        <input placeholder="Sarah" type="text" name="sunscreen-given-by" /><br />
+                        <input placeholder="Sarah" type="text" name="sunscreen-given-by" value="<?php echo GetSaved('[\'sunscreen\'][\'givenBy\']') ?>" /><br />
                     </div>
                     <div class="one-info">
                         <label for="sunscreen-given-at">At:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input placeholder="00:00" type="text" name="sunscreen-given-at" class="form-control" />
+                            <input placeholder="00:00" type="text" name="sunscreen-given-at" class="form-control" value="<?php echo GetSaved('[\'sunscreen\'][\'givenAt\']') ?>" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -204,12 +231,12 @@ var_dump($report["$id"]['meals']['snack']);
                     <p>Insect repellent</p>
                     <div class="one-info">
                         <label for="insect-repellent-given-by">Given by:</label>
-                        <input placeholder="Sarah" type="text" name="insect-repellent-given-by" /><br />
+                        <input placeholder="Sarah" type="text" name="insect-repellent-given-by" value="<?php echo GetSaved('[\'insectRepellent\'][\'givenBy\']') ?>" /><br />
                     </div>
                     <div class="one-info">
                         <label for="insect-repellent-given-at">At:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input placeholder="00:00" type="text" name="insect-repellent-given-at" class="form-control" />
+                            <input placeholder="00:00" type="text" name="insect-repellent-given-at" class="form-control" value="<?php echo GetSaved('[\'insectRepellent\'][\'givenAt\']') ?>" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
