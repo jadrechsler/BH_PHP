@@ -167,7 +167,7 @@ function GetSaved($spec) {
                         <input placeholder="new friend" type="text" name="highlight" value="<?php echo GetSaved('[\'highlights\']') ?>" /><br />
                     </div>
                 </div>
-                <div class="input-section">
+                <div class="input-section" id="changed-clothes-section">
                     <p>Changed clothes</p>
                     <?php $values = GetSaved('[\'changedClothes\']'); if (sizeof($values) == 0 || $values == ''): ?>
                     <div class="one-info changed-clothes-detail">
@@ -184,7 +184,12 @@ function GetSaved($spec) {
                     <?php endif; ?>
                     <br /><div id="add-details-button" onclick="addDetails()">
                         <div>
-                            <p>Add details</p>
+                            <p>Add</p>
+                        </div>
+                    </div><br />
+                    <br /><div id="remove-details-button" onclick="removeDetails()">
+                        <div>
+                            <p>Remove</p>
                         </div>
                     </div><br /><br />
                 </div>

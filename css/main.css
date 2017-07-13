@@ -326,3 +326,8 @@ h1#room-name {
     color: #F3625C;
     margin-top: 25px; /*Added*/
 }
+
+#report #i-ate ul {
+    list-style: none;
+    text-align: left;
+}

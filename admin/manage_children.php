@@ -19,6 +19,7 @@ $fetchChildren = file_get_contents('http://'.$IPADDRESS.'/query.php?action=get_c
 $children = json_decode($fetchChildren)->data->children;
 
 $displayChildren = array();
+$inactiveChildren = array();
 
 if ($id == 2 || $id == 3) {
     foreach ($children as $child) {
@@ -33,7 +34,13 @@ if ($id == 2 || $id == 3) {
         }
     }
 } else {
-    $displayChildren = $children;
+    foreach ($children as $child) {
+        if ($child->present) {
+            array_push($displayChildren, $child);
+        } elseif (!$child->present) {
+            array_push($inactiveChildren, $child);
+        }
+    }
 }
 
 $isAdmin = $id == 1 ? true : false;
@@ -91,6 +98,32 @@ $isFloater = $id == 4 ? true : false;
                 <div class="col-md-1"></div>
             </div>
             <?php endforeach; ?>
+            <?php if (sizeof($inactiveChildren) > 0): ?>
+            <h2>Inactive</h2>
+            <?php foreach ($inactiveChildren as $child): ?>
+            <div refChildId="<?php echo $child->id; ?>" class="container-fluid student-item">
+                <div class="col-md-3 col-sm-1"></div>
+                <div id="children-list-container" class="col-md-6 col-sm-10">
+                    <div>
+                        <div childId="<?php echo $child->id; ?>" class="container-fluid col-sm-11 col-md-11 list-item student">
+                            <div class="col-md-4 col-sm-4 img-container">
+                                <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
+                            </div>                    
+                            <div class="col-md-7 col-sm-7 p-container">
+                                <p><?php echo $child->name; ?></p>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-1 report-edit-button-container" onclick="window.location.href='child.php?id='+<?php echo $child->id; ?>">
+                            <div class="report-edit-button">
+                                <p>&#x370;</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
     <?php if (!$isFloater): ?>

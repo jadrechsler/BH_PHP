@@ -1,3 +1,5 @@
+var currentChild;
+
 function isPresent(id) {
 	var present = false;
 	children.forEach(function(child) {
@@ -54,9 +56,9 @@ function check_out(id) {
 function overlay_show(id, name) {
 	// First name displayed
 	document.getElementById("name").innerHTML = name.split(' ')[0];
+	currentChild = id;
 
 	if (isPresent(id)) {
-		console.log(name);
 		check.querySelector("p").innerHTML = "Check out";
 		check.style.backgroundColor = "#F3625C";
 		check.setAttribute("onclick", "check_out('"+id+"')");
@@ -75,11 +77,39 @@ function overlay_hide() {
 }
 
 function report_show() {
-	show(report);
+	QueryDB('get_report', '{}', function(r) {
+		if (!r.success) {
+			console.log(r.error);
+		} else {
+			const childReport = r.data.reports[currentChild];
+
+			if (childReport != undefined) {
+				loadReport(childReport);
+			}
+
+			console.log(childReport);
+
+			show(report);
+		}
+	});
 }
 
 function report_hide() {
 	hide(report);
+}
+
+function loadReport(report) {
+	$('#i-ate ul').text('');
+
+	$('#i-was p').text(report.feeling.iWas);
+	$('#i-slept p').text(report.nap.from + ' - ' + report.nap.to);
+	$('#i-went p').text(report.bathroom.iWent);
+	
+	$('#i-ate ul').append('<li>Breakfast: ' + report.meals.breakfast + '</li>');
+	$('#i-ate ul').append('<li>Lunch: ' + report.meals.lunch + '</li>');
+	$('#i-ate ul').append('<li>Snack: ' + report.meals.snack + '</li>');
+
+	$('#highlights p').text(report.highlights);
 }
 
 function autoDimDisplay() {

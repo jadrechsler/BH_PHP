@@ -127,11 +127,13 @@ function updateChild() {
                 case 'child-teacher':
                     const changeTeacher = {
                         id: childId,
-                        teacher: val
+                        teacher: parseInt(val)
                     }
+                    console.log(JSON.stringify(changeTeacher));
 
                     QueryDB('change_teacher', JSON.stringify(changeTeacher), function(r) {
                         if (!r.success) {
+                            console.log("error called");
                             console.log(r.error);
                         }
                     })
@@ -185,14 +187,15 @@ function updateChild() {
                     })
                     break;
             }
-        } else if (attr == 'file' && name == 'child-picture') {
-            var data = new FormData();
-            data.append('file', val);
+        } 
+        // //else if (attr == 'file' && name == 'child-picture') {
+        //     var data = new FormData();
+        //     data.append('file', val);
 
-            uploadImage(data, function(r) {
-                console.log(r);
-            });
-        }
+        //     uploadImage(data, function(r) {
+        //         console.log(r);
+        //     });
+        // }
     });
 }
 
@@ -209,7 +212,11 @@ function addCarer() {
 function addDetails() {
     const inputs = '<div class="one-info changed-clothes-detail"><label for="changed-clothes-details[]">Details:</label><input placeholder="changed shirt" type="text" name="changed-clothes-details[]" /><br /></div>'; 
 
-    $(inputs).insertAfter('.changed-clothes-detail:last');
+    $(inputs).insertBefore($('#add-details-button').prev());
+}
+
+function removeDetails() {
+    $('.changed-clothes-detail:last').remove();
 }
 
 function addChild() {

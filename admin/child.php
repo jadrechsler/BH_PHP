@@ -75,6 +75,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
                             <option <?php if($childInfo->teacher != 2 && $childInfo->teacher != 4) echo 'selected="selected"'; ?> value="">&lt;select teacher&gt;</option>
                             <option <?php if($childInfo->teacher == 2) echo 'selected="selected"'; ?> value="2"><?php echo $teacher1Name; ?></option>
                             <option <?php if($childInfo->teacher == 3) echo 'selected="selected"'; ?> value="3"><?php echo $teacher2Name; ?></option>
+                            <option <?php if($childInfo->teacher == 0) echo 'selected="selected"'; ?> value="0">Inactive</option>
                         </select><br />
                     </div>
                     <div class="one-info">

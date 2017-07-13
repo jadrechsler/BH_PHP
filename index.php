@@ -68,12 +68,12 @@ function makeRowSet($list) {
 			</div>
 			<div class="col-md-4">
 				<p id="name">Bobby Name</p>
-				<div id="view-report" class="option" onclick="report_show()">		
+				<div id="view-report" class="option" onclick="report_show();">		
 					<p>View report</p>
 				</div>
 			</div>
 			<div class="col-md-4">
-				<div class="exit"><span onclick="overlay_hide()">&#x2573</span></div>
+				<div class="exit"><span onclick="overlay_hide();">&#x2573</span></div>
 				<div id="change-pin" class="option">
 					<p>Change pin</p>
 				</div>
@@ -114,6 +114,7 @@ function makeRowSet($list) {
                         <div id="i-ate" class="col-md-12 report-container">
                             <div class="content">
                                 <h1>I ate</h1>
+                                <ul></ul>
                             </div>
                         </div>
                     </div>
@@ -130,6 +131,7 @@ function makeRowSet($list) {
                         <div id="highlights" class="col-md-12 report-container">
                             <div class="content">
                                 <h1>Highlights/ new discoveries</h1>
+                                <p></p>
                             </div>
                         </div>
                     </div>

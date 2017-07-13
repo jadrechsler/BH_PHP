@@ -88,10 +88,35 @@ function deleteUser() {
         respond(false, null, 'Missing Data Parameters: id');
     }
 
-    $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
-    $stmt->bind_param('i', $id);
+    if (!($id >= 1000)) {
+        $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bind_param('i', $id);
 
-    $stmt->execute();
+        $stmt->execute();
+    } else {
+        $stmt = $conn->prepare("SELECT carers FROM users WHERE id = ?");
+        $stmt->bind_param('i', $id);
+
+        $stmt->execute();
+        $stmt->store_result();
+
+        $stmt->bind_result($carers);
+
+        while($stmt->fetch()) {
+            foreach (json_decode($carers) as $carer) {
+                $cid = (int) $carer;
+                mysqli_query($conn, "DELETE FROM users WHERE id = $cid");
+            }
+        }
+
+        $stmt->free_result();
+
+        $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bind_param('i', $id);
+
+        $stmt->execute();
+        echo "DELETE FROM users WHERE id = $id";
+    }
 
     respond(true, null);
 
@@ -325,10 +350,12 @@ function changeTeacher() {
         respond(false, null, 'Missing Data Parameters');
     }
 
-    $stmt = $conn->prepare("UPDATE users SET teacher = ? WHERE id = ?");
-    $stmt->bind_param('ii', $teacher, $id);
+    $query = "UPDATE users SET teacher = $teacher WHERE id = ?";
 
-    $stmt->execute();
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param('i', $id);
+
+    $aa = $stmt->execute();
 
     respond(true, null);
 }
