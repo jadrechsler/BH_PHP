@@ -1,8 +1,9 @@
-function QueryDB(action, data, callback = function(value){}) {
+function QueryDB(action, data, callback = function(value){}, async = true) {
     return $.ajax({
         url: 'http://'+IPADDRESS+'/query.php',
         type: 'POST',
         data: {action: action, data: data},
+        async: async,
         success: function(value) {
             callback(value);
         }

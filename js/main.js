@@ -103,7 +103,7 @@ function loadReport(report) {
 
 	$('#i-was p').text(report.feeling.iWas);
 	$('#i-slept p').text(report.nap.from + ' - ' + report.nap.to);
-	$('#i-went p').text(report.bathroom.iWent);
+	$('#i-went p').text(report.bathroom.iWent + ' at ' + report.bathroom.at);
 	
 	$('#i-ate ul').append('<li>Breakfast: ' + report.meals.breakfast + '</li>');
 	$('#i-ate ul').append('<li>Lunch: ' + report.meals.lunch + '</li>');
@@ -130,4 +130,17 @@ function autoDimDisplay() {
 
 autoDimDisplay();
 
-// TODO: Make function to un-dim when interaction detected and dim again after time
+function checkPin(pin, id) {
+	const data = {
+		id: id,
+		pin: pin
+	};
+
+	var validation;
+
+	QueryDB('check_pin', JSON.stringify(data), function(r) {
+		validation = r.success;
+	}, false);
+
+	return validation;
+}

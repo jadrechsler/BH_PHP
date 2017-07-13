@@ -331,3 +331,17 @@ h1#room-name {
     list-style: none;
     text-align: left;
 }
+
+.keypad-done-button {
+    background-color: #2C5276;
+    border: none;
+    color: white;
+}
+
+.keypad-done-button:hover {
+    color: white;
+}
+
+.keypad-action-button {
+    border: 1px solid grey;
+}

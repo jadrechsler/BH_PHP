@@ -15,9 +15,9 @@ function getChildrenArray() {
 function makeRowItem($child) {
     $name = $child->name;
 
-    $html = '<div class="col-md-3 row-item">';
+    $html = '<div childId="'.$child->id.'" childName="'.$child->name.'" class="col-md-3 row-item">';
 
-    $html .= '<img src="'.AddrLink("img/children/$child->id.jpg").'" onclick="overlay_show('.$child->id.', \''.$name.'\')" />';
+    $html .= '<img src="'.AddrLink("img/children/$child->id.jpg").'" onclick="//overlay_show('.$child->id.', \''.$name.'\')" />';
 
     $html .= '<figcaption>'.$name.'</figcaption>';
 
@@ -55,7 +55,9 @@ function makeRowSet($list) {
 	<meta charset="utf-8">
 	<title>Class 1</title>
 	<link rel="stylesheet" href="<?php echo AddrLink('css/bootstrap.min.css'); ?>">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/bootstrap-theme.min.css'); ?>">
 	<link rel="stylesheet" href="<?php echo AddrLink('css/main.css'); ?>">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/jquery.numpad.css'); ?>">
 </head>
 <body>
     <div id="brightness"></div>
@@ -67,7 +69,7 @@ function makeRowSet($list) {
 				</div>
 			</div>
 			<div class="col-md-4">
-				<p id="name">Bobby Name</p>
+				<p id="name"></p>
 				<div id="view-report" class="option" onclick="report_show();">		
 					<p>View report</p>
 				</div>
@@ -91,7 +93,7 @@ function makeRowSet($list) {
                                 <div id="i-was" class="col-md-12 report-container">
                                     <div class="content">
                                         <h1>I was</h1>
-                                        <p>Happy</p>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +101,7 @@ function makeRowSet($list) {
                                 <div id="i-slept" class="col-md-12 report-container">
                                     <div class="content">
                                         <h1>I slept</h1>
-                                        <p>10:30 - 12:30</p>
+                                        <p></p>
                                     </div>
                                 </div>
                             </div>
@@ -107,6 +109,7 @@ function makeRowSet($list) {
                         <div id="i-went" class="col-md-6 report-container">
                             <div class="content">
                                 <h1>I went</h1>
+                                <p></p>
                             </div>
                         </div>
                     </div>
@@ -181,11 +184,36 @@ function makeRowSet($list) {
 			<?php echo makeRowSet($children) ?>
 		</div>
 	</div>
+    <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/bootstrap.min.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/jquery.numpad.js'); ?>"></script>
 	<script type="text/javascript">
 		var children = JSON.parse('<?php echo getChildrenArray(); ?>');
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
+
+        $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
+        $.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
+        $.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
+        $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
+        $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn keypad-action-button" style="width: 100%;"></button>';
+        $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('keypad-done-button');};
+
+        // $.fn.numpad.defaults.onKeypadClose = function() {
+
+        // };
+
+        $(document).ready(function() {
+            $('.row-item').each(function() {
+                $(this).numpad({
+                    displayTpl: '<input class="form-control" type="password" />',
+                    hidePlusMinusButton: true,
+                    hideDecimalButton: true,
+                    childId: $(this).attr('childId'),
+                    childName: $(this).attr('childName')
+                });
+            });
+        });
 	</script>
-    <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
     <script src="<?php echo AddrLink('js/query.js'); ?>"></script>
 	<script src="<?php echo AddrLink('js/main.js'); ?>"></script>
 </html>
