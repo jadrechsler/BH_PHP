@@ -78,6 +78,13 @@ function overlay_hide() {
 }
 
 function report_show() {
+	const $emailBtn = $('#email button');
+
+	$emailBtn.removeClass('sent');
+	$emailBtn.removeClass('failed');
+	$emailBtn.removeClass('disabled');
+	$emailBtn.text('EMAIL');
+
 	QueryDB('get_report', '{}', function(r) {
 		if (!r.success) {
 			console.log(r.error);
@@ -233,6 +240,8 @@ function checkPin(pin, id) {
 function emailReport() {
 	console.log("emailing");
 
+	$('#email button').addClass('disabled');
+
 	var html = '\
 		<html>\
 		<head>\
@@ -337,7 +346,11 @@ function emailReport() {
 
 	SendMail(data, function(r) {
 		if (r.success) {
-
+			$('#email button').text('DONE');
+			$('#email button').addClass('sent');
+		} else {
+			$('#email button').text('FAILED');
+			$('#email button').addClass('failed');
 		}
 	});
 }

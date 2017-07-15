@@ -296,6 +296,16 @@ h1#room-name {
     background-color: #2C5276;
 }
 
+#report #email button.sent {
+    background-color: #00874A;
+    pointer-events: none;
+}
+
+#report #email button.failed {
+    background-color: #F3625C;
+    pointer-events: none;
+}
+
 #report #exit-report {
     text-align: left;
     padding-top: 5px;
@@ -345,4 +355,8 @@ h1#room-name {
 
 .keypad-action-button {
     border: 1px solid grey;
+}
+
+.disabled {
+    pointer-events: none;
 }
