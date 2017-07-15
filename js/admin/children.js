@@ -365,6 +365,8 @@ function updateRemoveCarer() {
             childId: childId
         }
 
+        console.log(JSON.stringify(data));
+
         QueryDB('delete_carer', JSON.stringify(data), function(r) {
             if (!r.success) {
                 console.log(r.error);

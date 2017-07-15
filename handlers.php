@@ -647,10 +647,11 @@ function deleteCarer() {
 
     $newCarers = json_encode($currentCarers);
 
-    $stmts = $conn->prepare("UPDATE users SET carers = $newCarers WHERE id = ?");
-    $stmts->bind_param('i', $childId);
+    $stmt = $conn->prepare("UPDATE users SET carers = '$newCarers' WHERE id = ?");
 
-    if (!$stmts->execute()) {
+    $stmt->bind_param('i', $childId);
+
+    if (!$stmt->execute()) {
         respond(false, null, 'Error Deleting Carer');
     }
 

@@ -224,7 +224,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
                     </div><br /><br />
                 </div>
                 <input style="visibility: hidden; position: fixed;" type="number" name="childId"  value="<?php echo $id; ?>" />
-                <input style="visibility: hidden; position: fixed;" type="number" name="currentCarers"  value="<?php echo $childInfo->carers; ?>" />
+                <input style="visibility: hidden; position: fixed;" type="number" name="currentCarers"  value='<?php echo $childInfo->carers; ?>' />
                 <button style="visibility: hidden; position: fixed;" id="submit" type="submit"></button>
             </form>
             <div class="container-fluid update-options">
