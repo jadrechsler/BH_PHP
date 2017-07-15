@@ -31,8 +31,18 @@ $cc = isset($_REQUEST['cc']) ? $_REQUEST['cc'] : false; // Array of addresses
 $subject = isset($_REQUEST['subject']) ? $_REQUEST['subject'] : false;
 $body = isset($_REQUEST['body']) ? $_REQUEST['body'] : false; // HTML content
 
-if (!$to || !$subject || !$body) {
+if ($to === false || $subject === false || $body === false) {
     respond(false, null, 'Missing Parameters');
+}
+
+if (!is_array($to)) {
+    respond(false, null, 'Parameter \'to\' must be of type array');
+}
+
+if (!is_array($cc)) {
+    if (gettype($to) !== 'array') {
+        respond(false, null, 'Parameter \'cc\' must be of type array');
+    }
 }
 
 $mail = new PHPMailer();
@@ -49,11 +59,13 @@ $mail->SetFrom("brighthorizonsreport@gmail.com");
 $mail->Subject = $subject;
 $mail->Body = $body;
 
-foreach ($cc as $address) {
-    $mail->AddCC($address);
+if ($cc !== false) {
+    foreach ($cc as $key => $address) {
+        $mail->AddCC($address);
+    }
 }
 
-foreach ($to as $address) {
+foreach ($to as $key => $address) {
     $mail->AddAddress($address);
 }
 

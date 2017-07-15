@@ -10,6 +10,14 @@ function QueryDB(action, data, callback = function(value){}, async = true) {
     });
 }
 
-function uploadImage(imageData, callback = function(value){}) {
-    return $.post('http://'+IPADDRESS+'/upload_image.php', imageData);
+function SendMail(data, callback = function(value){}, async = true) {
+    return $.ajax({
+        url: 'http://'+IPADDRESS+'/mail.php',
+        type: 'POST',
+        data: data,
+        async: async,
+        success: function(value) {
+            callback(value);
+        }
+    });
 }

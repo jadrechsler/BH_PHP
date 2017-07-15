@@ -170,7 +170,7 @@ function makeRowSet($list) {
                 <div class="col-md-6"></div>
                 <div class="col-md-3">
                     <div id="email">
-                        <button>EMAIL</button>
+                        <button onclick="emailReport();">EMAIL</button>
                     </div>
                 </div>
             </div>

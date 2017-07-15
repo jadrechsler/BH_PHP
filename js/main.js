@@ -1,4 +1,6 @@
 var currentChild;
+var currentReport;
+var currentName;
 
 function isPresent(id) {
 	var present = false;
@@ -55,6 +57,7 @@ function overlay_show(id, name) {
 	// First name displayed
 	document.getElementById("name").innerHTML = name.split(' ')[0];
 	currentChild = id;
+	currentName = name;
 
 	if (isPresent(id)) {
 		check.querySelector("p").innerHTML = "Check out";
@@ -81,6 +84,8 @@ function report_show() {
 		} else {
 			const childReport = r.data.reports[currentChild];
 
+			currentReport = childReport;
+
 			if (childReport != undefined) {
 				loadReport(childReport);
 			}
@@ -94,39 +99,40 @@ function report_hide() {
 	hide(report);
 }
 
-function loadReport(report) {
-	$('#i-ate ul').text('');
-
-	function loadText(text) {
-		const sections = text.split('.');
+// Used for reports
+function loadText(text) {
+	const sections = text.split('.');
 
 
-		// Check if property exists in report
-		var exists = true;
-		for (var x = 0; x < sections.length; x++) {
-			if (x == 0) {
-				if (!report.hasOwnProperty(sections[x])) {
-					exists = false;
-					break;
-				}
-			} else if (x == 1) {
-				const secondExists = '(report.'+sections[0]+'.hasOwnProperty(\''+sections[x]+'\'))';
+	// Check if property exists in report
+	var exists = true;
+	for (var x = 0; x < sections.length; x++) {
+		if (x == 0) {
+			if (!currentReport.hasOwnProperty(sections[x])) {
+				exists = false;
+				break;
+			}
+		} else if (x == 1) {
+			const secondExists = '(currentReport.'+sections[0]+'.hasOwnProperty(\''+sections[x]+'\'))';
 
-				if (!eval(secondExists)) {
-					exists = false;
-					break;
-				}
+			if (!eval(secondExists)) {
+				exists = false;
+				break;
 			}
 		}
-
-		if (exists) {
-			const exec = '(report.'+text+');';
-
-			return eval(exec);
-		}
-
-		return '';
 	}
+
+	if (exists) {
+		const exec = '(currentReport.'+text+');';
+
+		return eval(exec);
+	}
+
+	return '';
+}
+
+function loadReport(report) {
+	$('#i-ate ul').text('');
 
 	$('#i-was p').text(loadText('feeling.iWas'));
 
@@ -222,4 +228,116 @@ function checkPin(pin, id) {
 	}, false);
 
 	return validation;
+}
+
+function emailReport() {
+	console.log("emailing");
+
+	var html = '\
+		<html>\
+		<head>\
+		<meta charset="utf-8">\
+		</head>\
+		<body>\
+		<h1>Report</h1>\
+		<h3>'+currentName+'</h3>\
+		<ul style="list-style-type: none">\
+	';
+
+	$('#i-was p').text(loadText('feeling.iWas'));
+
+	const napFrom = loadText('nap.from');
+	const napTo = loadText('nap.to');
+	if (napFrom != '' && napTo != '')
+		html += '<li>I slept: ' + napFrom + ' - ' + napTo + '</li>';
+
+	const bathroomIWent = loadText('bathroom.iWent');
+	const bathroomAt = loadText('bathroom.at');
+	if (bathroomIWent != '' && bathroomAt != '')
+		html += '<li>I went: ' + bathroomIWent + ' at ' + bathroomAt + '</li>';
+	
+
+	const breakfast = loadText('meals.breakfast');
+	if (breakfast != '')
+		html += '<li>Breakfast: ' + breakfast + '</li>';
+
+	const lunch = loadText('meals.lunch');
+	if (lunch != '')
+		html += '<li>Lunch: ' + lunch + '</li>';
+
+	const snack = loadText('meals.snack');
+	if (snack != '')
+		html += '<li>Snack: ' + snack + '</li>';
+
+	const iNeedOptions = ['diapers', 'wipes', 'shirt', 'pants', 'underwear'];
+	const iNeed = loadText('needs');
+	var iNeedText = '';
+
+	iNeedOptions.forEach(function(need, index) {
+		if (index < iNeedOptions.length-1) {
+			if (iNeed[need]) {
+				iNeedText += need + ' &#x2714;, '; // Append check mark
+			} else if (!iNeed[need]) {
+				iNeedText += need + ', ';
+			}
+		} else {
+			if (iNeed[need]) {
+				iNeedText += need + ' yes';
+			} else if (!iNeed[need]) {
+				iNeedText += need;
+			}
+		}
+	});
+
+	html += '<li>I need: ' + iNeedText + '</li>';
+
+	if (loadText('occurence')) {
+		html += '<li>Occurence: Please see teacher</li>';
+	}
+
+	const highlights = loadText('highlights');
+	if (highlights != '')
+		html += '<li>Highlights/ new discoveries: ' + highlights + '</li>';
+
+	html += '</ul></body></html>';
+
+	console.log(html);
+
+	const id = currentChild;
+
+	var carers;
+
+	QueryDB('get_user_info', JSON.stringify({id: id}), function(r) {
+		if (!r.success) {
+			console.log(r.error);
+		} else {
+			carers = JSON.parse(r.data.carers);
+		}
+	}, false);
+
+	var to = [];
+
+	carers.forEach(function(id) {
+		QueryDB('get_user_info', JSON.stringify({id: id}), function(r) {
+			if (!r.success) {
+				console.log(r.error);
+			} else {
+				to.push(r.data.email);
+			}
+		}, false);
+	});
+
+	const content = html;
+
+	const data = {
+		to: to,
+		subject: 'JS Test',
+		body: content
+	};
+
+	SendMail(data, function(r) {
+		if (r.success) {
+
+		}
+	});
 }
