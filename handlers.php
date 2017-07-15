@@ -516,4 +516,155 @@ function getUserInfo() {
     respond(true, $data);
 } 
 
+function updateUser() {
+    global $conn;
+    global $data;
+
+    $newInfo = array();
+    $id;
+
+    if (isset($data->id)) {
+        $id = $data->id;
+    } else {
+        respond(false, null, 'Missing Id Parameter');
+    }
+
+    if (isset($data->name)) {
+        $info = array(
+            'name' => $data->name
+        );
+        
+        array_push($newInfo, $info);
+    }
+
+    if (isset($data->relation)) {
+        $info = array(
+            'relation' => $data->relation
+        );
+        
+        array_push($newInfo, $info);
+    }
+
+    if (isset($data->email)) {
+        $info = array(
+            'email' => $data->email
+        );
+        
+        array_push($newInfo, $info);
+    }
+
+    if (isset($data->pin)) {
+        $info = array(
+            'pin' => $data->pin
+        );
+        
+        array_push($newInfo, $info);
+    }
+
+    if (isset($data->carers)) {
+        $info = array(
+            'carers' => $data->carers
+        );
+        
+        array_push($newInfo, $info);
+    }
+
+    if (isset($data->teacher)) {
+        $info = array(
+            'teacher' => $data->teacher
+        );
+        
+        array_push($newInfo, $info);
+    }
+
+    if (isset($data->present)) {
+        $info = array(
+            'present' => $data->present
+        );
+        
+        array_push($newInfo, $info);
+    }
+
+    if (sizeof($newInfo) > 0) {
+        foreach ($newInfo as $value) {
+            foreach ($value as $key => $info) {
+                $stmt = $conn->prepare("UPDATE users SET $key = ? WHERE id = ?");
+
+                $format;
+                if ($key == 'teacher' || $key == 'present') {
+                    $format = 'ii';
+                } else {
+                    $format = 'si';
+                }
+
+                $stmt->bind_param($format, $info, $id);
+
+                if (!$stmt->execute()) {
+                    respond(false, null, "Error Updating $key");
+                }
+            }
+        }
+    } else {
+        respond(false, null, 'Missing Update Data Parameters');
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    respond(true, null);
+}
+
+function deleteCarer() {
+    global $conn;
+    global $data;
+
+    if (!isset($data->carerId) || !isset($data->childId)) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    $carerId = $data->carerId;
+    $childId = $data->childId;
+
+    $stmt = $conn->prepare("SELECT carers FROM users WHERE id = ?");
+    $stmt->bind_param('i', $childId);
+
+    if (!$stmt->execute()) {
+        respond(false, null, 'Error Deleting Carer');
+    }
+
+    $stmt->store_result();
+    $stmt->bind_result($carers);
+
+    $currentCarers;
+
+    while($stmt->fetch()) {
+        $currentCarers = json_decode($carers);
+    }
+
+    if (($key = array_search($carerId, $currentCarers)) !== false) {
+        unset($currentCarers[$key]);
+    }
+
+    $newCarers = json_encode($currentCarers);
+
+    $stmts = $conn->prepare("UPDATE users SET carers = $newCarers WHERE id = ?");
+    $stmts->bind_param('i', $childId);
+
+    if (!$stmts->execute()) {
+        respond(false, null, 'Error Deleting Carer');
+    }
+
+    $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+    $stmt->bind_param('i', $carerId);
+
+    if (!$stmt->execute()) {
+        respond(false, null, 'Error Deleting Carer');
+    }
+
+    $stmt->close();
+    $conn->close();
+
+    respond(true, null);
+}
+
 ?>

@@ -6,6 +6,12 @@ $fetchChildren = file_get_contents('http://'.$IPADDRESS.'/query.php?action=get_c
 
 $children = json_decode($fetchChildren)->data->children;
 
+for ($x = 0; $x < sizeof($children); $x++) {
+    if ($children[$x]->teacher == 0) {
+        unset($children[$x]);
+    }
+}
+
 function getChildrenArray() {
     global $children;
 
@@ -142,6 +148,7 @@ function makeRowSet($list) {
                         <div class="col-md-6 report-container">
                             <div id="i-need" class="content">
                                 <h1>I need</h1>
+                                <p></p>
                             </div>
                         </div>
                         <div id="changed-clothes" class="col-md-6 report-container">

@@ -31,7 +31,6 @@ if (isset($_REQUEST['submit'])) {
 
 
         $_SESSION['id'] = $_REQUEST['id'];
-        $_SESSION['name'] = $name;
 
         header($exitPage);
     } else {

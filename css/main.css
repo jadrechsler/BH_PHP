@@ -266,12 +266,13 @@ h1#room-name {
     margin: 0;
     padding: 0;
     height: 10%;
+    position: relative;
 }
 
 #report .right .middle {
     margin: 0;
     padding: 0;
-    height: 70%;
+    height: 80%;
 }
 
 #report .right .bottom {

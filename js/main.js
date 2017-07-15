@@ -14,12 +14,10 @@ function changePresence(id, presence) {
 		if (child.id == id.toString()){
 			child.present = presence;
 		}
-		console.log(child);
 	})
 
 	const data = {id: id, presence: presence};	
 	QueryDB('change_presence', JSON.stringify(data));
-	console.log(JSON.stringify(data));
 }
 
 const overlay = document.getElementById("overlay");
@@ -87,8 +85,6 @@ function report_show() {
 				loadReport(childReport);
 			}
 
-			console.log(childReport);
-
 			show(report);
 		}
 	});
@@ -101,26 +97,109 @@ function report_hide() {
 function loadReport(report) {
 	$('#i-ate ul').text('');
 
-	$('#i-was p').text(report.feeling.iWas);
-	$('#i-slept p').text(report.nap.from + ' - ' + report.nap.to);
-	$('#i-went p').text(report.bathroom.iWent + ' at ' + report.bathroom.at);
-	
-	$('#i-ate ul').append('<li>Breakfast: ' + report.meals.breakfast + '</li>');
-	$('#i-ate ul').append('<li>Lunch: ' + report.meals.lunch + '</li>');
-	$('#i-ate ul').append('<li>Snack: ' + report.meals.snack + '</li>');
+	function loadText(text) {
+		const sections = text.split('.');
 
-	$('#highlights p').text(report.highlights);
+
+		// Check if property exists in report
+		var exists = true;
+		for (var x = 0; x < sections.length; x++) {
+			if (x == 0) {
+				if (!report.hasOwnProperty(sections[x])) {
+					exists = false;
+					break;
+				}
+			} else if (x == 1) {
+				const secondExists = '(report.'+sections[0]+'.hasOwnProperty(\''+sections[x]+'\'))';
+
+				if (!eval(secondExists)) {
+					exists = false;
+					break;
+				}
+			}
+		}
+
+		if (exists) {
+			const exec = '(report.'+text+');';
+
+			return eval(exec);
+		}
+
+		return '';
+	}
+
+	$('#i-was p').text(loadText('feeling.iWas'));
+
+	const napFrom = loadText('nap.from');
+	const napTo = loadText('nap.to');
+	if (napFrom != '' && napTo != '')
+		$('#i-slept p').text(napFrom + ' - ' + napTo);
+
+	const bathroomIWent = loadText('bathroom.iWent');
+	const bathroomAt = loadText('bathroom.at');
+	if (bathroomIWent != '' && bathroomAt != '')
+		$('#i-went p').text(bathroomIWent + ' at ' + bathroomAt);
+	
+
+	const breakfast = loadText('meals.breakfast');
+	if (breakfast != '')
+		$('#i-ate ul').append('<li>Breakfast: ' + breakfast + '</li>');
+
+	const lunch = loadText('meals.lunch');
+	if (lunch != '')
+		$('#i-ate ul').append('<li>Lunch: ' + lunch + '</li>');
+
+	const snack = loadText('meals.snack');
+	if (snack != '')
+		$('#i-ate ul').append('<li>Snack: ' + snack + '</li>');
+
+	const iNeedOptions = ['diapers', 'wipes', 'shirt', 'pants', 'underwear'];
+	const iNeed = loadText('needs');
+	var iNeedText = '';
+
+	iNeedOptions.forEach(function(need, index) {
+		if (index < iNeedOptions.length-1) {
+			if (iNeed[need]) {
+				iNeedText += need + ' &#x2714;, '; // Append check mark
+			} else if (!iNeed[need]) {
+				iNeedText += need + ', ';
+			}
+		} else {
+			if (iNeed[need]) {
+				iNeedText += need + ' yes';
+			} else if (!iNeed[need]) {
+				iNeedText += need;
+			}
+		}
+	});
+
+	$('#i-need p').html(iNeedText);
+
+	if (!loadText('occurence')) {
+		// Hide occurence box
+		$('#occurence').hide();
+		$('#report .right .top').css('position', 'absolute');
+		$('#report .right .middle').css('height', '80%');
+	} else {
+		// Show occurence box
+		$('#occurence').show();
+		$('#report .right .top').css('position', 'relative');
+		$('#report .right .middle').css('height', '70%');
+	}
+
+	$('#highlights p').text(loadText('highlights'));
 }
 
 function autoDimDisplay() {
 	const startTime = 13; // 13 - 1: PM 24 hour format
-	const endTime = 15; // 15 - 3: PM 24 hour format
+	// Dim will last for 1.9999999 hours
+	const endTime = 14; // 14 - 2.999999: PM 24 hour format
 
-	var t = setInterval(function() {
+	setInterval(function() {
 		const now = new Date();
 
 		if (now.getHours() >= startTime && now.getHours() <= endTime) {
-			$('#brightness').show();
+			$('#brightness').show(); 
 		} else {
 			$('#brightness').hide();
 		}

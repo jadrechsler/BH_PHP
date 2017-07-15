@@ -18,6 +18,10 @@ if (!isset($_REQUEST['id'])) {
 
 $id = $_REQUEST['id'];
 
+if (!is_numeric($id)) {
+    die('Invalid id Parameter');
+}
+
 $nameRequest = file_get_contents("http://$IPADDRESS/query.php?action=get_name&data=".urlencode("{\"id\": $id}"));
 
 $name = json_decode($nameRequest)->data->name;
@@ -114,7 +118,7 @@ function GetSaved($spec) {
                         <?php { $value = GetSaved('[\'meals\'][\'lunch\']'); ?>
                         <select name="lunch">
                             <option <?php if ($value == '') {echo 'selected="selected"';} ?> selected="selected" value="">&lt;select lunch&gt;</option>
-                            <option <?php if ($value == 'Parent Provided') {echo 'selected="selected"';} ?> value="Parent provided">Parent provided</option>
+                            <option <?php if ($value == 'Parent provided') {echo 'selected="selected"';} ?> value="Parent provided">Parent provided</option>
                             <option <?php if ($value == 'Option here') {echo 'selected="selected"';} ?> value="Option here">Option here</option>
                         </select>
                         <?php } ?><br />
@@ -198,6 +202,29 @@ function GetSaved($spec) {
                     <div class="one-info">
                         <label for="occurence">Yes / no:</label>
                         <input type="checkbox" name="occurence" <?php if (GetSaved('[\'occurence\']') == true) {echo 'checked="checked"';}; ?> /><br />
+                    </div>
+                </div>
+                <div id="needs" class="input-section">
+                    <p>Needs</p>
+                    <div class="one-info">
+                        <label for="diapers">Diapers:</label>
+                        <input type="checkbox" name="diapers" <?php if (GetSaved('[\'needs\'][\'diapers\']') == true) {echo 'checked="checked"';}; ?> /><br />
+                    </div>
+                    <div class="one-info">
+                        <label for="wipes">Wipes:</label>
+                        <input type="checkbox" name="wipes" <?php if (GetSaved('[\'needs\'][\'wipes\']') == true) {echo 'checked="checked"';}; ?> /><br />
+                    </div>
+                    <div class="one-info">
+                        <label for="shirt">Shirt:</label>
+                        <input type="checkbox" name="shirt" <?php if (GetSaved('[\'needs\'][\'shirt\']') == true) {echo 'checked="checked"';}; ?> /><br />
+                    </div>
+                    <div class="one-info">
+                        <label for="pants">Pants:</label>
+                        <input type="checkbox" name="pants" <?php if (GetSaved('[\'needs\'][\'pants\']') == true) {echo 'checked="checked"';}; ?> /><br />
+                    </div>
+                    <div class="one-info">
+                        <label for="underwear">Underwear:</label>
+                        <input type="checkbox" name="underwear" <?php if (GetSaved('[\'needs\'][\'underwear\']') == true) {echo 'checked="checked"';}; ?> /><br />
                     </div>
                 </div>
                 <div class="input-section">

@@ -29,15 +29,15 @@ if ($id == 2 || $id == 3) {
     }
 } elseif ($id == 4) {
     foreach ($children as $child) {
-        if (($child->teacher == 2 || $child->teacher == 3) && $child->present) {
+        if ($child->teacher == 2 || $child->teacher == 3) {
             array_push($displayChildren, $child);
         }
     }
 } else {
     foreach ($children as $child) {
-        if ($child->present) {
+        if ($child->teacher == 2 || $child->teacher == 3) {
             array_push($displayChildren, $child);
-        } elseif (!$child->present) {
+        } else {
             array_push($inactiveChildren, $child);
         }
     }
@@ -80,17 +80,19 @@ $isFloater = $id == 4 ? true : false;
                 <div class="col-md-3 col-sm-1"></div>
                 <div id="children-list-container" class="col-md-6 col-sm-10">
                     <div>
-                        <div childId="<?php echo $child->id; ?>" class="container-fluid col-sm-11 col-md-11 list-item student">
-                            <div class="col-md-4 col-sm-4 img-container">
-                                <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
-                            </div>                    
-                            <div class="col-md-7 col-sm-7 p-container">
-                                <p><?php echo $child->name; ?></p>
+                        <div class="container-fluid col-sm-11 col-md-11 student-container">
+                            <div childId="<?php echo $child->id; ?>" class="col-md-11 col-sm-11 container-fluid list-item student">
+                                <div class="col-md-4 col-sm-4 img-container">
+                                    <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
+                                </div>                    
+                                <div class="col-md-7 col-sm-7 p-container">
+                                    <p><?php echo $child->name; ?></p>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1 report-edit-button-container" onclick="window.location.href='child.php?id='+<?php echo $child->id; ?>">
                             <div class="report-edit-button">
-                                <p>&#x370;</p>
+                                <p>edit</p>
                             </div>
                         </div>
                     </div>
@@ -105,17 +107,19 @@ $isFloater = $id == 4 ? true : false;
                 <div class="col-md-3 col-sm-1"></div>
                 <div id="children-list-container" class="col-md-6 col-sm-10">
                     <div>
-                        <div childId="<?php echo $child->id; ?>" class="container-fluid col-sm-11 col-md-11 list-item student">
-                            <div class="col-md-4 col-sm-4 img-container">
-                                <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
-                            </div>                    
-                            <div class="col-md-7 col-sm-7 p-container">
-                                <p><?php echo $child->name; ?></p>
+                        <div class="container-fluid col-sm-11 col-md-11 student-container">
+                            <div childId="<?php echo $child->id; ?>" class="col-md-11 col-sm-11 container-fluid list-item student">
+                                <div class="col-md-4 col-sm-4 img-container">
+                                    <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
+                                </div>                    
+                                <div class="col-md-7 col-sm-7 p-container">
+                                    <p><?php echo $child->name; ?></p>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-1 col-sm-1 report-edit-button-container" onclick="window.location.href='child.php?id='+<?php echo $child->id; ?>">
                             <div class="report-edit-button">
-                                <p>&#x370;</p>
+                                <p>edit</p>
                             </div>
                         </div>
                     </div>

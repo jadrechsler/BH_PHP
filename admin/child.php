@@ -12,6 +12,102 @@ if (isset($_SESSION['id'])) {
 
 require('../ipconfig.php');
 
+if (isset($_POST['child-name'])) {
+    $childId = $_POST['childId'];
+    $childName = $_POST['child-name'];
+    $teacher = $_POST['child-teacher'];
+    $pin = $_POST['pin'];
+    $currentCarers = json_decode($_POST['currentCarers']);
+
+    $carerNames = $_POST['carer-name'];
+    $carerEmails = $_POST['carer-email'];
+    $carerRelations = $_POST['carer-relation'];
+    $carerIds = $_POST['carerId'];
+
+    $carers = array();
+    $newCarers = array();
+
+    for ($x = 0; $x < sizeof($carerNames); $x++) {
+        $carer;
+
+        if (isset($carerIds[$x])) {
+            $carer = array(
+                'name' => $carerNames[$x],
+                'email' => $carerEmails[$x],
+                'relation' => $carerRelations[$x],
+                'id' => $carerIds[$x]
+            );
+            array_push($carers, $carer);
+        } else {
+            $carer = array(
+                'name' => $carerNames[$x],
+                'email' => $carerEmails[$x],
+                'relation' => $carerRelations[$x],
+                'type' => 'carer'
+            );
+            array_push($newCarers, $carer);
+        }
+    }
+
+    foreach ($carers as $carer) {
+        $updateCarer = file_get_contents("http://$IPADDRESS/query.php?action=update_user&data=".urlencode(json_encode($carer)));
+
+        // echo "http://$IPADDRESS/query.php?action=update_user&data=".urlencode(json_encode($carer));
+
+        $updateCarerResponse = json_decode($updateCarer);
+
+        if (!$updateCarerResponse->success) {
+            die($updateCarerResponse->error);
+        }
+    }
+
+    $newCarerIds = array();
+
+    foreach ($newCarers as $carer) {
+        $addCarer = file_get_contents("http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($carer)));
+
+        // echo "http://$IPADDRESS/query.php?action=new_user&data=".urlencode(json_encode($carer));
+
+        $addCarerResponse = json_decode($addCarer);
+
+        if (!$addCarerResponse->success) {
+            die($addCarerResponse->error);
+        }
+
+        array_push($newCarerIds, $addCarerResponse->data->id);
+    }
+
+    $child = array(
+        'id' => $childId,
+        'name' => $childName,
+        'pin' => $pin,
+        'teacher' => $teacher,
+        'carers' => json_encode(array_merge($carerIds, $newCarerIds))
+    );
+    // echo json_encode($carerIds);
+
+    // echo "http://$IPADDRESS/query.php?action=update_user&data=".urlencode(json_encode($child));
+
+    $addChild = file_get_contents("http://$IPADDRESS/query.php?action=update_user&data=".urlencode(json_encode($child)));
+
+    $addChildResponse = json_decode($addChild);
+
+    if (!$addChildResponse->success) {
+        die($addChildResponse->error);
+    }
+
+    $targetFile = '../img/children/'.basename($childId.'.jpg');
+
+    if (is_uploaded_file($_FILES['child-picture']['tmp_name'])) {
+        if (file_exists($targetFile))
+            unlink($targetFile);
+
+        move_uploaded_file($_FILES['child-picture']['tmp_name'], $targetFile);
+    }
+
+    header('Location: manage_children.php');
+}
+
 if (!isset($_REQUEST['id'])) {
     die('Missing id parameter');
 }
@@ -62,7 +158,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
     <div id="update-child-main" class="container-fluid">
         <div class="col-md-3 col-sm-1"></div>
         <div class="col-md-6 col-sm-10">
-            <form method="POST" enctype="multipart/form-data" id="add-child">
+            <form method="POST" enctype="multipart/form-data" id="update-child">
                 <div id="child-info" class="input-section">
                     <p>Child</p>
                     <div class="one-info">
@@ -92,6 +188,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
                     <p>Carers</p>
                     <?php foreach ($carersInfo as $carerInfo): ?>
                     <div carerId="<?php echo $carerInfo->id; ?>" class="carer-solo">
+                        <input style="visibility: hidden; position: fixed;" type="number" name="carerId[]"  value="<?php echo $carerInfo->id; ?>" />
                         <div class="one-info">
                             <label for="carer-name[]">Name:</label>
                             <input value="<?php echo $carerInfo->name; ?>" type="text" name="carer-name[]" placeholder="Sarah Leaf"><br />
@@ -117,10 +214,18 @@ foreach (json_decode($childInfo->carers) as $carer) {
                     <?php endforeach; ?>
                     <div id="add-carer-button" onclick="addCarer()">
                         <div>
-                            <p>Add a carer</p>
+                            <p>Add</p>
+                        </div>
+                    </div><br />
+                    <br /><div id="remove-details-button" onclick="updateRemoveCarer()">
+                        <div>
+                            <p>Remove</p>
                         </div>
                     </div><br /><br />
                 </div>
+                <input style="visibility: hidden; position: fixed;" type="number" name="childId"  value="<?php echo $id; ?>" />
+                <input style="visibility: hidden; position: fixed;" type="number" name="currentCarers"  value="<?php echo $childInfo->carers; ?>" />
+                <button style="visibility: hidden; position: fixed;" id="submit" type="submit"></button>
             </form>
             <div class="container-fluid update-options">
                 <div id="edit-button" class="col-md-6 col-sm-6 update-option" onclick="updateChild()">

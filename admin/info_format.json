@@ -24,6 +24,14 @@
             "details": "Changed pants cus boy"
         }
     ],
+    "occurence": false,
+    "needs": {
+        "diapers": true,
+        "wipes": false,
+        "shirt": true,
+        "pants": true,
+        "underwear": true
+    },
     "medicine": {
         "givenBy": "Bob",
         "givenAt": "00:00"

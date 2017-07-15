@@ -33,6 +33,8 @@ const CHANGE_PRESENCE = 'change_presence';
 const GET_NAME = 'get_name'; // Not documented
 const INSERT_REPORT = 'insert_report'; // Not documented
 const GET_USER_INFO = 'get_user_info'; // Not documented
+const UPDATE_USER = 'update_user'; // Not documented
+const DELETE_CARER = 'delete_carer'; // Not documented
 
 // Types of Users
 const ADMIN = 'admin';
@@ -98,6 +100,12 @@ switch ($action) {
         break;
     case GET_USER_INFO:
         getUserInfo();
+        break;
+    case UPDATE_USER:
+        updateUser();
+        break;
+    case DELETE_CARER:
+        deleteCarer();
         break;
     default:
         respond(false, null, 'Invalid Action');
