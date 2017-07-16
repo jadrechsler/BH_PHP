@@ -10,6 +10,8 @@
 // Just change the password when deployed
 // Or use another address and/ or server by chaning the config below
 
+require_once('log.php');
+
 function respond($success, $data, $error = null) {
     header('Content-Type: application/json');
 
@@ -70,12 +72,15 @@ foreach ($to as $key => $address) {
 }
 
  if(!$mail->Send()) {
+    logAppend('Email failed for ' . $to[1] . ' (+) ' . $subject);
     respond(false, null, $mail->ErrorInfo);
  } else {
     $data = array(
         'to' => $to,
         'subject' => $subject
     );
+
+    logAppend('Email sent to ' . $to[0] . '(+) ' . $subject);
 
     respond(true, $data);
  }

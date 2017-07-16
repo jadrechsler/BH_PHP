@@ -1,5 +1,7 @@
 <?php
 
+require_once('log.php');
+
 function nextChildId() {
     global $conn;
 
@@ -118,10 +120,12 @@ function deleteUser() {
         echo "DELETE FROM users WHERE id = $id";
     }
 
-    respond(true, null);
-
     $stmt->close();
     $conn->close();
+
+    logAppend('Deleting user id: ' . $id);
+
+    respond(true, null);
 }
 
 function newChild($name, $pin) {
@@ -146,10 +150,12 @@ function newChild($name, $pin) {
         'id' => $id
     );
 
-    respond(true, $data);
-
     $stmt->close();
     $conn->close();
+
+    logAppend('New child: ' . $name . ' ' . $id);
+
+    respond(true, $data);
 }
 
 function newCarer($name, $relation, $email) {
@@ -166,10 +172,12 @@ function newCarer($name, $relation, $email) {
         'id' => $id
     );
 
-    respond(true, $data);
-
     $stmt->close();
     $conn->close();
+
+    logAppend('New carer: ' . $name . ' ' . $id);
+
+    respond(true, $data);
 }
 
 function newFloater($name, $email, $pin) {
@@ -241,6 +249,8 @@ function makeReport() {
     $stmt->close();
     $conn->close();
 
+    logAppend('Report updated');
+
     respond(true, null);
 }
 
@@ -256,6 +266,10 @@ function getReport() {
     $data = array(
         'reports' => json_decode(mysqli_fetch_row($reports)[0])
     );
+
+    mysqli_close($conn);
+
+    logAppend('Report retrieved');
 
     respond(true, $data);
 }
@@ -279,6 +293,8 @@ function changeEmail() {
     $stmt->close();
     $conn->close();
 
+    logAppend('User ' . $id .' changed email to ' . $email);
+
     respond(true, null);
 }
 
@@ -297,6 +313,8 @@ function changePin() {
     $stmt->bind_param('si', $pin, $id);
 
     $stmt->execute();
+
+    logAppend('User ' . $id . ' changed pin');
 
     respond(true, null);
 }
@@ -317,6 +335,8 @@ function changeName() {
 
     $stmt->execute();
 
+    logAppend('User ' . $id . ' changed name to ' . $name);
+
     respond(true, null);
 }
 
@@ -335,6 +355,8 @@ function changeRelation() {
     $stmt->bind_param('si', $relation, $id);
 
     $stmt->execute();
+
+    logAppend('User ' . $id . ' changed relation to ' . $relation);
 
     respond(true, null);
 }
@@ -357,23 +379,9 @@ function changeTeacher() {
 
     $aa = $stmt->execute();
 
+    logAppend('User ' . $id . ' changed teacher to id ' . $teacher);
+
     respond(true, null);
-}
-
-function changeImage() {
-    global $data;
-
-    try {
-        $id = $data->id;
-    } catch(Exception $e) {
-        respond(false, null, 'Missing Data Parameters');
-    }
-
-    if (!unlink("img/children/$id.jpg")) {
-        respond(false, null, 'Error Removing Current Image');
-    }
-
-    
 }
 
 function getChildren() {
@@ -400,6 +408,10 @@ function getChildren() {
         'children' => $list
     );
 
+    mysqli_close($conn);
+
+    logAppend('Children list retrieved');
+
     respond(true, $data);
 }
 
@@ -421,6 +433,10 @@ function changePresence() {
 
     $stmt->close();
     $conn->close();
+
+    $presentStatus = $present == 1 ? 'present' : 'not present';
+
+    logAppend('User ' . $id . ' is made ' . $presentStatus);
 
     respond(true, null);
 }
@@ -448,9 +464,13 @@ function checkPin() {
 
     if ($truePin === $pin) {
         // If pin is correct
+        logAppend('Login attempt user ' . $id . ' correct');
+
         respond(true, null);
     } else {
         // If pin is incorrect
+        logAppend('Login attempt user ' . $id . ' incorrect');
+
         respond(false, null);
     }
 }
@@ -512,6 +532,8 @@ function getUserInfo() {
         'teacher' => $info['teacher'],
         'present' => $info['present']
     );
+
+    logAppend('Info retrieved for user ' . $id);
 
     respond(true, $data);
 } 
@@ -611,6 +633,8 @@ function updateUser() {
     $stmt->close();
     $conn->close();
 
+    logAppend('Updated info for user ' . $id);
+
     respond(true, null);
 }
 
@@ -664,6 +688,8 @@ function deleteCarer() {
 
     $stmt->close();
     $conn->close();
+
+    logAppend('Deleted all carers for user ' . $childId);
 
     respond(true, null);
 }
