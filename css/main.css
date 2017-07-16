@@ -360,3 +360,11 @@ h1#room-name {
 .disabled {
     pointer-events: none;
 }
+
+.option.success {
+    background-color: #00874A;
+}
+
+.option.failed {
+    background-color: #F3625C;
+}

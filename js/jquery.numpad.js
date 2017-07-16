@@ -12,6 +12,9 @@
  * Version: 1.4
  *
  */
+
+// This is a modified version of jquery.numpad.js to tailor to the specifics of how used within the application
+
 (function($){
 
 	// From https://stackoverflow.com/questions/4963053/focus-to-input-without-scrolling
@@ -182,13 +185,22 @@
 			*/
 			nmpd.close = function(target, cancel = false){
 				if (!cancel) {
-					const valid = checkPin(nmpd.getValue(), options.childId);
-					if (!valid) {
-						nmpd.children('.nmpd-overlay').addClass('incorrect');
-						return false;
+					if (options.changePin) {
+						if (!changePin(nmpd.getValue())) {
+							nmpd.children('.nmpd-overlay').addClass('incorrect');
+							return false;
+						} else {
+							nmpd.children('.nmpd-overlay').removeClass('incorrect');
+						}
 					} else {
-						nmpd.children('.nmpd-overlay').removeClass('incorrect');
-						overlay_show(options.childId, options.childName);
+						const valid = checkPin(nmpd.getValue(), options.childId);
+						if (!valid) {
+							nmpd.children('.nmpd-overlay').addClass('incorrect');
+							return false;
+						} else {
+							nmpd.children('.nmpd-overlay').removeClass('incorrect');
+							overlay_show(options.childId, options.childName);
+						}
 					}
 				} else {
 					nmpd.children('.nmpd-overlay').removeClass('incorrect');
@@ -304,6 +316,7 @@
 		onKeypadCreate: false,
 		onKeypadOpen: false,
 		onKeypadClose: false,
-		onChange: false
+		onChange: false,
+		changePin: false
 	};
 })(jQuery);

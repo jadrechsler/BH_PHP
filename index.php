@@ -206,9 +206,6 @@ function makeRowSet($list) {
         $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn keypad-action-button" style="width: 100%;"></button>';
         $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('keypad-done-button');};
 
-        // $.fn.numpad.defaults.onKeypadClose = function() {
-
-        // };
 
         $(document).ready(function() {
             $('.row-item').each(function() {
@@ -218,6 +215,16 @@ function makeRowSet($list) {
                     hideDecimalButton: true,
                     childId: $(this).attr('childId'),
                     childName: $(this).attr('childName')
+                });
+            });
+
+            $('#change-pin').each(function() {
+                $(this).numpad({
+                    displayTpl: '<input placeholder="new pin min length of 4" class="form-control" type="password" />',
+                    hidePlusMinusButton: true,
+                    hideDecimalButton: true,
+                    textDone: 'Change',
+                    changePin: true
                 });
             });
         });

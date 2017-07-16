@@ -59,6 +59,10 @@ function overlay_show(id, name) {
 	currentChild = id;
 	currentName = name;
 
+	$('#change-pin p').text('Change pin');
+	$('#change-pin').removeClass('success');
+	$('#change-pin').removeClass('failed');
+
 	if (isPresent(id)) {
 		check.querySelector("p").innerHTML = "Check out";
 		check.style.backgroundColor = "#F3625C";
@@ -392,6 +396,26 @@ function emailReport() {
 	});
 }
 
-function changePin() {
+function changePin(newPin) {
+	if (String(newPin).length < 4) {
+		return false;
+	}
 
+	const data = {
+		id: currentChild,
+		pin: newPin
+	};
+
+	QueryDB('change_pin', JSON.stringify(data), function(r) {
+		if (!r.success) {
+			console.log(r.error);
+			$('#change-pin p').text('Failed');
+			$('#change-pin').addClass('failed');
+		} else {
+			$('#change-pin p').text('Success');
+			$('#change-pin').addClass('success');
+		}
+	})
+
+	return true;
 }
