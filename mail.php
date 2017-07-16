@@ -8,7 +8,7 @@
 // notpassword
 
 // Just change the password when deployed
-// Or use another address and/ or server by chaning the config below
+// Or use another address and/ or server by changing the config below
 
 require_once('log.php');
 
@@ -72,7 +72,7 @@ foreach ($to as $key => $address) {
 }
 
  if(!$mail->Send()) {
-    logAppend('Email failed for ' . $to[1] . ' (+) ' . $subject);
+    logAppend('Email failed for ' . $to[0] . ' (+) ' . $subject);
     respond(false, null, $mail->ErrorInfo);
  } else {
     $data = array(
