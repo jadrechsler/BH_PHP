@@ -201,6 +201,22 @@ function loadReport(report) {
 	}
 
 	$('#highlights p').text(loadText('highlights'));
+
+	const changedClothes = loadText('changedClothes');
+	var changedClothesText = '';
+
+	if (changedClothes.length > 0) {
+		changedClothes.forEach(function(details, key) {
+			if (key < changedClothes.length-1) {
+				changedClothesText += details + ', ';
+			} else {
+				changedClothesText += details;
+			}
+		});
+	}
+
+	if (changedClothesText != '')
+		$('#changed-clothes p').text(changedClothesText);
 }
 
 function autoDimDisplay() {
@@ -253,7 +269,14 @@ function emailReport() {
 		<ul style="list-style-type: none">\
 	';
 
-	$('#i-was p').text(loadText('feeling.iWas'));
+	if (loadText('occurence') != '') {
+		html += '<li><span style="color: #F3625C;">Occurence:</span> Please see the teacher</li><br />';
+	}
+
+	const iWas = loadText('feeling.iWas');
+	if (iWas != '') {
+		html += '<li>I was: ' + iWas + '</li>';
+	}
 
 	const napFrom = loadText('nap.from');
 	const napTo = loadText('nap.to');
@@ -291,7 +314,7 @@ function emailReport() {
 			}
 		} else {
 			if (iNeed[need]) {
-				iNeedText += need + ' yes';
+				iNeedText += need + ' &#x2714;';
 			} else if (!iNeed[need]) {
 				iNeedText += need;
 			}
@@ -300,13 +323,25 @@ function emailReport() {
 
 	html += '<li>I need: ' + iNeedText + '</li>';
 
-	if (loadText('occurence')) {
-		html += '<li>Occurence: Please see teacher</li>';
-	}
-
 	const highlights = loadText('highlights');
 	if (highlights != '')
 		html += '<li>Highlights/ new discoveries: ' + highlights + '</li>';
+
+	const changedClothes = loadText('changedClothes');
+	var changedClothesText = '';
+
+	if (changedClothes.length > 0) {
+		changedClothes.forEach(function(details, key) {
+			if (key < changedClothes.length-1) {
+				changedClothesText += details + ', ';
+			} else {
+				changedClothesText += details;
+			}
+		});
+	}
+
+	if (changedClothesText != '')
+		html += '<li>Changed clothes: ' + changedClothesText + '</li>';
 
 	html += '</ul></body></html>';
 
@@ -316,6 +351,8 @@ function emailReport() {
 
 	var carers;
 
+
+	// Get list of childs carers
 	QueryDB('get_user_info', JSON.stringify({id: id}), function(r) {
 		if (!r.success) {
 			console.log(r.error);
@@ -326,6 +363,8 @@ function emailReport() {
 
 	var to = [];
 
+
+	// Get email addresses associated with the carers
 	carers.forEach(function(id) {
 		QueryDB('get_user_info', JSON.stringify({id: id}), function(r) {
 			if (!r.success) {
@@ -336,21 +375,23 @@ function emailReport() {
 		}, false);
 	});
 
-	const content = html;
-
 	const data = {
 		to: to,
-		subject: 'JS Test',
-		body: content
+		subject: 'Report: ' + currentName,
+		body: html
 	};
 
 	SendMail(data, function(r) {
 		if (r.success) {
-			$('#email button').text('DONE');
+			$('#email button').text('SENT');
 			$('#email button').addClass('sent');
 		} else {
 			$('#email button').text('FAILED');
 			$('#email button').addClass('failed');
 		}
 	});
+}
+
+function changePin() {
+
 }
