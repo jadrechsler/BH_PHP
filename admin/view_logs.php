@@ -22,6 +22,9 @@ require('../ipconfig.php');
     <link rel="stylesheet" href="<?php echo AddrLink('css/jquery-ui.css'); ?>">
 </head>
 <body>
+    <a id="back-button" href="/admin">
+        <span>&larr;</span>
+    </a>
     <h1>Logs</h1>
     <div id="logs-main" class="container-fluid">
         <div class="col-md-3 col-sm-1"></div>

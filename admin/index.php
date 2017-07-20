@@ -48,17 +48,22 @@ $isFloater = $id == 4 ? true : false;
     <div id="main">
         <?php if ($isAdmin): ?>
         <div class="container-fluid">
-            <div onclick="window.location.href='manage_children.php'" class="col-md-4 col-sm-4 option-container">
+            <div onclick="window.location.href='manage_children.php'" class="col-md-3 col-sm-3 option-container">
                 <div class="option-box">
                     <p>Manage Children</p>
                 </div>                
             </div>
-            <div onclick="window.location.href='manage_staff.php'" class="col-md-4 col-sm-4 option-container">
+            <div onclick="window.location.href='manage_staff.php'" class="col-md-3 col-sm-3 option-container">
                 <div class="option-box">
                     <p>Manage Staff</p>
                 </div>                
             </div>
-            <div onclick="window.location.href='my_account.php'" class="col-md-4 col-sm-4 option-container">
+            <div onclick="window.location.href='view_logs.php'" class="col-md-3 col-sm-3 option-container">
+                <div class="option-box">
+                    <p>Logs</p>
+                </div>                
+            </div>
+            <div onclick="window.location.href='my_account.php'" class="col-md-3 col-sm-3 option-container">
                 <div class="option-box">
                     <p>My Account</p>
                 </div>                
@@ -66,10 +71,14 @@ $isFloater = $id == 4 ? true : false;
         </div>
         <?php endif; if ($isTeacher): ?>
         <div class="container-fluid">
-            <div class="col-md-2 col-sm-2"></div>
             <div onclick="window.location.href='manage_children.php'" class="col-md-4 col-sm-4 option-container">
                 <div class="option-box">
                     <p>Manage Children</p>
+                </div>                
+            </div>
+            <div onclick="window.location.href='view_logs.php'" class="col-md-4 col-sm-4 option-container">
+                <div class="option-box">
+                    <p>Logs</p>
                 </div>                
             </div>
             <div onclick="window.location.href='my_account.php'" class="col-md-4 col-sm-4 option-container">
