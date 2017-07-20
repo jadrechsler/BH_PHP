@@ -1,8 +1,14 @@
 {
-    "bathroom": {
-        "iWent": "wee",
-        "at": "00:00"
-    },
+    "bathroom": [
+        {
+            "iWent": "wee",
+            "at": "aaaa"
+        },
+        {
+            "iWent": "wee",
+            "at": "aaaa"
+        }
+    ],
     "meals": {
         "breakfast": "Parent provided",
         "lunch": "Provided here",

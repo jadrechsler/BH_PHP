@@ -82,7 +82,7 @@ function makeRowSet($list) {
 			</div>
 			<div class="col-md-4">
 				<div class="exit"><span onclick="overlay_hide();">&#x2573</span></div>
-				<div id="change-pin" class="option" onclick="changePin()">
+				<div id="change-pin" class="option">
 					<p>Change pin</p>
 				</div>
 			</div>
@@ -197,6 +197,7 @@ function makeRowSet($list) {
     <script src="<?php echo AddrLink('js/jquery.numpad.js'); ?>"></script>
 	<script type="text/javascript">
 		var children = JSON.parse('<?php echo getChildrenArray(); ?>');
+
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
 
         $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
@@ -213,6 +214,7 @@ function makeRowSet($list) {
                     displayTpl: '<input class="form-control" type="password" />',
                     hidePlusMinusButton: true,
                     hideDecimalButton: true,
+                    textDone: 'Enter',
                     childId: $(this).attr('childId'),
                     childName: $(this).attr('childName')
                 });

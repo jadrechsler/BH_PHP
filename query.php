@@ -35,6 +35,8 @@ const INSERT_REPORT = 'insert_report'; // Not documented
 const GET_USER_INFO = 'get_user_info'; // Not documented
 const UPDATE_USER = 'update_user'; // Not documented
 const DELETE_CARER = 'delete_carer'; // Not documented
+const GET_PAST_REPORT = 'get_past_report'; // Not documented
+const GET_LOG = 'get_log'; // Not documented
 
 // Types of Users
 const ADMIN = 'admin';
@@ -106,6 +108,12 @@ switch ($action) {
         break;
     case DELETE_CARER:
         deleteCarer();
+        break;
+    case GET_PAST_REPORT:
+        getPastReport();
+        break;
+    case GET_LOG:
+        getLog();
         break;
     default:
         respond(false, null, 'Invalid Action');

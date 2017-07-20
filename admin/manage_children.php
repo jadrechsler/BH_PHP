@@ -54,6 +54,7 @@ $isFloater = $id == 4 ? true : false;
     <title>Manage Children</title>
     <link rel="stylesheet" href="<?php echo AddrLink('css/bootstrap.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
+    <link rel="stylesheet" href="<?php echo AddrLink('css/jquery-ui.css'); ?>">
 </head>
 <body>
     <a id="back-button" href="/admin">
@@ -80,8 +81,9 @@ $isFloater = $id == 4 ? true : false;
                 <div class="col-md-3 col-sm-1"></div>
                 <div id="children-list-container" class="col-md-6 col-sm-10">
                     <div>
-                        <div class="container-fluid col-sm-11 col-md-11 student-container">
-                            <div childId="<?php echo $child->id; ?>" class="col-md-11 col-sm-11 container-fluid list-item student">
+                        <?php if (!$isFloater): ?>
+                        <div class="container-fluid col-sm-9 col-md-9 student-container">
+                            <div childId="<?php echo $child->id; ?>" class="col-md-11 col-sm-9 container-fluid list-item student">
                                 <div class="col-md-4 col-sm-4 img-container">
                                     <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
                                 </div>                    
@@ -90,11 +92,35 @@ $isFloater = $id == 4 ? true : false;
                                 </div>
                             </div>
                         </div>
+                        <div childId="<?php echo $child->id; ?>" class="col-md-2 col-sm-2 historical-button-container">
+                            <input style="position: absolute; height: 0; width: 0; border: none; background-color: transparent;" class="historical-date-input" readonly />
+                            <div class="historical-button">
+                                <p>historical</p>
+                            </div>
+                        </div>
                         <div class="col-md-1 col-sm-1 report-edit-button-container" onclick="window.location.href='child.php?id='+<?php echo $child->id; ?>">
                             <div class="report-edit-button">
                                 <p>edit</p>
                             </div>
                         </div>
+                        <?php endif; if ($isFloater): ?>
+                        <div class="container-fluid col-sm-10 col-md-10 student-container">
+                            <div childId="<?php echo $child->id; ?>" class="col-md-11 col-sm-9 container-fluid list-item student">
+                                <div class="col-md-4 col-sm-4 img-container">
+                                    <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
+                                </div>                    
+                                <div class="col-md-7 col-sm-7 p-container">
+                                    <p><?php echo $child->name; ?></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div childId="<?php echo $child->id; ?>" class="col-md-2 col-sm-2 historical-button-container alone">
+                            <input style="position: absolute; height: 0; width: 0; border: none; background-color: transparent;" class="historical-date-input" readonly />
+                            <div class="historical-button">
+                                <p>historical</p>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="col-md-1"></div>
@@ -107,8 +133,9 @@ $isFloater = $id == 4 ? true : false;
                 <div class="col-md-3 col-sm-1"></div>
                 <div id="children-list-container" class="col-md-6 col-sm-10">
                     <div>
-                        <div class="container-fluid col-sm-11 col-md-11 student-container">
-                            <div childId="<?php echo $child->id; ?>" class="col-md-11 col-sm-11 container-fluid list-item student">
+                        <?php if (!$isFloater): ?>
+                        <div class="container-fluid col-sm-9 col-md-9 student-container">
+                            <div childId="<?php echo $child->id; ?>" class="col-md-11 col-sm-9 container-fluid list-item student">
                                 <div class="col-md-4 col-sm-4 img-container">
                                     <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
                                 </div>                    
@@ -117,11 +144,18 @@ $isFloater = $id == 4 ? true : false;
                                 </div>
                             </div>
                         </div>
+                        <div childId="<?php echo $child->id; ?>" class="col-md-2 col-sm-2 historical-button-container">
+                            <input style="position: absolute; height: 0; width: 0; border: none; background-color: transparent;" class="historical-date-input" />
+                            <div class="historical-button">
+                                <p>historical</p>
+                            </div>
+                        </div>
                         <div class="col-md-1 col-sm-1 report-edit-button-container" onclick="window.location.href='child.php?id='+<?php echo $child->id; ?>">
                             <div class="report-edit-button">
                                 <p>edit</p>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <div class="col-md-1"></div>
@@ -149,7 +183,52 @@ $isFloater = $id == 4 ? true : false;
         const IPADDRESS = "<?php echo $IPADDRESS ?>";
     </script>
     <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
+    <script src="<?php echo AddrLink('js/jquery-ui.js'); ?>"></script>
     <script src="<?php echo AddrLink('js/query.js'); ?>"></script>
     <script src="<?php echo AddrLink('js/admin/children.js'); ?>"></script>
+    <script>
+        $('.historical-date-input').datepicker({
+            onClose: function() {
+                const $dateInput = $(this);
+
+                const val = $dateInput.val();
+                const id = $dateInput.parent().attr('childId');
+
+                console.log(val);
+                console.log(id);
+
+                if (!val)
+                    return;
+
+                const data = {
+                    date: val
+                };
+
+                QueryDB('get_past_report', JSON.stringify(data), function(r) {
+                    if (r.success) {
+                        const reports = r.data.reports;
+
+                        if (reports.hasOwnProperty(parseInt(id))) {
+                            const report = encodeURIComponent(JSON.stringify(reports[id]));
+                            const date = encodeURIComponent(val);
+
+                            window.location.href = 'historical_reports.php?id=' + id + '&date=' + date + '&report=' + report;
+                        ``} else {
+                            $dateInput.siblings('.historical-button').children('p').text('not found');
+                        }
+                    } else {
+                        $dateInput.siblings('.historical-button').children('p').text('not found');
+                    }
+                });
+            },
+            dateFormat: 'dd m yy'
+        });
+
+        $('.historical-button').click(function() {
+            const el = $(this).siblings('.historical-date-input');
+
+            el.focus();
+        });
+    </script>
 </body>
 </html>

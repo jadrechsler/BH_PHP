@@ -36,4 +36,45 @@ function logAppend($data) {
     }
 }
 
+function get_string_between($string, $start, $end){
+    $string = ' ' . $string;
+    $ini = strpos($string, $start);
+    if ($ini == 0) return '';
+    $ini += strlen($start);
+    $len = strpos($string, $end, $ini) - $ini;
+    return substr($string, $ini, $len);
+}
+
+function getLogList() {
+    global $logDirectory;
+    $list = array();
+
+    foreach (glob($logDirectory.'/*.log') as $log) {
+        $name = get_string_between($log, '/', '.');
+        array_push($list, $name);
+    }
+
+    return $list;
+}
+
+function getLogAsHTML($name) {
+    global $logDirectory;
+
+    $location = $logDirectory.'/'.$name.'.log';
+
+    if (!file_exists($location))
+        return '';
+
+    $log = fopen($location, 'r');
+
+    $fullFile = '';
+
+    while ($line = fgets($log)) {
+        $fullFile .= $line;
+    }
+
+    fclose($log);
+
+    return $fullFile;
+}
 ?>

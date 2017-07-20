@@ -2,6 +2,14 @@
 
 session_start();
 
+if (isset($_SESSION['id'])) {
+    if (!($_SESSION['id'] <= 3)) {
+        die('Invalid Authorisation');
+    }
+} else {
+    header('Location: ../login.php');
+}
+
 require('../ipconfig.php');
 
 if (isset($_POST['child-name'])) {

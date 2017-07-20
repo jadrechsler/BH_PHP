@@ -14,6 +14,8 @@ body {
     background-color: #EFEBE9;
     padding-bottom: 50px;
     font-size: 2em;
+
+    z-index: 2;
 }
 
 body > h1:nth-of-type(1) {
@@ -53,6 +55,10 @@ body > h1:nth-of-type(1) {
     background-color: white;
     height: 66px;
     width: 99%;
+}
+
+.list-item.no-edit {
+    width: 100%;
 }
 
 .list-item img {
@@ -218,11 +224,11 @@ form input, select, button, .input-group {
     height: 45px;
 }
 
-#add-carer-button, #add-details-button, #remove-details-button {
+#add-carer-button, .add-details-button, .remove-details-button {
     margin-top: 5px;
 }
 
-#add-carer-button, #add-details-button {
+#add-carer-button, .add-details-button {
     float: right;
     margin-right: 40px;
     padding: 5px;
@@ -236,7 +242,7 @@ form input, select, button, .input-group {
     cursor: pointer;
 }
 
-#remove-details-button {
+.remove-details-button {
     float: right;
     margin-right: 40px;
     padding: 5px;
@@ -250,17 +256,17 @@ form input, select, button, .input-group {
     cursor: pointer;
 }
 
-#add-carer-button:hover, #add-details-button:hover {
+#add-carer-button:hover, .add-details-button:hover {
     background-color: white;
     color: #2C5276;
 }
 
-#remove-details-button:hover {
+.remove-details-button:hover {
     background-color: white;
     color: #F3625C;
 }
 
-#add-carer-button p, #add-details-button p, #remove-details-button p {
+#add-carer-button p, .add-details-button p, .remove-details-button p {
     text-align: center;
 }
 
@@ -305,6 +311,20 @@ form input, select, button, .input-group {
     color: white;
     border: 1px solid #2C5276;
     cursor: pointer;
+}
+
+#complete-button.disabled {
+    pointer-events: none;
+}
+
+#complete-button.sent {
+    background-color: #00874A;
+    border: 1px solid #00874A;
+}
+
+#complete-button.failed {
+    background-color: #F3625C;
+    border: 1px solid #F3625C;
 }
 
 #complete-button:hover {
@@ -457,6 +477,36 @@ div.staff {
     line-height: 60px;
 }
 
+.historical-button-container {
+    padding: 0;
+    margin: 0;
+    margin-top: 1px;
+    height: 66px;
+    cursor: pointer;
+    padding-right: 2px;
+}
+
+.historical-button-container.alone {
+    padding-right: 0;
+}
+
+.historical-button-container div {
+    background-color: #FEBE11;;
+    color: white;
+    border: 1px solid #FEBE11;;
+    height: 66px;
+}
+
+.historical-button-container div:hover {
+    color: #FEBE11;;
+    background-color: white;
+}
+
+.historical-button p {
+    font-size: 1em;
+    line-height: 60px;
+}
+
 #back-button {
     text-align: left;
     top: 0;
@@ -469,4 +519,34 @@ div.staff {
 
 #back-button.back-dark {
     color: white;
+}
+
+.historical-date-input {
+    z-index: 0;
+}
+
+
+
+
+
+#logs-main #date-selector-container {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#logs-main #date-selector {
+    width: 100%;
+    padding: 7px;
+}
+
+#logs-main #log-container {
+    margin-top: 5px;
+    width: 100%;
+    min-height: 400px;
+    max-height: 500px;
+    padding: 5px;
+    overflow-y: auto;
+    background-color: lightgrey;
+    border: 1px solid grey;
 }

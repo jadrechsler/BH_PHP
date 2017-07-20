@@ -274,6 +274,48 @@ function getReport() {
     respond(true, $data);
 }
 
+function getPastReport() {
+    global $conn;
+    global $data;
+
+    try {
+        $date = $data->date;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    $stmt = $conn->prepare("SELECT reports FROM info WHERE date = ?");
+    $stmt->bind_param('s', $date);
+
+    $stmt->execute();
+
+    $stmt->store_result();
+    $stmt->bind_result($reports);
+
+    $numRows = $stmt->num_rows;
+
+    if ($numRows < 1) {
+        respond(false, null);
+    }
+
+    $r;
+
+    while ($stmt->fetch()) {
+        $r = $reports;
+    }
+
+    $data = array(
+        'reports' => json_decode($r)
+    );
+
+    $stmt->close();
+    $conn->close();
+
+    logAppend('Date Specific Report retrieved');
+
+    respond(true, $data);
+}
+
 function changeEmail() {
     global $conn;
     global $data;
@@ -692,6 +734,27 @@ function deleteCarer() {
     logAppend('Deleted all carers for user ' . $childId);
 
     respond(true, null);
+}
+
+function getLog() {
+    global $data;
+
+    try {
+        $date = $data->date;
+    } catch(Exception $e) {
+        respond(false, null, 'Missing Data Parameters');
+    }
+
+    $log = getLogAsHTML($date);
+
+    $data = array(
+        'log' => $log
+    );
+
+    if ($log != '')
+        respond(true, $data);
+
+    respond(false, $data, 'Can\'t find log');
 }
 
 ?>

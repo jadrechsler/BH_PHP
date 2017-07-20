@@ -163,9 +163,10 @@ function removeDetails() {
 }
 
 function addBathroom() {
-    const inputs = '<div class="bathroom-detail"><div class="one-info"><label for="i-went">I went:</label><select name="i-went"><option value="">&lt;select&gt;</option><option value="Wet">Wet</option><option value="Dry">Dry</option><option value="Peed">Peed</option><option value="BM">BM</option><option value="LS">LS</option></select><br /></div><div class="one-info"><label for="i-went-time">At:</label><div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true"><input placeholder="00:00" type="text" name="i-went-time" class="form-control" /><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span></div></div></div>'; 
+    const inputs = '<div class="bathroom-detail"><div class="one-info"><br /><label for="i-went[]">I went:</label><select name="i-went[]"><option value="">&lt;select&gt;</option><option value="Wet">Wet</option><option value="Dry">Dry</option><option value="Peed">Peed</option><option value="BM">BM</option><option value="LS">LS</option></select><br /></div><div class="one-info"><label for="i-went-time[]">At:</label><div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true"><input placeholder="00:00" type="text" name="i-went-time[]" class="form-control" /><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span></div></div></div>'; 
 
     $(inputs).insertBefore('#bathroom-append');
+    $('.clockpicker').clockpicker();
 }
 
 function removeBathroom() {
@@ -241,6 +242,9 @@ function saveReport() {
         return checkbox.is(':checked');
     }
 
+    var iWentArr = [];
+    var iWentTimeArr = [];
+
     form.filter(':input').each(function() {
         const val = $(this).val();
 
@@ -248,16 +252,13 @@ function saveReport() {
         const name = $(this).attr('name');
         const classes = $(this).attr('class');
 
+        if (name == 'i-went[]')
+            iWentArr.push(val);
+        if (name == 'i-went-time[]')
+            iWentTimeArr.push(val);
+
         if (val != '') {
             switch (name) {
-                case 'i-went':
-                    ensurePropExists('bathroom', {});
-                    report['bathroom']['iWent'] = val;
-                    break;
-                case 'i-went-time':
-                    ensurePropExists('bathroom', {});
-                    report['bathroom']['at'] = val;
-                    break;
                 case 'breakfast':
                     ensurePropExists('meals', {});
                     report['meals']['breakfast'] = val;
@@ -341,6 +342,22 @@ function saveReport() {
             }
         }
     })
+
+    if (iWentArr.length > 0 || iWentTimeArr.length > 0) {
+        ensurePropExists('bathroom', []);
+
+        for (var x = 0; x < iWentArr.length; x++) {
+            const iWent = iWentArr[x];
+            const at = iWentTimeArr[x];
+
+            if (iWent != '' || at != '') {
+                report['bathroom'].push({
+                    'iWent': iWentArr[x],
+                    'at': iWentTimeArr[x]
+                });
+            }
+        }
+    }
 
     QueryDB('get_report', '{}', function(r) {
         var reports = r.data.reports;
@@ -447,7 +464,7 @@ function loadText(text) {
 }
 
 function emailHistoricalReport() {
-    $('#email button').addClass('disabled');
+    $('#complete-button').addClass('disabled');
 
     const formattedDate = pastDate.replace(/\s+/g, '/');
 
@@ -571,11 +588,11 @@ function emailHistoricalReport() {
 
     SendMail(data, function(r) {
         if (r.success) {
-            $('#email button').text('SENT');
-            $('#email button').addClass('sent');
+            $('#complete-button p').text('SENT');
+            $('#complete-button').addClass('sent');
         } else {
-            $('#email button').text('FAILED');
-            $('#email button').addClass('failed');
+            $('#complete-button p').text('FAILED');
+            $('#complete-button').addClass('failed');
         }
     });
 }

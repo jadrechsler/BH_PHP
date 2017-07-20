@@ -32,6 +32,7 @@ if (!isset($_REQUEST['date'])) {
 
 $report = json_decode($_REQUEST['report'], true);
 $date = $_REQUEST['date'];
+$formattedDate = str_replace(' ', '/', $date);
 
 $nameRequest = file_get_contents("http://$IPADDRESS/query.php?action=get_name&data=".urlencode("{\"id\": $id}"));
 
@@ -54,7 +55,7 @@ function GetSaved($spec) {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Child Report</title>
+    <title>Child Historical Report</title>
     <link rel="stylesheet" href="<?php echo AddrLink('css/bootstrap.min.css'); ?>">
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
     <link rel="stylesheet" href="<?php echo AddrLink('css/clockpicker.css'); ?>">
@@ -64,9 +65,9 @@ function GetSaved($spec) {
         <a id="back-button" class="back-dark" href="/admin/manage_children.php">
             <span>&larr;</span>
         </a>
-        <h1><?php echo $name; ?></h1>
+        <h1><?php echo $name; ?> - <?php echo $formattedDate; ?></h1>
         <div id="complete-button" onclick="emailHistoricalReport()">
-            <p>Email</p>
+            <p>EMAIL</p>
         </div>
     </div>
     <div id="info-child-main" class="container-fluid">

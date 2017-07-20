@@ -149,6 +149,7 @@ function loadText(text) {
 
 function loadReport(report) {
 	$('#i-ate ul').text('');
+	$('#i-went p').text('');
 
 	$('#i-was p').text(loadText('feeling.iWas'));
 
@@ -157,10 +158,17 @@ function loadReport(report) {
 	if (napFrom != '' && napTo != '')
 		$('#i-slept p').text(napFrom + ' - ' + napTo);
 
-	const bathroomIWent = loadText('bathroom.iWent');
-	const bathroomAt = loadText('bathroom.at');
-	if (bathroomIWent != '' && bathroomAt != '')
-		$('#i-went p').text(bathroomIWent + ' at ' + bathroomAt);
+	const bathroomData = loadText('bathroom');
+
+	bathroomData.forEach(function(value) {
+		const iWent = value['iWent'];
+		const at = value['at'];
+
+		console.log('<p>' + iWent + ' at ' + at + '</p>');
+
+		if (iWent != '')
+			$('#i-went p').append('<p>' + iWent + ' at ' + at + '</p>');
+	});
 	
 
 	const breakfast = loadText('meals.breakfast');
@@ -297,10 +305,26 @@ function emailReport() {
 	if (napFrom != '' && napTo != '')
 		html += '<h2 style="padding-top: 5px;">I slept</h2><p>' + napFrom + ' - ' + napTo + '</p>';
 
-	const bathroomIWent = loadText('bathroom.iWent');
-	const bathroomAt = loadText('bathroom.at');
-	if (bathroomIWent != '' && bathroomAt != '')
-		html += '<h2 style="padding-top: 5px;">I went</h2><p>' + bathroomIWent + ' at ' + bathroomAt + '</p>';
+	const bathroomData = loadText('bathroom');
+
+	var iWentDone = false;
+
+	function iWentExists() {
+		if (!iWentDone) {
+			html += '<h2 style="padding-top: 5px;">I went</h2>';
+			iWentDone = true;
+		}
+	}
+
+	bathroomData.forEach(function(value) {
+		const iWent = value['iWent'];
+		const at = value['at'];
+
+		if (iWent != '') {
+			iWentExists();
+			html += '<p>' + iWent + ' at ' + at + '</p>';
+		}
+	});
 	
 
 	const breakfast = loadText('meals.breakfast');

@@ -266,7 +266,7 @@ h1#room-name {
     margin: 0;
     padding: 0;
     height: 10%;
-    position: relative;
+    position: absolute;
 }
 
 #report .right .middle {
@@ -331,6 +331,10 @@ h1#room-name {
     border: 5px solid #F3625C;
 }
 
+#report #occurence {
+    display: none;
+}
+
 #report #occurence h1 {
     line-height: calc(1%);
     font-weight: bold;
@@ -361,7 +365,12 @@ h1#room-name {
     pointer-events: none;
 }
 
-.option.success {
+#report #email button.disabledEmpty {
+    pointer-events: none;
+    background-color: grey;
+}
+
+option.success {
     background-color: #00874A;
 }
 

@@ -3,7 +3,7 @@
 session_start();
 
 if (isset($_SESSION['id'])) {
-    if (!($_SESSION['id'] <= 4)) {
+    if (!($_SESSION['id'] <= 3)) {
         die('Invalid Authorisation');
     }
 } else {
@@ -217,7 +217,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
                             <p>Add</p>
                         </div>
                     </div><br />
-                    <br /><div id="remove-details-button" onclick="updateRemoveCarer()">
+                    <br /><div class="remove-details-button" onclick="updateRemoveCarer()">
                         <div>
                             <p>Remove</p>
                         </div>
