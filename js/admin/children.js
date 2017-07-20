@@ -496,10 +496,26 @@ function emailHistoricalReport() {
     if (napFrom != '' && napTo != '')
         html += '<h2 style="padding-top: 5px;">I slept</h2><p>' + napFrom + ' - ' + napTo + '</p>';
 
-    const bathroomIWent = loadText('bathroom.iWent');
-    const bathroomAt = loadText('bathroom.at');
-    if (bathroomIWent != '' && bathroomAt != '')
-        html += '<h2 style="padding-top: 5px;">I went</h2><p>' + bathroomIWent + ' at ' + bathroomAt + '</p>';
+    const bathroomData = loadText('bathroom');
+
+    var iWentDone = false;
+
+    function iWentExists() {
+        if (!iWentDone) {
+            html += '<h2 style="padding-top: 5px;">I went</h2>';
+            iWentDone = true;
+        }
+    }
+
+    bathroomData.forEach(function(value) {
+        const iWent = value['iWent'];
+        const at = value['at'];
+
+        if (iWent != '') {
+            iWentExists();
+            html += '<p>' + iWent + ' at ' + at + '</p>';
+        }
+    });
     
 
     const breakfast = loadText('meals.breakfast');

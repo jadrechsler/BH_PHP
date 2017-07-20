@@ -76,30 +76,38 @@ function GetSaved($spec) {
             <form method="POST" enctype="multipart/form-data" id="child-report">
                 <div class="input-section">
                     <p>Bathroom</p>
+                    <?php $bathroomData = GetSaved('[\'bathroom\']'); $count = 0; foreach ($bathroomData as $value):?>
+                    <?php if ($count > 0): ?>
+                    <div class="bathroom-detail">
+                    <?php endif; ?>
                     <div class="one-info">
-                        <label for="i-went">I went:</label>
-                        <?php { $value = GetSaved('[\'bathroom\'][\'iWent\']'); ?>
-                        <select name="i-went">
-                            <option <?php if ($value == '') {echo 'selected="selected"';} ?> value="">&lt;select&gt;</option>
-                            <option <?php if ($value == 'Wet') {echo 'selected="selected"';} ?> value="Wet">Wet</option>
-                            <option <?php if ($value == 'Dry') {echo 'selected="selected"';} ?> value="Dry">Dry</option>
-                            <option <?php if ($value == 'Peed') {echo 'selected="selected"';} ?> value="Peed">Peed</option>
-                            <option <?php if ($value == 'BM') {echo 'selected="selected"';} ?> value="BM">BM</option>
-                            <option <?php if ($value == 'LS') {echo 'selected="selected"';} ?> value="LS">LS</option>
+                        <?php if ($count > 0): ?>
+                        <br />
+                        <?php endif; ?>
+                        <label for="i-went[]">I went:</label>
+                        <select name="i-went[]">
+                            <option <?php if ($value['iWent'] == '') {echo 'selected="selected"';} ?> value="">&lt;select&gt;</option>
+                            <option <?php if ($value['iWent'] == 'Wet') {echo 'selected="selected"';} ?> value="Wet">Wet</option>
+                            <option <?php if ($value['iWent'] == 'Dry') {echo 'selected="selected"';} ?> value="Dry">Dry</option>
+                            <option <?php if ($value['iWent'] == 'Peed') {echo 'selected="selected"';} ?> value="Peed">Peed</option>
+                            <option <?php if ($value['iWent'] == 'BM') {echo 'selected="selected"';} ?> value="BM">BM</option>
+                            <option <?php if ($value['iWent'] == 'LS') {echo 'selected="selected"';} ?> value="LS">LS</option>
                         </select>
-                        <?php } ?>
                         <br />
                     </div>
                     <div class="one-info">
-                        <label for="i-went-time">At:</label>
+                        <label for="i-went-time[]">At:</label>
                         <div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true">
-                            <input type="text" name="i-went-time" class="form-control" value="<?php echo GetSaved('[\'bathroom\'][\'at\']'); ?>" />
+                            <input placeholder="00:00" type="text" name="i-went-time[]" class="form-control" value="<?php echo $value['at']; ?>" />
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
                         </div>
                     </div>
-                </div>
+                    <?php if ($count > 0): ?>
+                    </div></div>
+                    <?php endif; ?>
+                    <?php $count++; endforeach; ?>
                 <div class="input-section">
                     <p>Meals</p>
                     <div class="one-info">
