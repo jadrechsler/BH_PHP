@@ -4,6 +4,9 @@ var currentName;
 
 function isPresent(id) {
 	var present = false;
+
+	console.log(children);
+
 	children.forEach(function(child) {
 		if (child.id == id.toString() && child.present == "1")
 			present = true;
@@ -87,6 +90,7 @@ function report_show() {
 	$emailBtn.removeClass('sent');
 	$emailBtn.removeClass('failed');
 	$emailBtn.removeClass('disabled');
+	$emailBtn.removeClass('disabledEmpty');
 	$emailBtn.text('EMAIL');
 
 	QueryDB('get_report', '{}', function(r) {
@@ -95,10 +99,11 @@ function report_show() {
 		} else {
 			const childReport = r.data.reports[currentChild];
 
-			currentReport = childReport;
-
-			if (childReport != undefined) {
+			if (childReport != undefined && childReport != null) {
+				currentReport = childReport;
 				loadReport(childReport);
+			} else {
+				$emailBtn.addClass('disabledEmpty');
 			}
 
 			show(report);
@@ -172,36 +177,35 @@ function loadReport(report) {
 
 	const iNeedOptions = ['diapers', 'wipes', 'shirt', 'pants', 'underwear'];
 	const iNeed = loadText('needs');
-	var iNeedText = '';
+	var iNeedText = '<ul style="list-style-type: none; text-align: left;">';
 
-	iNeedOptions.forEach(function(need, index) {
-		if (index < iNeedOptions.length-1) {
-			if (iNeed[need]) {
-				iNeedText += need + ' &#x2714;, '; // Append check mark
-			} else if (!iNeed[need]) {
-				iNeedText += need + ', ';
-			}
-		} else {
-			if (iNeed[need]) {
-				iNeedText += need + ' yes';
-			} else if (!iNeed[need]) {
-				iNeedText += need;
-			}
+	iNeedOptions.forEach(function(need) {
+		if (iNeed[need]) {
+			iNeedText += '<li>' + need + ' &#x2714; </li>'; // Append check mark
+		} else if (!iNeed[need]) {
+			iNeedText += '<li>' + need + '</li>';
 		}
 	});
 
-	$('#i-need p').html(iNeedText);
+	$('#i-need p').html(iNeedText + '</ul>');
 
-	if (!loadText('occurence')) {
-		// Hide occurence box
+	const occurence = loadText('occurence');
+	if (occurence != '') {
+		if (occurence) {
+			// Hide occurence box
+			$('#occurence').hide();
+			$('#report .right .top').css('position', 'absolute');
+			$('#report .right .middle').css('height', '80%');
+		} else {
+			// Show occurence box
+			$('#occurence').show();
+			$('#report .right .top').css('position', 'relative');
+			$('#report .right .middle').css('height', '70%');
+		}
+	} else {
 		$('#occurence').hide();
 		$('#report .right .top').css('position', 'absolute');
 		$('#report .right .middle').css('height', '80%');
-	} else {
-		// Show occurence box
-		$('#occurence').show();
-		$('#report .right .top').css('position', 'relative');
-		$('#report .right .middle').css('height', '70%');
 	}
 
 	$('#highlights p').text(loadText('highlights'));
@@ -240,7 +244,7 @@ function autoDimDisplay() {
 	}, 2000); // Every 2 seconds
 }
 
-autoDimDisplay();
+// autoDimDisplay();
 
 function checkPin(pin, id) {
 	const data = {
@@ -258,9 +262,14 @@ function checkPin(pin, id) {
 }
 
 function emailReport() {
-	console.log("emailing");
-
 	$('#email button').addClass('disabled');
+
+	const date = new Date();
+	const day = date.getDate();
+	const month = date.getMonth()+1;
+	const year = date.getFullYear();
+
+	const formattedDate = day + '/' + month + '/' + year;
 
 	var html = '\
 		<html>\
@@ -268,10 +277,11 @@ function emailReport() {
 		<meta charset="utf-8">\
 		</head>\
 		<body>\
-		<h1>Report</h1>\
-		<h3>'+currentName+'</h3>\
-		<ul style="list-style-type: none">\
+		<h1>Daily Report</h1>\
+		<h3>'+currentName+' : '+formattedDate+'</h3>\
 	';
+
+	console.log(html);
 
 	if (loadText('occurence') != '') {
 		html += '<li><span style="color: #F3625C;">Occurence:</span> Please see the teacher</li><br />';
@@ -279,75 +289,67 @@ function emailReport() {
 
 	const iWas = loadText('feeling.iWas');
 	if (iWas != '') {
-		html += '<li>I was: ' + iWas + '</li>';
+		html += '<h2 style="padding-top: 5px;">I was</h2><p>' + iWas + '</p>';
 	}
 
 	const napFrom = loadText('nap.from');
 	const napTo = loadText('nap.to');
 	if (napFrom != '' && napTo != '')
-		html += '<li>I slept: ' + napFrom + ' - ' + napTo + '</li>';
+		html += '<h2 style="padding-top: 5px;">I slept</h2><p>' + napFrom + ' - ' + napTo + '</p>';
 
 	const bathroomIWent = loadText('bathroom.iWent');
 	const bathroomAt = loadText('bathroom.at');
 	if (bathroomIWent != '' && bathroomAt != '')
-		html += '<li>I went: ' + bathroomIWent + ' at ' + bathroomAt + '</li>';
+		html += '<h2 style="padding-top: 5px;">I went</h2><p>' + bathroomIWent + ' at ' + bathroomAt + '</p>';
 	
 
 	const breakfast = loadText('meals.breakfast');
-	if (breakfast != '')
-		html += '<li>Breakfast: ' + breakfast + '</li>';
-
 	const lunch = loadText('meals.lunch');
-	if (lunch != '')
-		html += '<li>Lunch: ' + lunch + '</li>';
-
 	const snack = loadText('meals.snack');
+
+	if (breakfast != '' || lunch != '' || snack != '')
+		html += '<h2 style="padding-top: 5px;">Meals</h2>'
+
+	if (breakfast != '')
+		html += '<p>Breakfast: ' + breakfast + '</p>';
+
+	if (lunch != '')
+		html += '<p>Lunch: ' + lunch + '</p>';
+
 	if (snack != '')
-		html += '<li>Snack: ' + snack + '</li>';
+		html += '<p>Snack: ' + snack + '</p>';
 
 	const iNeedOptions = ['diapers', 'wipes', 'shirt', 'pants', 'underwear'];
 	const iNeed = loadText('needs');
-	var iNeedText = '';
+	var iNeedText = '<h2 style="padding-top: 5px;">I need</h2>';
 
-	iNeedOptions.forEach(function(need, index) {
-		if (index < iNeedOptions.length-1) {
-			if (iNeed[need]) {
-				iNeedText += need + ' &#x2714;, '; // Append check mark
-			} else if (!iNeed[need]) {
-				iNeedText += need + ', ';
-			}
-		} else {
-			if (iNeed[need]) {
-				iNeedText += need + ' &#x2714;';
-			} else if (!iNeed[need]) {
-				iNeedText += need;
-			}
+	iNeedOptions.forEach(function(need) {
+		if (iNeed[need]) {
+			iNeedText += '<p>' + need + ' &#x2714; </p>'; // Append check mark
+		} else if (!iNeed[need]) {
+			iNeedText += '<p>' + need + '</p>';
 		}
 	});
 
-	html += '<li>I need: ' + iNeedText + '</li>';
+	html += iNeedText;
 
 	const highlights = loadText('highlights');
 	if (highlights != '')
-		html += '<li>Highlights/ new discoveries: ' + highlights + '</li>';
+		html += '<h2 style="padding-top: 5px;">Highlights/ new discoveries</h2><p>' + highlights + '</p>';
 
 	const changedClothes = loadText('changedClothes');
 	var changedClothesText = '';
 
 	if (changedClothes.length > 0) {
-		changedClothes.forEach(function(details, key) {
-			if (key < changedClothes.length-1) {
-				changedClothesText += details + ', ';
-			} else {
-				changedClothesText += details;
-			}
+		changedClothes.forEach(function(details) {
+			changedClothesText += '<p>' + details + '</p>';
 		});
 	}
 
 	if (changedClothesText != '')
-		html += '<li>Changed clothes: ' + changedClothesText + '</li>';
+		html += '<h2 style="padding-top: 5px;">Changed clothes</h2>' + changedClothesText;
 
-	html += '</ul></body></html>';
+	html += '</body></html>';
 
 	console.log(html);
 
