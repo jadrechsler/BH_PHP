@@ -272,13 +272,17 @@ h1#room-name {
 #report .right .middle {
     margin: 0;
     padding: 0;
-    height: 80%;
+    height: 60% !important;
+}
+
+#report .right .middle.occurence-show {
+    height: 50% !important;
 }
 
 #report .right .bottom {
     margin: 0;
     padding: 0;
-    height: 20%;
+    height: 40%;
 }
 
 #report #email {

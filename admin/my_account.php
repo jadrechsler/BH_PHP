@@ -37,7 +37,7 @@ $info = $infoRequest->data;
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
-    <a id="back-button" href="/admin">
+    <a id="back-button" href="./">
         <span>&larr;</span>
     </a>
     <h1>My account</h1>
@@ -52,12 +52,6 @@ $info = $infoRequest->data;
                     </div>
                     <div class="staff-info-box">
                         <form staffId="<?php echo $info->id; ?>" class="staff-info-form">
-                            <?php if ($info->id != 4): ?>
-                            <div class="one-info">
-                                <label for="name">Name:</label>
-                                <input type="text" name="name" value="<?php echo $info->name; ?>" />
-                            </div>
-                            <?php endif; ?>
                             <div class="one-info">
                                 <label for="name">Pin:</label>
                                 <input type="password" name="pin" value="<?php echo $info->pin; ?>" maxlength="6" />

@@ -135,7 +135,6 @@ function updateChild() {
     });
 
     if (filled >= form.filter(':input').length-(5 + $('input[name="carerId[]"]').length)) {
-        console.log("aaa");
         $('#submit').click();
     } else {
         window.scrollTo(0, 0);
@@ -147,30 +146,39 @@ function uploadPicture() {
 }
 
 function addCarer() {
-    const inputs = '<div class="carer-solo"><div class="one-info"><label for="carer-name[]">Name:</label><input type="text" name="carer-name[]" placeholder="Sarah Leaf"><br /></div><div class="one-info"><label for="carer-email[]">Email:</label><input type="text" name="carer-email[]" placeholder="sarah.leaf@gmail.com" /></div><div class="one-info"><label for="carer-relation[]">Relation:</label><select name="carer-relation[]"><option selected="selected" value="">&lt;select relation&gt;</option><option value="Mom">Mom</option><option value="Dad">Dad</option><option value="Grandma">Grandma</option><option value="Grandpa">Grandpa</option><option value="Aunt">Aunt</option><option value="Uncle">Uncle</option><option value="Carer">Carer</option></select><br /></div></div>'; 
+    const inputs = '<div class="carer-solo"><input style="visibility: hidden; position: fixed;" type="number" name="carerId[]"  value="" /><div class="one-info"><label for="carer-name[]">Name:</label><input value="" type="text" name="carer-name[]" placeholder="Sarah Leaf"><br /></div><div class="one-info"><label for="carer-email[]">Email:</label><input value="" type="text" name="carer-email[]" placeholder="sarah.leaf@gmail.com" /></div><div class="one-info"><label for="carer-relation[]">Relation:</label><select name="carer-relation[]"><option selected="selected" value="">&lt;select relation&gt;</option><option value="Mom">Mom</option><option value="Dad">Dad</option><option value="Grandma">Grandma</option><option value="Grandpa">Grandpa</option><option value="Aunt">Aunt</option><option value="Uncle">Uncle</option><option value="Carer">Carer</option></select><br /></div></div>'; 
 
-    $(inputs).insertAfter('.carer-solo:last');
+    $(inputs).insertBefore('#add-carer-button');
+    $(':input').click(function(event) {
+        event.stopPropagation();
+    });
 }
 
 function addDetails() {
-    const inputs = '<div class="one-info changed-clothes-detail"><label for="changed-clothes-details[]">Details:</label><input placeholder="changed shirt" type="text" name="changed-clothes-details[]" /><br /></div>'; 
+    const inputs = '<div class="group"><div class="one-info changed-clothes-detail"><label for="changed-clothes-details[]">Details:</label><input placeholder="changed shirt" type="text" name="changed-clothes-details[]" /><br /></div></div>'; 
 
     $(inputs).insertBefore('#changed-clothes-append');
+    $(':input').click(function(event) {
+        event.stopPropagation();
+    });
 }
 
 function removeDetails() {
-    $('.changed-clothes-detail:last').remove();
+    $('#changed-clothes-section .group.remSelect').remove();
 }
 
 function addBathroom() {
-    const inputs = '<div class="bathroom-detail"><div class="one-info"><br /><label for="i-went[]">I went:</label><select name="i-went[]"><option value="">&lt;select&gt;</option><option value="Wet">Wet</option><option value="Dry">Dry</option><option value="Peed">Peed</option><option value="BM">BM</option><option value="LS">LS</option></select><br /></div><div class="one-info"><label for="i-went-time[]">At:</label><div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true"><input placeholder="00:00" type="text" name="i-went-time[]" class="form-control" /><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span></div></div></div>'; 
+    const inputs = '<div class="group"><div class="one-info"><br /><label for="i-went[]">I went:</label><select name="i-went[]"><option value="">&lt;select&gt;</option><option value="Wet">Wet</option><option value="Dry">Dry</option><option value="Peed">Peed</option><option value="BM">BM</option><option value="LS">LS</option></select><br /></div><div class="one-info"><label for="i-went-time[]">At:</label><div class="input-group clockpicker" data-placement="left" data-align="top" data-autoclose="true"><input placeholder="00:00" type="text" name="i-went-time[]" class="form-control" /><span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span></div></div></div>'; 
 
     $(inputs).insertBefore('#bathroom-append');
     $('.clockpicker').clockpicker();
+    $(':input').click(function(event) {
+        event.stopPropagation();
+    });
 }
 
 function removeBathroom() {
-    $('.bathroom-detail:last').remove();
+    $('#bathroom.input-section .group.remSelect').remove();
 }
 
 function addChild() {
@@ -219,6 +227,7 @@ function addChild() {
 }
 
 function saveReport() {
+    console.log("saving");
     var report = {
         'occurence': false,
         'needs': {
@@ -263,13 +272,26 @@ function saveReport() {
                     ensurePropExists('meals', {});
                     report['meals']['breakfast'] = val;
                     break;
+                case 'breakfast-amount':
+                    ensurePropExists('meals', {});
+                    report['meals']['breakfast-amount'] = val;
+                    break;
                 case 'lunch':
                     ensurePropExists('meals', {});
                     report['meals']['lunch'] = val;
                     break;
+                case 'lunch-amount':
+                    ensurePropExists('meals', {});
+                    report['meals']['lunch-amount'] = val;
+                    console.log(report['meals']['breakfast-amount']);
+                    break;
                 case 'snack':
                     ensurePropExists('meals', {});
                     report['meals']['snack'] = val;
+                    break;
+                case 'snack-amount':
+                    ensurePropExists('meals', {});
+                    report['meals']['snack-amount'] = val;
                     break;
                 case 'nap-from':
                     ensurePropExists('nap', {});
@@ -359,6 +381,8 @@ function saveReport() {
         }
     }
 
+    // console.log(report);
+
     QueryDB('get_report', '{}', function(r) {
         var reports = r.data.reports;
 
@@ -383,16 +407,13 @@ function saveReport() {
 }
 
 function updateRemoveCarer() {
-    if ($('.carer-solo').length > 1) {
-        const $lastCarer = $('.carer-solo:last');
-        const carerId = $lastCarer.attr('carerId');
+    $('.remSelect').each(function() {
+        const carerId = $(this).attr('carerId');
 
         const data = {
             carerId: carerId,
             childId: childId
         }
-
-        console.log(JSON.stringify(data));
 
         QueryDB('delete_carer', JSON.stringify(data), function(r) {
             if (!r.success) {
@@ -400,8 +421,8 @@ function updateRemoveCarer() {
             }
         });
 
-        $('.carer-solo:last').remove();
-    }
+        $(this).remove();
+    });
 }
 
 function getChildrenList() {
@@ -466,7 +487,8 @@ function loadText(text) {
 function emailHistoricalReport() {
     $('#complete-button').addClass('disabled');
 
-    const formattedDate = pastDate.replace(/\s+/g, '/');
+    var formattedDate = pastDate.split(' ');
+    formattedDate = formattedDate[1] + '/' + formattedDate[0] + '/' + formattedDate[2];
 
     console.log(formattedDate);
 
@@ -519,20 +541,28 @@ function emailHistoricalReport() {
     
 
     const breakfast = loadText('meals.breakfast');
+    const breakfastAmount = loadText('meals.breakfast-amount');
+
     const lunch = loadText('meals.lunch');
+    const lunchAmount = loadText('meals.lunch-amount');
+
     const snack = loadText('meals.snack');
+    const snackAmount = loadText('meals.snack');
 
     if (breakfast != '' || lunch != '' || snack != '')
-        html += '<h2 style="padding-top: 5px;">Meals</h2>'
+        html += '<h2 style="padding-top: 5px;">Meals</h2>';
 
     if (breakfast != '')
         html += '<p>Breakfast: ' + breakfast + '</p>';
+        html += '<p>Amount: ' + breakfastAmount + '</p><br />';
 
     if (lunch != '')
         html += '<p>Lunch: ' + lunch + '</p>';
+        html += '<p>Amount: ' + lunchAmount + '</p><br />';
 
     if (snack != '')
         html += '<p>Snack: ' + snack + '</p>';
+        html += '<p>Amount: ' + snackAmount + '</p><br />';
 
     const iNeedOptions = ['diapers', 'wipes', 'shirt', 'pants', 'underwear'];
     const iNeed = loadText('needs');

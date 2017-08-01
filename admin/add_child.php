@@ -95,7 +95,7 @@ $teacher2Name = json_decode(file_get_contents("http://$IPADDRESS/query.php?actio
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
-    <a id="back-button" href="/admin/manage_children.php">
+    <a id="back-button" href="./manage_children.php">
         <span>&larr;</span>
     </a>
     <h1>Add child</h1>

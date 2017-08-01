@@ -297,6 +297,11 @@ form input, select, button, .input-group {
 
 .carer-solo {
     padding-bottom: 30px;
+    cursor: pointer;
+}
+
+.carer-solo input, select {
+    border: 1px solid grey;
 }
 
 #complete-button p {
@@ -549,4 +554,12 @@ div.staff {
     overflow-y: auto;
     background-color: lightgrey;
     border: 1px solid grey;
+}
+
+.remSelect {
+    color: red;
+}
+
+.remSelect input, .remSelect select {
+    border: 1px solid red;
 }

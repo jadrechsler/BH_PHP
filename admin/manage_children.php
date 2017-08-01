@@ -57,7 +57,7 @@ $isFloater = $id == 4 ? true : false;
     <link rel="stylesheet" href="<?php echo AddrLink('css/jquery-ui.css'); ?>">
 </head>
 <body>
-    <a id="back-button" href="/admin">
+    <a id="back-button" href="./">
         <span>&larr;</span>
     </a>
     <h1>Manage Children</h1>
@@ -134,7 +134,7 @@ $isFloater = $id == 4 ? true : false;
                 <div id="children-list-container" class="col-md-6 col-sm-10">
                     <div>
                         <?php if (!$isFloater): ?>
-                        <div class="container-fluid col-sm-9 col-md-9 student-container">
+                        <div onclick="window.location.href='child.php?id='+<?php echo $child->id; ?>" class="container-fluid col-sm-9 col-md-9 student-container">
                             <div childId="<?php echo $child->id; ?>" class="col-md-11 col-sm-9 container-fluid list-item student">
                                 <div class="col-md-4 col-sm-4 img-container">
                                     <img class="round-img" src="<?php echo AddrLink("img/children/$child->id.jpg"); ?>" height="50px" width="50px" />
@@ -170,7 +170,7 @@ $isFloater = $id == 4 ? true : false;
         <div id="options" class="col-md-6 col-sm-10">
             <div class="container-fluid options-container">
                 <div class="col-md-12 col-sm-12 option-button-container">
-                    <div id="add-button" class="option-button" onclick="window.location.href = '/admin/add_child.php'">
+                    <div id="add-button" class="option-button" onclick="window.location.href = 'add_child.php'">
                         <p>Add</p>
                     </div>
                 </div>

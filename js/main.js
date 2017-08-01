@@ -139,7 +139,12 @@ function loadText(text) {
 	}
 
 	if (exists) {
-		const exec = '(currentReport.'+text+');';
+		var sectionsComplete = '';
+		sections.forEach(function(value) {
+			sectionsComplete += '[\''+value+'\']';
+		});
+
+		const exec = '(currentReport'+sectionsComplete+');';
 
 		return eval(exec);
 	}
@@ -164,24 +169,28 @@ function loadReport(report) {
 		const iWent = value['iWent'];
 		const at = value['at'];
 
-		console.log('<p>' + iWent + ' at ' + at + '</p>');
-
 		if (iWent != '')
 			$('#i-went p').append('<p>' + iWent + ' at ' + at + '</p>');
 	});
 	
 
 	const breakfast = loadText('meals.breakfast');
-	if (breakfast != '')
-		$('#i-ate ul').append('<li>Breakfast: ' + breakfast + '</li>');
+	$('#i-ate ul').append('<li>Breakfast: ' + breakfast + '</li>');
+
+	const breakfastAmount = loadText('meals.breakfast-amount');
+	$('#i-ate ul').append('<li>Amount: ' + breakfastAmount + '</li><br />');
 
 	const lunch = loadText('meals.lunch');
-	if (lunch != '')
-		$('#i-ate ul').append('<li>Lunch: ' + lunch + '</li>');
+	$('#i-ate ul').append('<li>Lunch: ' + lunch + '</li>');
+
+	const lunchAmount = loadText('meals.lunch-amount');
+	$('#i-ate ul').append('<li>Amount: ' + lunchAmount + '</li><br />');
 
 	const snack = loadText('meals.snack');
-	if (snack != '')
-		$('#i-ate ul').append('<li>Snack: ' + snack + '</li>');
+	$('#i-ate ul').append('<li>Snack: ' + snack + '</li>');
+
+	const snackAmount = loadText('meals.snack-amount');
+	$('#i-ate ul').append('<li>Amount: ' + snackAmount + '</li><br />');
 
 	const iNeedOptions = ['diapers', 'wipes', 'shirt', 'pants', 'underwear'];
 	const iNeed = loadText('needs');
@@ -199,21 +208,22 @@ function loadReport(report) {
 
 	const occurence = loadText('occurence');
 	if (occurence != '') {
-		if (occurence) {
+		if (!occurence) {
 			// Hide occurence box
 			$('#occurence').hide();
 			$('#report .right .top').css('position', 'absolute');
-			$('#report .right .middle').css('height', '80%');
+			$('#report .right .middle').removeClass('occurence-show');
 		} else {
 			// Show occurence box
 			$('#occurence').show();
 			$('#report .right .top').css('position', 'relative');
-			$('#report .right .middle').css('height', '70%');
+			$('#report .right .middle').addClass('occurence-show');
 		}
 	} else {
+		// Hide occurence box
 		$('#occurence').hide();
 		$('#report .right .top').css('position', 'absolute');
-		$('#report .right .middle').css('height', '80%');
+		$('#report .right .middle').removeClass('occurence-show');
 	}
 
 	$('#highlights p').text(loadText('highlights'));
@@ -277,7 +287,7 @@ function emailReport() {
 	const month = date.getMonth()+1;
 	const year = date.getFullYear();
 
-	const formattedDate = day + '/' + month + '/' + year;
+	const formattedDate = month + '/' + day + '/' + year;
 
 	var html = '\
 		<html>\
@@ -328,20 +338,28 @@ function emailReport() {
 	
 
 	const breakfast = loadText('meals.breakfast');
+	const breakfastAmount = loadText('meals.breakfast-amount');
+
 	const lunch = loadText('meals.lunch');
+	const lunchAmount = loadText('meals.lunch-amount');
+
 	const snack = loadText('meals.snack');
+	const snackAmount = loadText('meals.snack');
 
 	if (breakfast != '' || lunch != '' || snack != '')
 		html += '<h2 style="padding-top: 5px;">Meals</h2>'
 
 	if (breakfast != '')
 		html += '<p>Breakfast: ' + breakfast + '</p>';
+		html += '<p>Amount: ' + breakfastAmount + '</p><br />';
 
 	if (lunch != '')
 		html += '<p>Lunch: ' + lunch + '</p>';
+		html += '<p>Amount: ' + lunchAmount + '</p><br />';
 
 	if (snack != '')
 		html += '<p>Snack: ' + snack + '</p>';
+		html += '<p>Amount: ' + snackAmount + '</p><br />';
 
 	const iNeedOptions = ['diapers', 'wipes', 'shirt', 'pants', 'underwear'];
 	const iNeed = loadText('needs');

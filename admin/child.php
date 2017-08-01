@@ -151,7 +151,7 @@ foreach (json_decode($childInfo->carers) as $carer) {
     <link rel="stylesheet" href="<?php echo AddrLink('css/admin/children.css'); ?>">
 </head>
 <body>
-    <a id="back-button" href="/admin/manage_children.php">
+    <a id="back-button" href="./manage_children.php">
         <span>&larr;</span>
     </a>
     <h1>Edit child info</h1>
@@ -249,5 +249,19 @@ foreach (json_decode($childInfo->carers) as $carer) {
     <script src="<?php echo AddrLink('js/jquery-3.2.1.min.js'); ?>"></script>
     <script src="<?php echo AddrLink('js/query.js'); ?>"></script>
     <script src="<?php echo AddrLink('js/admin/children.js'); ?>"></script>
+    <script>
+        $(':input').click(function(event) {
+            event.stopPropagation();
+        });
+
+        $(document).on('click', '.carer-solo', function() {
+            if ($(this).hasClass('remSelect')) {
+                $(this).removeClass('remSelect');
+            } else {
+                if (!($('.remSelect').length >= $('.carer-solo').length - 1))
+                    $(this).addClass('remSelect');
+            }
+        });
+    </script>
 </body>
 </html>

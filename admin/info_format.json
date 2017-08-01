@@ -10,9 +10,18 @@
         }
     ],
     "meals": {
-        "breakfast": "Parent provided",
-        "lunch": "Provided here",
-        "snack": "Parent provided"
+        "breakfast": {
+            "option": "Parent provided",
+            "amount": "None|Some|Most|All"
+        },
+        "lunch": {
+            "option": "Parent provided",
+            "amount": "None|Some|Most|All"
+        },
+        "snack": {
+            "option": "Parent provided",
+            "amount": "None|Some|Most|All"
+        }
     },
     "nap": {
         "from": "00:00",

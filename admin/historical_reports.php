@@ -51,6 +51,22 @@ function GetSaved($spec) {
     return eval($exec);
 }
 
+$bathroomData = GetSaved('[\'bathroom\']');
+$bathroomData = $bathroomData == '' || $bathroomData == null ?
+                array(
+                    array(
+                        'iWent' => '',
+                        'at' => ''
+                    )
+                ) :
+                $bathroomData;
+
+function USDate($date) {
+    $date = explode('/', $date);
+
+    return $date[1].'/'.$date[0].'/'.$date[2];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,10 +78,10 @@ function GetSaved($spec) {
 </head>
 <body>
     <div id="child-name">
-        <a id="back-button" class="back-dark" href="/admin/manage_children.php">
+        <a id="back-button" class="back-dark" href="./manage_children.php">
             <span>&larr;</span>
         </a>
-        <h1><?php echo $name; ?> - <?php echo $formattedDate; ?></h1>
+        <h1><?php echo $name; ?> - <?php echo USDate($formattedDate); ?></h1>
         <div id="complete-button" onclick="emailHistoricalReport()">
             <p>EMAIL</p>
         </div>
@@ -76,7 +92,7 @@ function GetSaved($spec) {
             <form method="POST" enctype="multipart/form-data" id="child-report">
                 <div class="input-section">
                     <p>Bathroom</p>
-                    <?php $bathroomData = GetSaved('[\'bathroom\']'); $count = 0; foreach ($bathroomData as $value):?>
+                    <?php $count = 0; foreach ($bathroomData as $value):?>
                     <?php if ($count > 0): ?>
                     <div class="bathroom-detail">
                     <?php endif; ?>
@@ -108,11 +124,22 @@ function GetSaved($spec) {
                     </div></div>
                     <?php endif; ?>
                     <?php $count++; endforeach; ?>
+                </div>
                 <div class="input-section">
                     <p>Meals</p>
                     <div class="one-info">
                         <label for="breakfast">Breakfast:</label>
-                        <input type="text" name="breakfast" value="<?php echo GetSaved('[\'meals\'][\'breakfast\']'); ?>" /><br />
+                        <input placeholder="cereals" type="text" name="breakfast" value="<?php echo GetSaved('[\'meals\'][\'breakfast\']'); ?>" /><br />
+                    </div>
+                    <div class="one-info">
+                        <label for="breakfast-amount">Amount:</label>
+                        <select name="breakfast-amount">
+                            <option <?php if (GetSaved('[\'meals\'][\'breakfast-amount\']') == '') {echo 'selected="selected"';} ?> value="">&lt;select&gt;</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'breakfast-amount\']') == 'None') {echo 'selected="selected"';} ?> value="None">None</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'breakfast-amount\']') == 'Some') {echo 'selected="selected"';} ?> value="Some">Some</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'breakfast-amount\']') == 'Most') {echo 'selected="selected"';} ?> value="Most">Most</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'breakfast-amount\']') == 'All') {echo 'selected="selected"';} ?> value="All">All</option>
+                        </select><br /><br />
                     </div>
                     <div class="one-info">
                         <label for="lunch">Lunch:</label>
@@ -125,8 +152,28 @@ function GetSaved($spec) {
                         <?php } ?><br />
                     </div>
                     <div class="one-info">
+                        <label for="lunch-amount">Amount:</label>
+                        <select name="lunch-amount">
+                            <option <?php if (GetSaved('[\'meals\'][\'lunch-amount\']') == '') {echo 'selected="selected"';} ?> value="">&lt;select&gt;</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'lunch-amount\']') == 'None') {echo 'selected="selected"';} ?> value="None">None</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'lunch-amount\']') == 'Some') {echo 'selected="selected"';} ?> value="Some">Some</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'lunch-amount\']') == 'Most') {echo 'selected="selected"';} ?> value="Most">Most</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'lunch-amount\']') == 'All') {echo 'selected="selected"';} ?> value="All">All</option>
+                        </select><br /><br />
+                    </div>
+                    <div class="one-info">
                         <label for="snack">Snack:</label>
-                        <input type="text" name="snack" value="<?php echo GetSaved('[\'meals\'][\'snack\']'); ?>" /><br />
+                        <input placeholder="banana" type="text" name="snack" value="<?php echo GetSaved('[\'meals\'][\'snack\']'); ?>" /><br />
+                    </div>
+                    <div class="one-info">
+                        <label for="snack-amount">Amount:</label>
+                        <select name="snack-amount">
+                            <option <?php if (GetSaved('[\'meals\'][\'snack-amount\']') == '') {echo 'selected="selected"';} ?> value="">&lt;select&gt;</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'snack-amount\']') == 'None') {echo 'selected="selected"';} ?> value="None">None</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'snack-amount\']') == 'Some') {echo 'selected="selected"';} ?> value="Some">Some</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'snack-amount\']') == 'Most') {echo 'selected="selected"';} ?> value="Most">Most</option>
+                            <option <?php if (GetSaved('[\'meals\'][\'snack-amount\']') == 'All') {echo 'selected="selected"';} ?> value="All">All</option>
+                        </select><br /><br />
                     </div>
                 </div>
                 <div class="input-section">
